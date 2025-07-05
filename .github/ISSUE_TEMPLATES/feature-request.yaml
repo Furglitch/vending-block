@@ -1,0 +1,49 @@
+name: Feature Request
+description: Suggest an idea for this project
+title: "[Feature]: "
+labels: ['enhancement']
+assignees: Furglitch
+body:
+  - type: markdown
+    attributes:
+      value: '**Check for existing requests.**\nBefore submitting a feature request, please check the [issue tracker](https://github.com/Furglitch/vending-block/issues) and the [to-do list](https://github.com/Furglitch/vending-block/issues/1) to see if your idea has already been suggested.'
+  - type: markdown
+    attributes:
+      value: '**Requests for version updates or backports will be closed and ignored.**\nThey will be released if deemed necessary, and only when they are ready.'
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: Describe the feature you'd like.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: How should we implement this?
+      placeholder: Describe how you think this feature could be written into the project.
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      placeholder: Are there any other projects that have similar functionality?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      placeholder: If implementing this isn't possible, is there any alternatives you'd like to suggest?
+  - type: checkboxes
+    id: related-issue
+    attributes:
+      label: Is this feature related to an issue?
+      description: If yes, please reference the issue in the 'Additional Info' section.
+      options:
+        - label: "Yes"
+        - label: "No"
+    validations:
+      required: true
+  - type: textarea
+    id: misc
+    attributes:
+      label: Additional Notes
+      description: Anything else you want to add?
