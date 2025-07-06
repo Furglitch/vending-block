@@ -2,25 +2,31 @@ package com.furglitch.vendingblock.blockentity;
 
 import java.util.UUID;
 
+import com.furglitch.vendingblock.gui.trade.VendorBlockMenu;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class VendorBlockEntity extends BlockEntity {
+public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
-    public final ItemStackHandler inventory = new ItemStackHandler(9) {
+    public final ItemStackHandler inventory = new ItemStackHandler(11) {
         @Override
         protected int getStackLimit(int slot, ItemStack stack) {
             return 64;
@@ -70,6 +76,14 @@ public class VendorBlockEntity extends BlockEntity {
     public String getOwnerUser() {
         return this.ownerUser;
     }
+    
+    public boolean isOwner(Player player) {
+        return this.ownerID != null && this.ownerID.equals(player.getUUID());
+    }
+    
+    public boolean hasOwner() {
+        return this.ownerID != null;
+    }
 
     @Override
     protected void saveAdditional(CompoundTag tag, Provider registries) {
@@ -90,12 +104,21 @@ public class VendorBlockEntity extends BlockEntity {
     }
 
     @Override
+    public Component getDisplayName() {
+        return Component.literal("Vendor");
+    }
+
+    @Override public AbstractContainerMenu createMenu(int i, Inventory inv, Player player) {
+        return new VendorBlockMenu(i, inv, this);
+    }
+
+    @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public CompoundTag getUpdateTag(Provider pRegistries) {
+    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         return saveWithoutMetadata(pRegistries);
     }
 

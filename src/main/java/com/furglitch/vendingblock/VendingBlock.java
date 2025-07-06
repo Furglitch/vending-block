@@ -2,9 +2,11 @@ package com.furglitch.vendingblock;
 
 import org.slf4j.Logger;
 
+import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 import com.furglitch.vendingblock.registry.BlockRegistry;
 import com.furglitch.vendingblock.registry.ItemRegistry;
+import com.furglitch.vendingblock.registry.MenuRegistry;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.world.item.CreativeModeTabs;
@@ -17,6 +19,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -34,18 +37,19 @@ public class VendingBlock {
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
+        MenuRegistry.register(modEventBus);
         //TabRegistry.register(modEventBus);
         modEventBus.addListener(this::addCreative);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-    }
-
-    private void commonSetup(FMLCommonSetupEvent event) {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(BlockRegistry.VENDOR);
         }
+    }
+
+    private void commonSetup(FMLCommonSetupEvent event) {
     }
 
     @SubscribeEvent
@@ -55,9 +59,16 @@ public class VendingBlock {
     @SuppressWarnings("removal")
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
         }
+
+        @SubscribeEvent
+        public static void registerMenus(RegisterMenuScreensEvent event) {
+            event.register(MenuRegistry.VENDOR_MENU.get(), VendorBlockScreen::new);
+        }
+
     }
 
 }
