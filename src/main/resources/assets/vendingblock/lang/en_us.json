@@ -1,3 +1,8 @@
 {
-  "block.vendingblock.vending_block": "Vending Block"
+  "block.vendingblock.vending_block": "Vending Block",
+
+  "ui.vendingblock.sell": "is selling",
+  "ui.vendingblock.buy": "for",
+  "ui.vendingblock.request": "is requesting",
+  "ui.vendingblock.giveaway": "is giving away"
 }

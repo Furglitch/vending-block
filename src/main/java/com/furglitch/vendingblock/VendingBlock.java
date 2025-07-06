@@ -2,6 +2,7 @@ package com.furglitch.vendingblock;
 
 import org.slf4j.Logger;
 
+import com.furglitch.vendingblock.gui.hud.HintOverlay;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 import com.furglitch.vendingblock.registry.BlockRegistry;
@@ -62,6 +63,9 @@ public class VendingBlock {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                NeoForge.EVENT_BUS.register(HintOverlay.class);
+            });
         }
 
         @SubscribeEvent
