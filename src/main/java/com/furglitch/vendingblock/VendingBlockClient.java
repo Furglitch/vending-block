@@ -10,9 +10,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 public class VendingBlockClient {
     
     public VendingBlockClient(ModContainer container) {
-
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-
     }
 
 }

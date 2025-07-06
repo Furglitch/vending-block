@@ -2,8 +2,12 @@ package com.furglitch.vendingblock;
 
 import org.slf4j.Logger;
 
+import com.furglitch.vendingblock.registry.BlockEntityRegistry;
+import com.furglitch.vendingblock.registry.BlockRegistry;
+import com.furglitch.vendingblock.registry.ItemRegistry;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,34 +28,36 @@ public class VendingBlock {
     private static final Logger LOGGER = LogUtils.getLogger();
     
     public VendingBlock(IEventBus modEventBus, ModContainer modContainer) {
-
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
-        //modEventBus.addListener(this::addCreative);
+        ItemRegistry.register(modEventBus);
+        BlockRegistry.register(modEventBus);
+        BlockEntityRegistry.register(modEventBus);
+        //TabRegistry.register(modEventBus);
+        modEventBus.addListener(this::addCreative);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-
-    }
-
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+    }
+
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(BlockRegistry.VENDOR);
+        }
     }
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
     }
 
-    @SuppressWarnings({ "removal", "deprecation" })
+    @SuppressWarnings("removal")
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
-
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
         }
     }
-    
+
 }
