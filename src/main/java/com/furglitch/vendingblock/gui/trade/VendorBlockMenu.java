@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class VendorBlockMenu extends AbstractContainerMenu{
 
         addPlayerInventory(inv);
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 0, 26, 35));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 0, 26, 35, this.blockEntity));
 
 
         for (int i = 0; i < 3; i++) {
@@ -41,7 +42,7 @@ public class VendorBlockMenu extends AbstractContainerMenu{
             }
         }
 
-        this.addSlot(new SlotItemHandler(this.blockEntity.inventory, 10, 134, 35));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 10, 134, 35, this.blockEntity));
     }
 
     // CREDIT: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -98,4 +99,20 @@ public class VendorBlockMenu extends AbstractContainerMenu{
         }
     }
     
+    @Override
+    public void clicked(int slotId, int dragType, ClickType clickType, Player player) {
+        if (slotId >= 0 && slotId < this.slots.size()) {
+            Slot slot = this.slots.get(slotId);
+            if (slot instanceof FilterSlot filterSlot) {
+                if (clickType == ClickType.PICKUP) {
+                    ItemStack cursorStack = this.getCarried();
+                    boolean leftClick = dragType == 0;
+                    if (filterSlot.onClick(cursorStack, leftClick)) {
+                        return;
+                    }
+                }
+            }
+        }
+        super.clicked(slotId, dragType, clickType, player);
+    }
 }

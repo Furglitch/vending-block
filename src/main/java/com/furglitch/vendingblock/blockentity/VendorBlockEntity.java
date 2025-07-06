@@ -54,6 +54,22 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         setChanged();
     }
 
+    public void setFilterContents(int type, ItemStack stack) {
+        if (type == 1) {
+            this.inventory.setStackInSlot(0, stack);
+        } else if (type == 2) {
+            this.inventory.setStackInSlot(10, stack);
+        }
+    }
+
+    public void getFilterContents(int type) {
+        if (type == 1) {
+            this.inventory.getStackInSlot(0);
+        } else if (type == 2) {
+            this.inventory.getStackInSlot(10);
+        }
+    }
+
     public void drops() {
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());
         for (int i = 0; i < inventory.getSlots(); i++) {
