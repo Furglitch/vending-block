@@ -4,5 +4,23 @@
   "ui.vendingblock.sell": "is selling",
   "ui.vendingblock.buy": "for",
   "ui.vendingblock.request": "is requesting",
-  "ui.vendingblock.giveaway": "is giving away"
+  "ui.vendingblock.giveaway": "is giving away",
+
+  "msg.vendingblock.sell": "You bought %s %s from %s for %s %s",
+  "msg.vendingblock.request": "You gave %s %s to %s",
+  "msg.vendingblock.giveaway": "You received %s %s from %s",
+  "msg.vendingblock.sold": "This vending block is out of stock",
+  "msg.vendingblock.full": "This vending block's inventory is full",
+  "msg.vendingblock.empty": "This vending block has not been set up!",
+
+  "msg.vendingblock.empty.player": "You do not have enough %s for this transaction",
+  "msg.vendingblock.full.player": "You do not have enough inventory space for this transaction",
+
+  "msg.vendingblock.sell.owner": "Your vending block sold %s %s to %s for %s %s",
+  "msg.vendingblock.request.owner": "Your vending block received %s %s from %s",
+  "msg.vendingblock.giveaway.owner": "Your vending block gave %s %s to %s",
+  "msg.vendingblock.sold.owner": "Your vending block is out of stock",
+  "msg.vendingblock.full.owner": "Your vending block's inventory is full"
+
+
 }
