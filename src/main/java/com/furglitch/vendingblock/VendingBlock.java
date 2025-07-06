@@ -2,6 +2,7 @@ package com.furglitch.vendingblock;
 
 import org.slf4j.Logger;
 
+import com.furglitch.vendingblock.blockentity.VendorBlockEntityDisplay;
 import com.furglitch.vendingblock.gui.hud.HintOverlay;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
@@ -20,6 +21,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -71,6 +73,11 @@ public class VendingBlock {
         @SubscribeEvent
         public static void registerMenus(RegisterMenuScreensEvent event) {
             event.register(MenuRegistry.VENDOR_MENU.get(), VendorBlockScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerDisplay(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(BlockEntityRegistry.VENDOR_BE.get(), VendorBlockEntityDisplay::new);
         }
 
     }
