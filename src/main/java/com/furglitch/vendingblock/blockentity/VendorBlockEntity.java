@@ -93,7 +93,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         if (product.isEmpty() && price.isEmpty()) return;
 
         Player owner = level.getPlayerByUUID(vendor.getOwnerID());
-        String ownerName = owner.getName().getString();
+        String ownerName = vendor.getOwnerUser();
         String playerName = buyer.getName().getString();
         boolean playerHasPayment = checkInventory(buyer, price);
         boolean playerHasSpace = checkInventorySpace(buyer, price, product);
@@ -101,22 +101,21 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         boolean blockHasSpace = checkStockSpace(vendor, product, price);
         buyer.sendSystemMessage(Component.literal(playerHasPayment + " " + playerHasSpace + " " + blockHasStock + " " + blockHasSpace));
 
-        // Transaction messages
         if (playerHasPayment && playerHasSpace && blockHasStock && blockHasSpace && !product.isEmpty() && !price.isEmpty()) { // trade
             giveProduct(buyer, vendor, product);
             recievePayment(buyer, vendor, price);
             buyer.sendSystemMessage(Messages.playerBought(product.getCount(), product.getHoverName().getString(), ownerName, price.getCount(), price.getHoverName().getString()));
-            owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName().getString(), ownerName, price.getCount(), price.getHoverName().getString()));
+            if (owner != null) owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName().getString(), ownerName, price.getCount(), price.getHoverName().getString()));
             return;
         } else if (playerHasSpace && blockHasStock && !product.isEmpty() && price.isEmpty()) { // giveaway 
             giveProduct(buyer, vendor, product);
             buyer.sendSystemMessage(Messages.playerGiveaway(product.getCount(), product.getHoverName().getString(), ownerName));
-            owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName().getString(), playerName));
+            if (owner != null) owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName().getString(), playerName));
             return;
         } else if (playerHasPayment && blockHasSpace && product.isEmpty() && !price.isEmpty()) { // donation
             recievePayment(buyer, vendor, price);
             buyer.sendSystemMessage(Messages.playerRequest(price.getCount(), price.getHoverName().getString(), ownerName));
-            owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName().getString(), playerName));
+            if (owner != null) owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName().getString(), playerName));
             return;
         } else if (!playerHasPayment) {
             buyer.sendSystemMessage(Messages.playerEmpty(price.getHoverName().getString()));
@@ -126,11 +125,11 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
             return;
         } else if (!blockHasStock) {
             buyer.sendSystemMessage(Messages.vendorSold());
-            owner.sendSystemMessage(Messages.ownerSold());
+            if (owner != null) owner.sendSystemMessage(Messages.ownerSold());
             return;
         } else if (!blockHasSpace) {
             buyer.sendSystemMessage(Messages.vendorFull());
-            owner.sendSystemMessage(Messages.ownerFull());
+            if (owner != null) owner.sendSystemMessage(Messages.ownerFull());
             return;
         }
 
