@@ -1,5 +1,6 @@
 {
   "block.vendingblock.vending_block": "Vending Block",
+  "item.vendingblock.vendor_key": "Vendor's Key",
 
   "ui.vendingblock.sell": "is selling",
   "ui.vendingblock.buy": "for",

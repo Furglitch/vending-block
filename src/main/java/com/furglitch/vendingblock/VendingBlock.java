@@ -49,6 +49,7 @@ public class VendingBlock {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(BlockRegistry.VENDOR);
+            event.accept(ItemRegistry.VENDOR_KEY);
         }
     }
 
