@@ -20,3 +20,4 @@ Originally created by AUTOMATIC_MAIDEN (aka [minecreatr](https://www.curseforge.
 Accessible via both the Mods menu and vendingblock-common.toml
 - Toggleable transaction notifications
 - Different animations
+- Key accessibility through creative mode tab (for server admins)
