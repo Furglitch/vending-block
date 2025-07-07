@@ -12,6 +12,7 @@ import com.furglitch.vendingblock.registry.ItemRegistry;
 import com.furglitch.vendingblock.registry.MenuRegistry;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -68,6 +69,8 @@ public class VendingBlock {
             (vendorBlockEntity, side) -> {
                 if (side == null) {
                     return vendorBlockEntity.getPublicItemHandler();
+                } else if (side == Direction.DOWN) {
+                    return vendorBlockEntity.getExtractItemHandler();
                 } else {
                     return vendorBlockEntity.getInsertItemHandler();
                 }
