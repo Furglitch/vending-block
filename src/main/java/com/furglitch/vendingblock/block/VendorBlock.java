@@ -3,6 +3,8 @@ package com.furglitch.vendingblock.block;
 import javax.annotation.Nullable;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+import com.furglitch.vendingblock.gui.admin.VendorAdminMenu;
+import com.furglitch.vendingblock.registry.ItemRegistry;
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -72,12 +74,17 @@ public class VendorBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof VendorBlockEntity vendorBlockEntity) {
-            if (vendorBlockEntity.isOwner(player) && !level.isClientSide()) {
+            if (player.getMainHandItem().is(ItemRegistry.VENDOR_KEY.get()) && !level.isClientSide()) {
+                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(
+                    (containerId, inventory, playerEntity) -> new VendorAdminMenu(containerId, inventory, vendorBlockEntity), 
+                    Component.literal("Vendor Admin")), pos);
+                level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 2.0F);
+            }
+            else if (vendorBlockEntity.isOwner(player) && !level.isClientSide()) {
                 ((ServerPlayer) player).openMenu(new SimpleMenuProvider(vendorBlockEntity, Component.literal("Vendor")), pos);
                 level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 2.0F);
             } else if (!vendorBlockEntity.isOwner(player) && !level.isClientSide()) {
                 VendorBlockEntity.purchase(level, player, vendorBlockEntity);
-                return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.SUCCESS;

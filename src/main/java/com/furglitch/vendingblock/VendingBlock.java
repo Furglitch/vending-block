@@ -3,6 +3,7 @@ package com.furglitch.vendingblock;
 import org.slf4j.Logger;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntityDisplay;
+import com.furglitch.vendingblock.gui.admin.VendorAdminScreen;
 import com.furglitch.vendingblock.gui.hud.HintOverlay;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
@@ -74,6 +75,7 @@ public class VendingBlock {
         @SubscribeEvent
         public static void registerMenus(RegisterMenuScreensEvent event) {
             event.register(MenuRegistry.VENDOR_MENU.get(), VendorBlockScreen::new);
+            event.register(MenuRegistry.VENDOR_ADMIN_MENU.get(), VendorAdminScreen::new);
         }
 
         @SubscribeEvent
