@@ -73,7 +73,9 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     public void drops() {
         SimpleContainer inv = new SimpleContainer(inventory.getSlots());
         for (int i = 0; i < inventory.getSlots(); i++) {
-            inv.setItem(i, inventory.getStackInSlot(i));
+            if (i != 0 && i != 10 && i != 11) {
+                inv.setItem(i, inventory.getStackInSlot(i));
+            }
         }
         Containers.dropContents(this.level, this.worldPosition, inv);
     }
