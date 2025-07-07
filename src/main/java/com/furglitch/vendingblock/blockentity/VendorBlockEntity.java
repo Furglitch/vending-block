@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class VendorBlockEntity extends BlockEntity implements MenuProvider{
@@ -39,12 +40,50 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
             setChanged();
             if(!level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                level.invalidateCapabilities(getBlockPos());
             } 
+        }
+    };
+
+    private final IItemHandler insertItemHandler = new IItemHandler() {
+        @Override
+        public int getSlots() {
+            return 9;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return inventory.getStackInSlot(slot + 1);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return inventory.insertItem(slot + 1, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            // Don't allow extraction - hoppers should only be able to insert items
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return inventory.getSlotLimit(slot + 1);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return inventory.isItemValid(slot + 1, stack);
         }
     };
 
     public VendorBlockEntity(BlockPos pos, BlockState blockState) {
         super(BlockEntityRegistry.VENDOR_BE.get(), pos, blockState);
+    }
+
+    public IItemHandler getInsertItemHandler() {
+        return insertItemHandler;
     }
 
     public void clearContents() {

@@ -22,6 +22,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -44,6 +46,7 @@ public class VendingBlock {
         MenuRegistry.register(modEventBus);
         //TabRegistry.register(modEventBus);
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(com.furglitch.vendingblock.network.NetworkHandler::register);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
@@ -56,6 +59,14 @@ public class VendingBlock {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+    }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+            Capabilities.ItemHandler.BLOCK,
+            BlockEntityRegistry.VENDOR_BE.get(),
+            (vendorBlockEntity, side) -> vendorBlockEntity.getInsertItemHandler()
+        );
     }
 
     @SubscribeEvent
