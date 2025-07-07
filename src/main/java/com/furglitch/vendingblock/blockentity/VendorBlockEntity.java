@@ -87,6 +87,29 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         setChanged();
     }
 
+    public void setOwnerByUsername(String username) {
+        Player player = null;
+        if (level != null && level.getServer() != null) {
+            player = level.getServer().getPlayerList().getPlayerByName(username);
+        }
+        
+        if (player != null) {
+            this.ownerID = player.getUUID();
+            this.ownerUser = player.getName().getString();
+        } else {
+            if (this.ownerUser != null && this.ownerUser.equals(username)) {
+            } else {
+                this.ownerID = null;
+                this.ownerUser = username;
+            }
+        }
+        setChanged();
+        
+        if(!level.isClientSide()) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
+    }
+
     public UUID getOwnerID() {
         return this.ownerID;
     }
@@ -96,11 +119,33 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     }
     
     public boolean isOwner(Player player) {
-        return this.ownerID != null && this.ownerID.equals(player.getUUID());
+        if (this.ownerID != null && this.ownerID.equals(player.getUUID())) {
+            return true;
+        }
+        
+        if (this.ownerUser != null && this.ownerUser.equals(player.getName().getString())) {
+            this.ownerID = player.getUUID();
+            setChanged();
+            return true;
+        }
+        
+        return false;
     }
     
+    public void updateOwnershipInfo(Player player) {
+        if (this.ownerUser != null && this.ownerID == null) {
+            if (this.ownerUser.equals(player.getName().getString())) {
+                this.ownerID = player.getUUID();
+                setChanged();
+                if (!level.isClientSide()) {
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                }
+            }
+        }
+    }
+
     public boolean hasOwner() {
-        return this.ownerID != null;
+        return this.ownerID != null || this.ownerUser != null;
     }
 
     public static void purchase(Level level, Player buyer, VendorBlockEntity vendor) {
@@ -115,7 +160,6 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         boolean playerHasSpace = checkInventorySpace(buyer, price, product);
         boolean blockHasStock = checkStock(vendor, product);
         boolean blockHasSpace = checkStockSpace(vendor, product, price);
-        buyer.sendSystemMessage(Component.literal(playerHasPayment + " " + playerHasSpace + " " + blockHasStock + " " + blockHasSpace));
 
         if (playerHasPayment && playerHasSpace && blockHasStock && blockHasSpace && !product.isEmpty() && !price.isEmpty()) { // trade
             giveProduct(buyer, vendor, product);

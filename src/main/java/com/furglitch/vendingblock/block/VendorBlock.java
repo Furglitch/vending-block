@@ -74,6 +74,8 @@ public class VendorBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof VendorBlockEntity vendorBlockEntity) {
+            vendorBlockEntity.updateOwnershipInfo(player);
+            
             if (player.getMainHandItem().is(ItemRegistry.VENDOR_KEY.get()) && !level.isClientSide()) {
                 ((ServerPlayer) player).openMenu(new SimpleMenuProvider(
                     (containerId, inventory, playerEntity) -> new VendorAdminMenu(containerId, inventory, vendorBlockEntity), 

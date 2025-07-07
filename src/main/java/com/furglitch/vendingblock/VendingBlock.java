@@ -44,6 +44,7 @@ public class VendingBlock {
         MenuRegistry.register(modEventBus);
         //TabRegistry.register(modEventBus);
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(com.furglitch.vendingblock.network.NetworkHandler::register);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
