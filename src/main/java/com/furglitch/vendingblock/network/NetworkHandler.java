@@ -8,5 +8,6 @@ public class NetworkHandler {
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("1");
         registrar.playToServer(OwnerChangePacket.TYPE, OwnerChangePacket.STREAM_CODEC, OwnerChangePacket::handle);
+        registrar.playToServer(InfiniteInventoryPacket.TYPE, InfiniteInventoryPacket.STREAM_CODEC, InfiniteInventoryPacket::handle);
     }
 }

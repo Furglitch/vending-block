@@ -1,6 +1,8 @@
 package com.furglitch.vendingblock.gui.admin;
 
 import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.gui.components.CustomCheckbox;
+import com.furglitch.vendingblock.network.InfiniteInventoryPacket;
 import com.furglitch.vendingblock.network.OwnerChangePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -18,6 +20,8 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
     private static final ResourceLocation TEXTURE =  ResourceLocation.fromNamespaceAndPath(VendingBlock.MODID, "textures/gui/vendingblock/admin.png");
     private EditBox ownerField;
     private String initialOwnerValue;
+    private CustomCheckbox infiniteCheckbox;
+    private boolean infiniteInit;
 
     public VendorAdminScreen(VendorAdminMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -47,6 +51,22 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         }
         
         this.addRenderableWidget(ownerField);
+        
+        boolean infiniteStatus = menu.blockEntity.isInfinite();
+        Component infiniteLabel = Component.translatable("menu.vendingblock.admin.infinite");
+        int checkboxSize = CustomCheckbox.checkboxSize;
+        int spacing = 4;
+        int labelWidth = this.font.width(infiniteLabel);
+        int totalWidth = checkboxSize + spacing + labelWidth;
+        int centeredX = (this.width - totalWidth) / 2;
+        
+        infiniteCheckbox = CustomCheckbox.customBuilder(infiniteLabel, this.font)
+            .pos(centeredX, y + 39)
+            .selected(infiniteStatus)
+            .build();
+        infiniteInit = infiniteStatus;
+
+        this.addRenderableWidget(infiniteCheckbox);
     }
 
     @Override
@@ -103,6 +123,8 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         if (ownerField.mouseClicked(pMouseX, pMouseY, pButton)) {
             this.setFocused(ownerField);
             return true;
+        } else if (infiniteCheckbox.mouseClicked(pMouseX, pMouseY, pButton)) {
+            return true;
         } else {
             if (this.getFocused() == ownerField) {
                 ownerField.setFocused(false);
@@ -130,6 +152,7 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
     @Override
     public void onClose() {
         sendOwnerChangeIfChanged();
+        sendInfiniteInventoryChangeIfChanged();
         super.onClose();
     }
 
@@ -137,6 +160,14 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         String newOwner = ownerField.getValue().trim();
         if (!newOwner.equals(initialOwnerValue)) {
             OwnerChangePacket packet = new OwnerChangePacket(menu.blockEntity.getBlockPos(), newOwner);
+            PacketDistributor.sendToServer(packet);
+        }
+    }
+
+    private void sendInfiniteInventoryChangeIfChanged() {
+        boolean newInfiniteInventory = infiniteCheckbox.selected();
+        if (newInfiniteInventory != infiniteInit) {
+            InfiniteInventoryPacket packet = new InfiniteInventoryPacket(menu.blockEntity.getBlockPos(), newInfiniteInventory);
             PacketDistributor.sendToServer(packet);
         }
     }

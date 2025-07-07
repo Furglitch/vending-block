@@ -1,4 +1,4 @@
-package com.furglitch.vendingblock.gui.trade;
+package com.furglitch.vendingblock.gui.components;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
 

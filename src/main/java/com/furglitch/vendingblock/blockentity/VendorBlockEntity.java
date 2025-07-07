@@ -80,6 +80,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
     private UUID ownerID;
     private String ownerUser;
+    private boolean infiniteInventory = false;
 
     public void setOwner(Player player) {
         this.ownerID = player.getUUID();
@@ -148,12 +149,22 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         return this.ownerID != null || this.ownerUser != null;
     }
 
+    public boolean isInfinite() {
+        return infiniteInventory;
+    }
+
+    public void setInfinite(boolean infiniteInventory) {
+        this.infiniteInventory = infiniteInventory;
+        setChanged();
+        if (!level.isClientSide()) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+    }
+
     public static void purchase(Level level, Player buyer, VendorBlockEntity vendor) {
         ItemStack product = vendor.inventory.getStackInSlot(0);
         ItemStack price = vendor.inventory.getStackInSlot(10);
         if (product.isEmpty() && price.isEmpty()) return;
 
-        Player owner = level.getPlayerByUUID(vendor.getOwnerID());
+        Player owner = vendor.getOwnerID() != null ? level.getPlayerByUUID(vendor.getOwnerID()) : null;
         String ownerName = vendor.getOwnerUser();
         String playerName = buyer.getName().getString();
         boolean playerHasPayment = checkInventory(buyer, price);
@@ -248,6 +259,8 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     }
 
     private static boolean checkStock(VendorBlockEntity vendor, ItemStack product) {
+        
+        if (vendor.isInfinite()) return true;
 
         int stock = 0;
         for (int i = 1; i <= 9; i++) {
@@ -333,14 +346,18 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     private static void giveProduct(Player buyer, VendorBlockEntity vendor, ItemStack product) {
 
         int stock = product.getCount();
-        for (int i = 1; i <= 9 && stock > 0; i++) {
-            ItemStack slot = vendor.inventory.getStackInSlot(i);
-            if (slot.isEmpty()) continue;
-            if (ItemStack.isSameItemSameComponents(slot, product)) {
-                int available = slot.getCount();
-                int slotStock = Math.min(available, stock);
-                slot.shrink(slotStock);
-                stock -= slotStock;
+        if (vendor.isInfinite()) {
+            stock = 0;
+        } else {
+            for (int i = 1; i <= 9 && stock > 0; i++) {
+                ItemStack slot = vendor.inventory.getStackInSlot(i);
+                if (slot.isEmpty()) continue;
+                if (ItemStack.isSameItemSameComponents(slot, product)) {
+                    int available = slot.getCount();
+                    int slotStock = Math.min(available, stock);
+                    slot.shrink(slotStock);
+                    stock -= slotStock;
+                }
             }
         }
 
@@ -372,6 +389,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
         if (this.ownerID != null) tag.putUUID("ownerID", this.ownerID);
         if (this.ownerUser != null) tag.putString("ownerUser", this.ownerUser);
+        tag.putBoolean("infiniteInventory", this.infiniteInventory);
     }
 
     @Override
@@ -381,6 +399,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
         if (tag.hasUUID("ownerID")) this.ownerID = tag.getUUID("ownerID");
         if (tag.contains("ownerUser")) this.ownerUser = tag.getString("ownerUser");
+        this.infiniteInventory = tag.getBoolean("infiniteInventory");
     }
 
     @Override

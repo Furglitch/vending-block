@@ -1,6 +1,7 @@
 package com.furglitch.vendingblock.gui.trade;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+import com.furglitch.vendingblock.gui.components.FilterSlot;
 import com.furglitch.vendingblock.registry.BlockRegistry;
 import com.furglitch.vendingblock.registry.MenuRegistry;
 

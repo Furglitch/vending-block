@@ -6,6 +6,8 @@
   "ui.vendingblock.buy": "for",
   "ui.vendingblock.request": "is requesting",
   "ui.vendingblock.giveaway": "is giving away",
+  
+  "menu.vendingblock.admin.infinite": "Infinite Inventory",
 
   "msg.vendingblock.sell": "You bought %s %s from %s for %s %s",
   "msg.vendingblock.request": "You gave %s %s to %s",
