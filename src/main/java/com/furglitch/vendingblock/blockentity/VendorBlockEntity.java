@@ -78,12 +78,25 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         }
     };
 
+    private final IItemHandler emptyItemHandler = new IItemHandler() {
+        @Override public int getSlots() { return 0; }
+        @Override public ItemStack getStackInSlot(int slot) { return ItemStack.EMPTY; }
+        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) { return stack; }
+        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) { return ItemStack.EMPTY; }
+        @Override public int getSlotLimit(int slot) { return 0;}
+        @Override public boolean isItemValid(int slot, ItemStack stack) { return false; }
+    };
+
     public VendorBlockEntity(BlockPos pos, BlockState blockState) {
         super(BlockEntityRegistry.VENDOR_BE.get(), pos, blockState);
     }
 
     public IItemHandler getInsertItemHandler() {
         return insertItemHandler;
+    }
+
+    public IItemHandler getPublicItemHandler() {
+        return emptyItemHandler;
     }
 
     public void clearContents() {

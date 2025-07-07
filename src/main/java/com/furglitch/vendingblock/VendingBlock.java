@@ -65,7 +65,13 @@ public class VendingBlock {
         event.registerBlockEntity(
             Capabilities.ItemHandler.BLOCK,
             BlockEntityRegistry.VENDOR_BE.get(),
-            (vendorBlockEntity, side) -> vendorBlockEntity.getInsertItemHandler()
+            (vendorBlockEntity, side) -> {
+                if (side == null) {
+                    return vendorBlockEntity.getPublicItemHandler();
+                } else {
+                    return vendorBlockEntity.getInsertItemHandler();
+                }
+            }
         );
     }
 

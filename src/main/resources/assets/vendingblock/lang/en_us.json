@@ -7,6 +7,12 @@
   "ui.vendingblock.request": "is requesting",
   "ui.vendingblock.giveaway": "is giving away",
 
+  "ui.vendingblock.jade.sell": "Selling: %s",
+  "ui.vendingblock.jade.buy": "Buying: %s",
+  "ui.vendingblock.jade.request": "Requesting: %s",
+  "ui.vendingblock.jade.giveaway": "Giving Away: %s",
+  "ui.vendingblock.jade.owner": "Owner: %s",
+
   "menu.vendingblock.settings": "Vendor Settings",
   "menu.vendingblock.admin.settings": "Admin Settings",
   "menu.vendingblock.admin.owner": "Owner",

@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 public class HintOverlay {
@@ -22,6 +23,8 @@ public class HintOverlay {
 
     @SubscribeEvent
     public static void onRenderGUI(RenderGuiEvent.Post event){
+
+        if (ModList.get().isLoaded("jade")) return;
 
         Minecraft mc = Minecraft.getInstance();
         if(mc.player == null || mc.level == null) return;

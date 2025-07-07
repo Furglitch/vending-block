@@ -1,0 +1,38 @@
+package com.furglitch.vendingblock.integration.jade;
+
+import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.IServerDataProvider;
+
+public enum VendorBlockDataProvider implements IServerDataProvider<BlockAccessor> {
+    INSTANCE;
+
+    @Override
+    public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+        if (accessor.getBlockEntity() instanceof VendorBlockEntity entity) {
+            String ownerUser = entity.getOwnerUser();
+            if (ownerUser != null) tag.putString("owner", ownerUser);
+
+            ItemStack product = entity.inventory.getStackInSlot(0);
+            if (!product.isEmpty()) {
+                tag.putString("productName", product.getHoverName().getString());
+                tag.putInt("productCount", product.getCount());
+            }
+
+            ItemStack price = entity.inventory.getStackInSlot(10);
+            if (!price.isEmpty()) {
+                tag.putString("priceName", price.getHoverName().getString());
+                tag.putInt("priceCount", price.getCount());
+            }
+        }
+    }
+
+    @Override
+    public ResourceLocation getUid() {
+        return ResourceLocation.fromNamespaceAndPath("vendingblock", "vendor_data");
+    }
+}
