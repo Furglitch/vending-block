@@ -34,7 +34,7 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         
-        ownerField = new EditBox(this.font, x + 43, y + 16, 90, 18, Component.literal("Owner"));
+        ownerField = new EditBox(this.font, x + 43, y + 16, 90, 18, Component.translatable("menu.vendingblock.admin.owner"));
         ownerField.setMaxLength(32);
         ownerField.setBordered(true);
         ownerField.setVisible(true);

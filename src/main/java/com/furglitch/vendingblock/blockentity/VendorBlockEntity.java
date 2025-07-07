@@ -175,21 +175,21 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         if (playerHasPayment && playerHasSpace && blockHasStock && blockHasSpace && !product.isEmpty() && !price.isEmpty()) { // trade
             giveProduct(buyer, vendor, product);
             recievePayment(buyer, vendor, price);
-            buyer.sendSystemMessage(Messages.playerBought(product.getCount(), product.getHoverName().getString(), ownerName, price.getCount(), price.getHoverName().getString()));
-            if (owner != null) owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName().getString(), ownerName, price.getCount(), price.getHoverName().getString()));
+            buyer.sendSystemMessage(Messages.playerBought(product.getCount(), product.getHoverName(), ownerName, price.getCount(), price.getHoverName()));
+            if (owner != null) owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName(), playerName, price.getCount(), price.getHoverName()));
             return;
         } else if (playerHasSpace && blockHasStock && !product.isEmpty() && price.isEmpty()) { // giveaway 
             giveProduct(buyer, vendor, product);
-            buyer.sendSystemMessage(Messages.playerGiveaway(product.getCount(), product.getHoverName().getString(), ownerName));
-            if (owner != null) owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName().getString(), playerName));
+            buyer.sendSystemMessage(Messages.playerGiveaway(product.getCount(), product.getHoverName(), ownerName));
+            if (owner != null) owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName(), playerName));
             return;
         } else if (playerHasPayment && blockHasSpace && product.isEmpty() && !price.isEmpty()) { // donation
             recievePayment(buyer, vendor, price);
-            buyer.sendSystemMessage(Messages.playerRequest(price.getCount(), price.getHoverName().getString(), ownerName));
-            if (owner != null) owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName().getString(), playerName));
+            buyer.sendSystemMessage(Messages.playerRequest(price.getCount(), price.getHoverName(), ownerName));
+            if (owner != null) owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName(), playerName));
             return;
         } else if (!playerHasPayment) {
-            buyer.sendSystemMessage(Messages.playerEmpty(price.getHoverName().getString()));
+            buyer.sendSystemMessage(Messages.playerEmpty(price.getHoverName()));
             return;
         } else if (!playerHasSpace) {
             buyer.sendSystemMessage(Messages.playerFull());
@@ -404,7 +404,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
     @Override
     public Component getDisplayName() {
-        return Component.literal("Vendor");
+        return Component.translatable("menu.vendingblock.settings");
     }
 
     @Override public AbstractContainerMenu createMenu(int i, Inventory inv, Player player) {

@@ -4,19 +4,19 @@ import net.minecraft.network.chat.Component;
 
 public class Messages {
 
-    public static Component playerBought(int count, String item, String owner, int sellCount, String sellItem) {
+    public static Component playerBought(int count, Component item, String owner, int sellCount, Component sellItem) {
         return Component.translatable("msg.vendingblock.sell", count, item, owner, sellCount, sellItem);
     }
 
-    public static Component playerRequest(int count, String item, String owner) {
+    public static Component playerRequest(int count, Component item, String owner) {
         return Component.translatable("msg.vendingblock.request", count, item, owner);
     }
 
-    public static Component playerGiveaway(int count, String item, String owner) {
+    public static Component playerGiveaway(int count, Component item, String owner) {
         return Component.translatable("msg.vendingblock.giveaway", count, item, owner);
     }
 
-    public static Component playerEmpty(String sellItem) {
+    public static Component playerEmpty(Component sellItem) {
         return Component.translatable("msg.vendingblock.empty.player", sellItem);
     }
 
@@ -36,15 +36,15 @@ public class Messages {
         return Component.translatable("msg.vendingblock.empty");
     }
 
-    public static Component ownerSold(int count, String item, String player, int sellCount, String sellItem) {
+    public static Component ownerSold(int count, Component item, String player, int sellCount, Component sellItem) {
         return Component.translatable("msg.vendingblock.sell.owner", count, item, player, sellCount, sellItem);
     }
 
-    public static Component ownerRequest(int count, String item, String player) {
+    public static Component ownerRequest(int count, Component item, String player) {
         return Component.translatable("msg.vendingblock.request.owner", count, item, player);
     }
 
-    public static Component ownerGiveaway(int count, String item, String player) {
+    public static Component ownerGiveaway(int count, Component item, String player) {
         return Component.translatable("msg.vendingblock.giveaway.owner", count, item, player);
     }
 
