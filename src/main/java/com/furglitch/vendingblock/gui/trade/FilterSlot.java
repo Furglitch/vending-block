@@ -31,6 +31,9 @@ public class FilterSlot extends SlotItemHandler {
             if (slotIndex == 11 && !isFullBlock(stack)) return;
 
             ItemStack filter = stack.copy();
+            if (slotIndex == 11) {
+                filter.setCount(1);
+            }
             super.set(filter);
 
             if (slotIndex == 0) {
@@ -71,7 +74,11 @@ public class FilterSlot extends SlotItemHandler {
                 if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
                 
                 ItemStack slotStack = cursorStack.copy();
-                slotStack.setCount(cursorStack.getCount());
+                if (slotIndex == 11) {
+                    slotStack.setCount(1);
+                } else {
+                    slotStack.setCount(cursorStack.getCount());
+                }
                 set(slotStack);
 
             }
@@ -84,7 +91,11 @@ public class FilterSlot extends SlotItemHandler {
                 if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
                 
                 ItemStack slotStack = cursorStack.copy();
-                slotStack.setCount(getItem().getCount() + 1);
+                if (slotIndex == 11) {
+                    slotStack.setCount(1);
+                } else {
+                    slotStack.setCount(getItem().getCount() + 1);
+                }
                 set(slotStack);
 
             }
