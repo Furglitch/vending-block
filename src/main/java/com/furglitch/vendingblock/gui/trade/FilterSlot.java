@@ -3,7 +3,12 @@ package com.furglitch.vendingblock.gui.trade;
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
 
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
@@ -22,6 +27,8 @@ public class FilterSlot extends SlotItemHandler {
     public void set(ItemStack stack) {
 
         if (!stack.isEmpty()) {
+            
+            if (slotIndex == 11 && !isFullBlock(stack)) return;
 
             ItemStack filter = stack.copy();
             super.set(filter);
@@ -42,23 +49,44 @@ public class FilterSlot extends SlotItemHandler {
 
     }
     
+    private boolean isFullBlock(ItemStack stack) {
+
+        if (!(stack.getItem() instanceof BlockItem blockItem)) return false;
+        
+        Block block = blockItem.getBlock();
+        BlockState state = block.defaultBlockState();
+        VoxelShape shape = state.getShape(null, null);
+        VoxelShape fullCube = Shapes.block();
+        
+        return shape.equals(fullCube);
+
+    }
+    
     public boolean onClick(ItemStack cursorStack, boolean leftClick) {
         if (leftClick) {
             if (cursorStack.isEmpty()) {
                 set(ItemStack.EMPTY);
             } else {
+                
+                if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
+                
                 ItemStack slotStack = cursorStack.copy();
                 slotStack.setCount(cursorStack.getCount());
                 set(slotStack);
+
             }
             return true;
         } else {
             if (cursorStack.isEmpty()) {
                 set(ItemStack.EMPTY);
             } else {
+                
+                if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
+                
                 ItemStack slotStack = cursorStack.copy();
                 slotStack.setCount(getItem().getCount() + 1);
                 set(slotStack);
+
             }
             return true;
         }

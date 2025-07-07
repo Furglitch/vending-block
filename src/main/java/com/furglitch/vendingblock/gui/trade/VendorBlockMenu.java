@@ -32,17 +32,15 @@ public class VendorBlockMenu extends AbstractContainerMenu{
 
         addPlayerInventory(inv);
 
-        this.addSlot(new FilterSlot(this.blockEntity.inventory, 0, 26, 35, this.blockEntity));
-
-
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 0, 26, 17, this.blockEntity));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 10, 26, 53, this.blockEntity));
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 int slotIndex = 1 + (i * 3) + j; // slots 1-9
                 this.addSlot(new SlotItemHandler(this.blockEntity.inventory, slotIndex, 62 + (j * 18), 17 + (i * 18)));
             }
         }
-
-        this.addSlot(new FilterSlot(this.blockEntity.inventory, 10, 134, 35, this.blockEntity));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 11, 134, 17, this.blockEntity));
     }
 
     // CREDIT: diesieben07 | https://github.com/diesieben07/SevenCommons
@@ -53,7 +51,7 @@ public class VendorBlockMenu extends AbstractContainerMenu{
     private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 11;
+    private static final int TE_INVENTORY_SLOT_COUNT = 12;
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);

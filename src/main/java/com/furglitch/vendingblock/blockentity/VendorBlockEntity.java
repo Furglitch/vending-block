@@ -28,7 +28,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
-    public final ItemStackHandler inventory = new ItemStackHandler(11) {
+    public final ItemStackHandler inventory = new ItemStackHandler(12) {
         @Override
         protected int getStackLimit(int slot, ItemStack stack) {
             return 64;
