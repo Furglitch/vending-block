@@ -49,7 +49,8 @@ public class VendingBlock {
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(com.furglitch.vendingblock.network.NetworkHandler::register);
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.Client.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, Config.Server.SPEC);
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

@@ -35,12 +35,13 @@
   "msg.vendingblock.sold.owner": "Your vending block is out of stock",
   "msg.vendingblock.full.owner": "Your vending block's inventory is full",
 
-  "vendingblock.configuration.ownedNotifications": "Vendor Owner Messages",
+  "vendingblock.configuration.ownerNotifications": "Vendor Owner Messages",
   "config.vendingblock.messages.purchase": "Purchase Notifications",
   "config.vendingblock.messages.giveaway": "Giveaway Notifications", 
   "config.vendingblock.messages.donation": "Donation Notifications",
   "config.vendingblock.messages.outOfStock": "Out of Stock Notifications",
-  "config.vendingblock.messages.fullStorage": "Full Storage Notifications"
+  "config.vendingblock.messages.fullStorage": "Full Storage Notifications",
+  "config.vendingblock.creative.keyInTab": "Creative Vendor's Key"
 
 
 }

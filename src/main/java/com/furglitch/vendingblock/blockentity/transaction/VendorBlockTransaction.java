@@ -27,17 +27,17 @@ public class VendorBlockTransaction {
             giveProduct(buyer, vendor, product);
             recievePayment(buyer, vendor, price);
             buyer.sendSystemMessage(Messages.playerBought(product.getCount(), product.getHoverName(), ownerName, price.getCount(), price.getHoverName()));
-            if (owner != null && Config.PURCHASE_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName(), playerName, price.getCount(), price.getHoverName()));
+            if (owner != null && Config.Client.PURCHASE_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName(), playerName, price.getCount(), price.getHoverName()));
 
         } else if (playerHasSpace && blockHasStock && !product.isEmpty() && price.isEmpty()) { // giveaway 
             giveProduct(buyer, vendor, product);
             buyer.sendSystemMessage(Messages.playerGiveaway(product.getCount(), product.getHoverName(), ownerName));
-            if (owner != null && Config.GIVEAWAY_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName(), playerName));
+            if (owner != null && Config.Client.GIVEAWAY_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName(), playerName));
 
         } else if (playerHasPayment && blockHasSpace && product.isEmpty() && !price.isEmpty()) { // donation
             recievePayment(buyer, vendor, price);
             buyer.sendSystemMessage(Messages.playerRequest(price.getCount(), price.getHoverName(), ownerName));
-            if (owner != null && Config.DONATION_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName(), playerName));
+            if (owner != null && Config.Client.DONATION_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName(), playerName));
 
         } else if (!playerHasPayment) {
             buyer.sendSystemMessage(Messages.playerEmpty(price.getHoverName()));
@@ -47,11 +47,11 @@ public class VendorBlockTransaction {
 
         } else if (!blockHasStock) {
             buyer.sendSystemMessage(Messages.vendorSold());
-            if (owner != null && Config.OUT_OF_STOCK_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerSold());
+            if (owner != null && Config.Client.OUT_OF_STOCK_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerSold());
 
         } else if (!blockHasSpace) {
             buyer.sendSystemMessage(Messages.vendorFull());
-            if (owner != null && Config.FULL_STORAGE_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerFull());
+            if (owner != null && Config.Client.FULL_STORAGE_MESSAGES.get()) owner.sendSystemMessage(Messages.ownerFull());
 
         }
         

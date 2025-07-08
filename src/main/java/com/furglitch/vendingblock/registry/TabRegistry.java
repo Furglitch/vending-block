@@ -1,5 +1,6 @@
 package com.furglitch.vendingblock.registry;
 
+import com.furglitch.vendingblock.Config;
 import com.furglitch.vendingblock.VendingBlock;
 
 import net.minecraft.core.registries.Registries;
@@ -21,7 +22,7 @@ public class TabRegistry {
             .icon(() -> new ItemStack(BlockRegistry.VENDOR.get()))
             .displayItems((parameters, output) -> {
                 output.accept(BlockRegistry.VENDOR.get());
-                output.accept(ItemRegistry.VENDOR_KEY.get());
+                if (Config.Server.VENDOR_KEY_IN_CREATIVE.get()) output.accept(ItemRegistry.VENDOR_KEY.get());
             })
             .build());
     
