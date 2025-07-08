@@ -10,10 +10,10 @@ import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 import com.furglitch.vendingblock.registry.BlockRegistry;
 import com.furglitch.vendingblock.registry.ItemRegistry;
 import com.furglitch.vendingblock.registry.MenuRegistry;
+import com.furglitch.vendingblock.registry.TabRegistry;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -45,7 +45,7 @@ public class VendingBlock {
         BlockRegistry.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
-        //TabRegistry.register(modEventBus);
+        TabRegistry.register(modEventBus);
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(com.furglitch.vendingblock.network.NetworkHandler::register);
@@ -53,10 +53,6 @@ public class VendingBlock {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(BlockRegistry.VENDOR);
-            event.accept(ItemRegistry.VENDOR_KEY);
-        }
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
