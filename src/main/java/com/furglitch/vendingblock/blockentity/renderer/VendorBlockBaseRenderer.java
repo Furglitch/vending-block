@@ -28,7 +28,7 @@ public class VendorBlockBaseRenderer {
         poseStack.pushPose();
         
         int tintColor = getBiomeColor(block, level, pos);
-        renderCube(poseStack, vertexConsumer, TEXTURE_STRETCH, TEXTURE_STRETCH, TEXTURE_STRETCH, 1f + TEXTURE_STRETCH, 0.125f + TEXTURE_STRETCH, 1f + TEXTURE_STRETCH, sprite, packedLight, packedOverlay, tintColor);
+        renderCube(poseStack, vertexConsumer, -TEXTURE_STRETCH, TEXTURE_STRETCH, TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, 0.125f - TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, sprite, packedLight, packedOverlay, tintColor);
         
         poseStack.popPose();
     }
