@@ -33,7 +33,13 @@
   "msg.vendingblock.request.owner": "Your vending block received %s %s from %s",
   "msg.vendingblock.giveaway.owner": "Your vending block gave %s %s to %s",
   "msg.vendingblock.sold.owner": "Your vending block is out of stock",
-  "msg.vendingblock.full.owner": "Your vending block's inventory is full"
+  "msg.vendingblock.full.owner": "Your vending block's inventory is full",
+
+  "config.vendingblock.messages.purchase": "Owner Purchase Notifications",
+  "config.vendingblock.messages.giveaway": "Owner Giveaway Notifications", 
+  "config.vendingblock.messages.donation": "Owner Donation Notifications",
+  "config.vendingblock.messages.outOfStock": "Owner Out of Stock Notifications",
+  "config.vendingblock.messages.fullStorage": "Owner Full Storage Notifications"
 
 
 }
