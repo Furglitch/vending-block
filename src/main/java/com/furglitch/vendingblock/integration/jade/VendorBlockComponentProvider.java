@@ -27,9 +27,9 @@ public enum VendorBlockComponentProvider implements IBlockComponentProvider {
                 String text = count > 1 ? count + "x " + product : product;
 
                 if (hasPrice) {
-                    tooltip.add(Component.translatable("ui.vendingblock.jade.sell", text));
+                    tooltip.add(Component.translatable("jade.vendingblock.sell", text));
                 } else {
-                    tooltip.add(Component.translatable("ui.vendingblock.jade.giveaway", text));
+                    tooltip.add(Component.translatable("jade.vendingblock.giveaway", text));
                 }
             }
 
@@ -39,13 +39,13 @@ public enum VendorBlockComponentProvider implements IBlockComponentProvider {
                 String text = count > 1 ? count + "x " + product : product;
 
                 if (hasProduct) {
-                    tooltip.add(Component.translatable("ui.vendingblock.jade.buy", text));
+                    tooltip.add(Component.translatable("jade.vendingblock.buy", text));
                 } else {
-                    tooltip.add(Component.translatable("ui.vendingblock.jade.request", text));
+                    tooltip.add(Component.translatable("jade.vendingblock.request", text));
                 }
             }
 
-            if (serverData.contains("owner")) tooltip.add(Component.translatable("ui.vendingblock.jade.owner", serverData.getString("owner")));
+            if (serverData.contains("owner")) tooltip.add(Component.translatable("jade.vendingblock.owner", serverData.getString("owner")));
         }
     }
 

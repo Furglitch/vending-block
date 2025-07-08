@@ -81,8 +81,8 @@ public class HintOverlay {
         totalHeight += lineHeight;
         switch (saleType) {
             case 1:
-                sellItemText = Component.translatable("ui.vendingblock.sell");
-                buyItemText = Component.translatable("ui.vendingblock.buy");
+                sellItemText = Component.translatable("hint.vendingblock.sell");
+                buyItemText = Component.translatable("hint.vendingblock.buy");
                 maxWidth = Math.max(maxWidth, mc.font.width(sellItemText.getString()));
                 maxWidth = Math.max(maxWidth, mc.font.width(buyItemText.getString()));
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, buyItem).width);
@@ -90,13 +90,13 @@ public class HintOverlay {
                 totalHeight += lineHeight * 4;
                 break;
             case 2:
-                sellItemText = Component.translatable("ui.vendingblock.giveaway");
+                sellItemText = Component.translatable("hint.vendingblock.giveaway");
                 maxWidth = Math.max(maxWidth, mc.font.width(sellItemText.getString()));
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, sellItem).width);
                 totalHeight += lineHeight * 2;
                 break;
             case 3:
-                buyItemText = Component.translatable("ui.vendingblock.request");
+                buyItemText = Component.translatable("hint.vendingblock.request");
                 maxWidth = Math.max(maxWidth, mc.font.width(buyItemText.getString()));
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, buyItem).width);
                 totalHeight += lineHeight * 2;
