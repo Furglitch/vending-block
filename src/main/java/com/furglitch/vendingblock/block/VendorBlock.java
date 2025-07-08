@@ -3,6 +3,7 @@ package com.furglitch.vendingblock.block;
 import javax.annotation.Nullable;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+import com.furglitch.vendingblock.blockentity.transaction.VendorBlockTransaction;
 import com.furglitch.vendingblock.gui.admin.VendorAdminMenu;
 import com.furglitch.vendingblock.registry.ItemRegistry;
 import com.mojang.serialization.MapCodec;
@@ -86,7 +87,7 @@ public class VendorBlock extends BaseEntityBlock {
                 ((ServerPlayer) player).openMenu(new SimpleMenuProvider(vendorBlockEntity, Component.translatable("menu.vendingblock.settings")), pos);
                 level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 2.0F);
             } else if (!vendorBlockEntity.isOwner(player) && !level.isClientSide()) {
-                VendorBlockEntity.purchase(level, player, vendorBlockEntity);
+                VendorBlockTransaction.purchase(level, player, vendorBlockEntity);
             }
         }
         return InteractionResult.SUCCESS;
