@@ -24,7 +24,6 @@ public class VendorBlockEntityDisplay implements BlockEntityRenderer<VendorBlock
     }
     
     public void render(VendorBlockEntity entity, float pTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        
         ItemStack item = entity.inventory.getStackInSlot(0);
         ItemStack textureItem = entity.inventory.getStackInSlot(11);
 
@@ -32,7 +31,7 @@ public class VendorBlockEntityDisplay implements BlockEntityRenderer<VendorBlock
             textureRenderer.renderTextureOverlay(blockItem.getBlock(), poseStack, bufferSource, packedLight, packedOverlay, entity.getLevel(), entity.getBlockPos());
         }
 
-        //if (entity.hasError) warningRenderer.renderErrorCube(entity, poseStack, bufferSource, packedLight, packedOverlay);
+        if (entity.hasError) warningRenderer.renderErrorCube(entity, poseStack, bufferSource, packedLight, packedOverlay);
 
         itemRenderer.renderItem(item, poseStack, bufferSource, entity.getLevel(), entity.getBlockPos());
     }

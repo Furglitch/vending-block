@@ -27,32 +27,29 @@ public class VendorBlockTransaction {
             recievePayment(buyer, vendor, price);
             buyer.sendSystemMessage(Messages.playerBought(product.getCount(), product.getHoverName(), ownerName, price.getCount(), price.getHoverName()));
             if (owner != null) owner.sendSystemMessage(Messages.ownerSold(product.getCount(), product.getHoverName(), playerName, price.getCount(), price.getHoverName()));
-            return;
         } else if (playerHasSpace && blockHasStock && !product.isEmpty() && price.isEmpty()) { // giveaway 
             giveProduct(buyer, vendor, product);
             buyer.sendSystemMessage(Messages.playerGiveaway(product.getCount(), product.getHoverName(), ownerName));
             if (owner != null) owner.sendSystemMessage(Messages.ownerGiveaway(product.getCount(), product.getHoverName(), playerName));
-            return;
         } else if (playerHasPayment && blockHasSpace && product.isEmpty() && !price.isEmpty()) { // donation
             recievePayment(buyer, vendor, price);
             buyer.sendSystemMessage(Messages.playerRequest(price.getCount(), price.getHoverName(), ownerName));
             if (owner != null) owner.sendSystemMessage(Messages.ownerRequest(price.getCount(), price.getHoverName(), playerName));
-            return;
         } else if (!playerHasPayment) {
             buyer.sendSystemMessage(Messages.playerEmpty(price.getHoverName()));
-            return;
         } else if (!playerHasSpace) {
             buyer.sendSystemMessage(Messages.playerFull());
-            return;
         } else if (!blockHasStock) {
             buyer.sendSystemMessage(Messages.vendorSold());
             if (owner != null) owner.sendSystemMessage(Messages.ownerSold());
-            return;
         } else if (!blockHasSpace) {
             buyer.sendSystemMessage(Messages.vendorFull());
             if (owner != null) owner.sendSystemMessage(Messages.ownerFull());
-            return;
         }
+        
+        vendor.checkErrorState();
+
+        return;
     }
 
     private static void recievePayment(Player buyer, VendorBlockEntity vendor, ItemStack price) {

@@ -2,6 +2,7 @@ package com.furglitch.vendingblock.blockentity;
 
 import java.util.UUID;
 
+import com.furglitch.vendingblock.blockentity.transaction.VendorBlockInventory;
 import com.furglitch.vendingblock.gui.trade.VendorBlockMenu;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 
@@ -30,6 +31,8 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     private UUID ownerID;
     private String ownerUser;
     public boolean infiniteInventory = false;
+    public boolean hasError = false;
+    public int errorCode = 0; // 0 = no error, 1 = no stock, 2 = no space, 3 = not set
 
     public VendorBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.VENDOR_BE.get(), pos, state);
@@ -75,6 +78,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
             if(!level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
                 level.invalidateCapabilities(getBlockPos());
+                checkErrorState();
             } 
         }
     };
@@ -189,6 +193,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         this.ownerID = player.getUUID();
         this.ownerUser = player.getName().getString();
         setChanged();
+        if (!level.isClientSide()) checkErrorState();
     }
 
     public void setOwnerByUsername(String username) {
@@ -211,6 +216,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         
         if(!level.isClientSide()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            checkErrorState();
         }
     }
     
@@ -221,6 +227,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
                 setChanged();
                 if (!level.isClientSide()) {
                     level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                    checkErrorState();
                 }
             }
         }
@@ -255,7 +262,10 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     public void setInfinite(boolean infiniteInventory) {
         this.infiniteInventory = infiniteInventory;
         setChanged();
-        if (!level.isClientSide()) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        if (!level.isClientSide()) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            checkErrorState();
+        }
     }
 
     public boolean isInfinite() {
@@ -269,6 +279,8 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
         if (this.ownerID != null) tag.putUUID("ownerID", this.ownerID);
         if (this.ownerUser != null) tag.putString("ownerUser", this.ownerUser);
+        tag.putBoolean("hasError", this.hasError);
+        tag.putInt("errorCode", this.errorCode);
         tag.putBoolean("infiniteInventory", this.infiniteInventory);
     }
 
@@ -279,7 +291,11 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
 
         if (tag.hasUUID("ownerID")) this.ownerID = tag.getUUID("ownerID");
         if (tag.contains("ownerUser")) this.ownerUser = tag.getString("ownerUser");
+        if (tag.contains("hasError")) this.hasError = tag.getBoolean("hasError");
+        if (tag.contains("errorCode")) this.errorCode = tag.getInt("errorCode");
         this.infiniteInventory = tag.getBoolean("infiniteInventory");
+        
+        if (level != null && !level.isClientSide()) checkErrorState();
     }
 
     @Override public AbstractContainerMenu createMenu(int i, Inventory inv, Player player) {
@@ -294,6 +310,39 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         return saveWithoutMetadata(pRegistries);
+    }
+
+    public void checkErrorState() {
+        ItemStack product = inventory.getStackInSlot(0);
+        ItemStack price = inventory.getStackInSlot(10);
+        
+        boolean blockHasStock = VendorBlockInventory.checkStock(this, product);
+        boolean blockHasSpace = VendorBlockInventory.checkStockSpace(this, product, price);
+        
+        updateErrorState(blockHasStock, blockHasSpace, product, price);
+    }
+
+    public void updateErrorState(boolean blockHasStock, boolean blockHasSpace, ItemStack product, ItemStack price) {
+        this.hasError = false;
+        this.errorCode = 0;
+
+        if (product.isEmpty() && price.isEmpty()) {
+            this.hasError = true;
+            this.errorCode = 3;
+        } else {
+            if (!blockHasStock) {
+                this.hasError = true;
+                this.errorCode = 1;
+            } else if (!blockHasSpace) {
+                this.hasError = true;
+                this.errorCode = 2;
+            }
+        }
+        
+        setChanged();
+        if (!level.isClientSide()) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
     }
 
 }
