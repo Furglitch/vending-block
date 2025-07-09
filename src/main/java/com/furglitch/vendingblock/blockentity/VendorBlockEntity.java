@@ -55,6 +55,8 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
             this.inventory.setStackInSlot(0, stack);
         } else if (type == 2) {
             this.inventory.setStackInSlot(10, stack);
+        } else if (type == 3) {
+            this.inventory.setStackInSlot(11, stack);
         }
     }
 
@@ -63,6 +65,8 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
             this.inventory.getStackInSlot(0);
         } else if (type == 2) {
             this.inventory.getStackInSlot(10);
+        } else if (type == 3) {
+            this.inventory.getStackInSlot(11);
         }
     }
 

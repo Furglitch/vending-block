@@ -1,6 +1,10 @@
 package com.furglitch.vendingblock.gui.trade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.gui.components.FilterSlot;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,6 +13,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 
 public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> {
 
@@ -34,6 +39,16 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+    }
+
+    public List<FilterSlot> getFilterSlots() {
+        List<FilterSlot> filterSlots = new ArrayList<>();
+        for (Slot slot : this.menu.slots) {
+            if (slot instanceof FilterSlot filterSlot) {
+                filterSlots.add(filterSlot);
+            }
+        }
+        return filterSlots;
     }
 
 }

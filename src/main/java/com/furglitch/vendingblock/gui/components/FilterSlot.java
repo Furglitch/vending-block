@@ -1,6 +1,7 @@
 package com.furglitch.vendingblock.gui.components;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+import com.furglitch.vendingblock.network.FilterSlotUpdatePacket;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -11,6 +12,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class FilterSlot extends SlotItemHandler {
 
@@ -40,13 +42,26 @@ public class FilterSlot extends SlotItemHandler {
                 blockEntity.setFilterContents(1, filter);
             } else if (slotIndex == 10) {
                 blockEntity.setFilterContents(2, filter);
+            } else if (slotIndex == 11) {
+                blockEntity.setFilterContents(3, filter);
+            }
+            
+            if (blockEntity.getLevel() != null && blockEntity.getLevel().isClientSide()) {
+                PacketDistributor.sendToServer(new FilterSlotUpdatePacket(blockEntity.getBlockPos(), slotIndex, filter));
             }
         } else {
             super.set(ItemStack.EMPTY);
+            
             if (slotIndex == 0) {
                 blockEntity.setFilterContents(1, ItemStack.EMPTY);
             } else if (slotIndex == 10) {
                 blockEntity.setFilterContents(2, ItemStack.EMPTY);
+            } else if (slotIndex == 11) {
+                blockEntity.setFilterContents(3, ItemStack.EMPTY);
+            }
+            
+            if (blockEntity.getLevel() != null && blockEntity.getLevel().isClientSide()) {
+                PacketDistributor.sendToServer(new FilterSlotUpdatePacket(blockEntity.getBlockPos(), slotIndex, ItemStack.EMPTY));
             }
         }
 

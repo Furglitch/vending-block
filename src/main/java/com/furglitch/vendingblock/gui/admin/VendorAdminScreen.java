@@ -1,7 +1,11 @@
 package com.furglitch.vendingblock.gui.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.furglitch.vendingblock.VendingBlock;
 import com.furglitch.vendingblock.gui.components.CustomCheckbox;
+import com.furglitch.vendingblock.gui.components.FilterSlot;
 import com.furglitch.vendingblock.network.InfiniteInventoryPacket;
 import com.furglitch.vendingblock.network.OwnerChangePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,6 +17,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> {
@@ -170,6 +175,16 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
             InfiniteInventoryPacket packet = new InfiniteInventoryPacket(menu.blockEntity.getBlockPos(), newInfiniteInventory);
             PacketDistributor.sendToServer(packet);
         }
+    }
+
+    public List<FilterSlot> getFilterSlots() {
+        List<FilterSlot> filterSlots = new ArrayList<>();
+        for (Slot slot : this.menu.slots) {
+            if (slot instanceof FilterSlot filterSlot) {
+                filterSlots.add(filterSlot);
+            }
+        }
+        return filterSlots;
     }
 
     
