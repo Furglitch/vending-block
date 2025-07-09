@@ -19,6 +19,8 @@ public class FilterSlot extends SlotItemHandler {
     private final VendorBlockEntity blockEntity;
     private final int slotIndex;
 
+    private boolean triggeredByClick = false;
+
     public FilterSlot(IItemHandler handler, int index, int x, int y, VendorBlockEntity vendor) {
         super(handler, index, x, y);
         this.blockEntity = vendor;
@@ -46,7 +48,7 @@ public class FilterSlot extends SlotItemHandler {
                 blockEntity.setFilterContents(3, filter);
             }
             
-            if (blockEntity.getLevel() != null && blockEntity.getLevel().isClientSide()) {
+            if (!triggeredByClick && blockEntity.getLevel() != null && blockEntity.getLevel().isClientSide()) {
                 PacketDistributor.sendToServer(new FilterSlotUpdatePacket(blockEntity.getBlockPos(), slotIndex, filter));
             }
         } else {
@@ -60,7 +62,7 @@ public class FilterSlot extends SlotItemHandler {
                 blockEntity.setFilterContents(3, ItemStack.EMPTY);
             }
             
-            if (blockEntity.getLevel() != null && blockEntity.getLevel().isClientSide()) {
+            if (!triggeredByClick && blockEntity.getLevel() != null && blockEntity.getLevel().isClientSide()) {
                 PacketDistributor.sendToServer(new FilterSlotUpdatePacket(blockEntity.getBlockPos(), slotIndex, ItemStack.EMPTY));
             }
         }
@@ -81,40 +83,39 @@ public class FilterSlot extends SlotItemHandler {
     }
     
     public boolean onClick(ItemStack cursorStack, boolean leftClick) {
-        if (leftClick) {
-            if (cursorStack.isEmpty()) {
-                set(ItemStack.EMPTY);
-            } else {
-                
-                if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
-                
-                ItemStack slotStack = cursorStack.copy();
-                if (slotIndex == 11) {
-                    slotStack.setCount(1);
+        triggeredByClick = true;
+        try {
+            if (leftClick) {
+                if (cursorStack.isEmpty()) {
+                    set(ItemStack.EMPTY);
                 } else {
-                    slotStack.setCount(cursorStack.getCount());
+                    if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
+                    ItemStack slotStack = cursorStack.copy();
+                    if (slotIndex == 11) {
+                        slotStack.setCount(1);
+                    } else {
+                        slotStack.setCount(cursorStack.getCount());
+                    }
+                    set(slotStack);
                 }
-                set(slotStack);
-
-            }
-            return true;
-        } else {
-            if (cursorStack.isEmpty()) {
-                set(ItemStack.EMPTY);
+                return true;
             } else {
-                
-                if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
-                
-                ItemStack slotStack = cursorStack.copy();
-                if (slotIndex == 11) {
-                    slotStack.setCount(1);
+                if (cursorStack.isEmpty()) {
+                    set(ItemStack.EMPTY);
                 } else {
-                    slotStack.setCount(getItem().getCount() + 1);
+                    if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
+                    ItemStack slotStack = cursorStack.copy();
+                    if (slotIndex == 11) {
+                        slotStack.setCount(1);
+                    } else {
+                        slotStack.setCount(getItem().getCount() + 1);
+                    }
+                    set(slotStack);
                 }
-                set(slotStack);
-
+                return true;
             }
-            return true;
+        } finally {
+            triggeredByClick = false;
         }
     }
 
