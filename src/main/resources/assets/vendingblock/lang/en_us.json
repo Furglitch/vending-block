@@ -41,7 +41,10 @@
   "config.vendingblock.messages.donation": "Donation Notifications",
   "config.vendingblock.messages.outOfStock": "Out of Stock Notifications",
   "config.vendingblock.messages.fullStorage": "Full Storage Notifications",
-  "config.vendingblock.creative.keyInTab": "Creative Vendor's Key"
+  "config.vendingblock.creative.keyInTab": "Creative Vendor's Key",
+
+  "vendingblock.configuration.animationSettings": "Item Display",
+  "config.vendingblock.animation.mode": "Animation Style"
 
 
 }

@@ -7,6 +7,20 @@ public class Config {
     public static class Client {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
+        public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
+            .comment("Animation mode for vending block items. 'SERVER_DEFAULT' uses the server's setting, which is 'ROTATION' unless changed.")
+            .translation("config.vendingblock.animation.mode")
+            .defineEnum("clientAnimationMode", AnimationMode.SERVER_DEFAULT);
+
+        public enum AnimationMode {
+            SERVER_DEFAULT,
+            STILL,
+            BOBBING,
+            ROTATION,
+            BOBBING_ROTATION,
+            FACING_PLAYER;
+        }
+
         static { BUILDER.push("ownerNotifications"); }
 
         public static final ModConfigSpec.BooleanValue PURCHASE_MESSAGES = BUILDER
@@ -41,6 +55,19 @@ public class Config {
     
     public static class Server {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+
+        public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
+            .comment("Animation mode for vending block items")
+            .translation("config.vendingblock.animation.mode")
+            .defineEnum("animationMode", AnimationMode.ROTATION);
+
+        public enum AnimationMode {
+            STILL,
+            BOBBING,
+            ROTATION,
+            BOBBING_ROTATION,
+            FACING_PLAYER;
+        }
 
         public static final ModConfigSpec.BooleanValue VENDOR_KEY_IN_CREATIVE = BUILDER
             .comment("Whether the vendor key should appear in the creative mode tab (Server restart required)")
