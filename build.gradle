@@ -138,11 +138,11 @@ dependencies {
 	
     // EMI integration
     compileOnly "dev.emi:emi-neoforge:${emi_version}"
-	//localRuntime "dev.emi:emi-neoforge:${emi_version}"
+	localRuntime "dev.emi:emi-neoforge:${emi_version}"
 
     // REI integration
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-    localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    //localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 
 
 }
