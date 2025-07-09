@@ -22,6 +22,7 @@ repositories {
     maven { url = "https://maven.blamejared.com/" } // JEI Host
     maven { url = "https://modmaven.dev/" } // JEI fallback
     maven { url = "https://maven.terraformersmc.com/" } // EMI Host
+    maven { url = "https://maven.shedaniel.me/" } // REI Host
 }
 
 base {
@@ -133,10 +134,17 @@ dependencies {
 
     // JEI integration
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    //localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 	
+    // EMI integration
     compileOnly "dev.emi:emi-neoforge:${emi_version}"
-	localRuntime "dev.emi:emi-neoforge:${emi_version}"
+	//localRuntime "dev.emi:emi-neoforge:${emi_version}"
+
+    // REI integration
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+    localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+
+
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -156,7 +164,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_description        : mod_description,
             jade_version           : jade_version,
             jei_version            : jei_version,
-            emi_version            : emi_version
+            emi_version            : emi_version,
+            rei_version            : rei_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties
