@@ -23,7 +23,7 @@ public class GhostHandlerAdmin implements EmiDragDropHandler<VendorAdminScreen> 
             return false;
         }
         
-        for (FilterSlot slot : screen.getFilterSlots()) {
+        for (FilterSlot slot : screen.getFilterSlots().stream().filter(s -> s.getSlotIndex() != 0).toList()) {
             int slotX = screen.getGuiLeft() + slot.x;
             int slotY = screen.getGuiTop() + slot.y;
             
@@ -49,7 +49,7 @@ public class GhostHandlerAdmin implements EmiDragDropHandler<VendorAdminScreen> 
         
         EmiDrawContext context = EmiDrawContext.wrap(guiGraphics);
         
-        for (FilterSlot slot : screen.getFilterSlots()) {
+        for (FilterSlot slot : screen.getFilterSlots().stream().filter(s -> s.getSlotIndex() != 0).toList()) {
             int slotX = screen.getGuiLeft() + slot.x;
             int slotY = screen.getGuiTop() + slot.y;
             

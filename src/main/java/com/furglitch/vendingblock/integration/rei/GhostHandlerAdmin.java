@@ -35,7 +35,7 @@ public class GhostHandlerAdmin implements DraggableStackVisitor<VendorAdminScree
         int mouseX = context.getCurrentPosition().getX();
         int mouseY = context.getCurrentPosition().getY();
 
-        for (FilterSlot slot : screen.getFilterSlots()) {
+        for (FilterSlot slot : screen.getFilterSlots().stream().filter(s -> s.getSlotIndex() != 0).toList()) {
             int slotX = screen.getGuiLeft() + slot.x;
             int slotY = screen.getGuiTop() + slot.y;
 
@@ -51,6 +51,6 @@ public class GhostHandlerAdmin implements DraggableStackVisitor<VendorAdminScree
     @Override
     public Stream<BoundsProvider> getDraggableAcceptingBounds(DraggingContext<VendorAdminScreen> context, DraggableStack stack) {
         VendorAdminScreen screen = context.getScreen();
-        return screen.getFilterSlots().stream().map(slot -> BoundsProvider.ofRectangle(new Rectangle(screen.getGuiLeft() + slot.x, screen.getGuiTop() + slot.y, 16, 16)));
+        return screen.getFilterSlots().stream().filter(s -> s.getSlotIndex() != 0).toList().stream().map(slot -> BoundsProvider.ofRectangle(new Rectangle(screen.getGuiLeft() + slot.x, screen.getGuiTop() + slot.y, 16, 16)));
     }
 }

@@ -138,4 +138,7 @@ public class FilterSlot extends SlotItemHandler {
         return false;
     }
     
+    public int getSlotIndex() {
+        return this.slotIndex;
+    }
 }
