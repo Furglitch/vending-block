@@ -1,4 +1,4 @@
-package com.furglitch.vendingblock.integration.index;
+package com.furglitch.vendingblock.integration.jei;
 
 import com.furglitch.vendingblock.gui.admin.VendorAdminScreen;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
@@ -9,7 +9,7 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import net.minecraft.resources.ResourceLocation;
 
 @JeiPlugin
-public class JEIRegistry implements IModPlugin {
+public class GhostHandlerRegistry implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -18,8 +18,8 @@ public class JEIRegistry implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addGhostIngredientHandler(VendorBlockScreen.class, new MenuGhostHandler());
-        registration.addGhostIngredientHandler(VendorAdminScreen.class, new AdminGhostHandler());
+        registration.addGhostIngredientHandler(VendorBlockScreen.class, new GhostHandlerBlock());
+        registration.addGhostIngredientHandler(VendorAdminScreen.class, new GhostHandlerAdmin());
     }
     
 }

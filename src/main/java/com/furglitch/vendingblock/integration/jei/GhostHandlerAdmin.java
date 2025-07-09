@@ -1,20 +1,20 @@
-package com.furglitch.vendingblock.integration.index;
+package com.furglitch.vendingblock.integration.jei;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.furglitch.vendingblock.gui.admin.VendorAdminScreen;
 import com.furglitch.vendingblock.gui.components.FilterSlot;
-import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 
 import mezz.jei.api.gui.handlers.IGhostIngredientHandler;
 import mezz.jei.api.ingredients.ITypedIngredient;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.world.item.ItemStack;
 
-public class MenuGhostHandler implements IGhostIngredientHandler<VendorBlockScreen>  {
+public class GhostHandlerAdmin implements IGhostIngredientHandler<VendorAdminScreen>  {
 
     @Override
-    public <I> List<Target<I>> getTargetsTyped(VendorBlockScreen screen, ITypedIngredient<I> ingredient, boolean doStart) {
+    public <I> List<Target<I>> getTargetsTyped(VendorAdminScreen screen, ITypedIngredient<I> ingredient, boolean doStart) {
         List<Target<I>> targets = new ArrayList<>();
         if (ingredient.getIngredient() instanceof ItemStack) {
             for (FilterSlot slot : screen.getFilterSlots()) {
