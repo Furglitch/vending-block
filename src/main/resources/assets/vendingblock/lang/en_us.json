@@ -47,6 +47,10 @@
   "config.vendingblock.messages.donation": "Donation Notifications",
   "config.vendingblock.messages.outOfStock": "Out of Stock Notifications",
   "config.vendingblock.messages.fullStorage": "Full Storage Notifications",
+
+  "config.vendingblock.server.productBlacklist": "Product Blacklist",
+  "msg.vendingblock.blacklist": "%s is blacklisted and cannot be sold in vending blocks on this server",
+
   "config.vendingblock.creative.keyInTab": "Creative Vendor's Key",
 
   "vendingblock.configuration.animationSettings": "Item Display",

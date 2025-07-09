@@ -1,10 +1,16 @@
 package com.furglitch.vendingblock.gui.components;
 
+import java.util.List;
+
+import com.furglitch.vendingblock.Config;
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+import com.furglitch.vendingblock.gui.chat.Messages;
 import com.furglitch.vendingblock.network.FilterSlotUpdatePacket;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -79,7 +85,22 @@ public class FilterSlot extends SlotItemHandler {
         VoxelShape fullCube = Shapes.block();
         
         return shape.equals(fullCube);
+    }
+    
+    private boolean isBlacklisted(ItemStack stack) {
+        Item item = stack.getItem();
+        String itemId = item.toString();
 
+        List<String> blacklist = Config.Server.PRODUCT_BLACKLIST.get();
+        if (blacklist.contains(itemId)) {
+            BlockPos pos = blockEntity.getBlockPos();
+            Player player = blockEntity.getLevel().getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
+            if (player != null && !blockEntity.getLevel().isClientSide()) {
+                player.sendSystemMessage(Messages.blacklisted(stack.getHoverName().getString()));
+            }
+            return true;
+        }
+        return false;
     }
     
     public boolean onClick(ItemStack cursorStack, boolean leftClick) {
@@ -90,6 +111,7 @@ public class FilterSlot extends SlotItemHandler {
                     set(ItemStack.EMPTY);
                 } else {
                     if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
+                    if (isBlacklisted(cursorStack)) return false;
                     ItemStack slotStack = cursorStack.copy();
                     if (slotIndex == 11) {
                         slotStack.setCount(1);
@@ -104,6 +126,7 @@ public class FilterSlot extends SlotItemHandler {
                     set(ItemStack.EMPTY);
                 } else {
                     if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
+                    if (isBlacklisted(cursorStack)) return false;
                     ItemStack slotStack = cursorStack.copy();
                     if (slotIndex == 11) {
                         slotStack.setCount(1);

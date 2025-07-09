@@ -68,6 +68,11 @@ public class Config {
             BOBBING_ROTATION,
             FACING_PLAYER;
         }
+        
+        public static final ModConfigSpec.ConfigValue<java.util.List<String>> PRODUCT_BLACKLIST = BUILDER
+            .comment("List of blacklisted product IDs")
+            .translation("config.vendingblock.server.productBlacklist")
+            .define("productBlacklist", java.util.Arrays.asList("vendingblock:vendor_key"));
 
         public static final ModConfigSpec.BooleanValue VENDOR_KEY_IN_CREATIVE = BUILDER
             .comment("Whether the vendor key should appear in the creative mode tab (Server restart required)")
