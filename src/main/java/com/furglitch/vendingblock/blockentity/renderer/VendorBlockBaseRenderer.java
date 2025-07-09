@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 
 public class VendorBlockBaseRenderer {
 
-    private static final float TEXTURE_STRETCH = -0.00001f;
+    private static final float TEXTURE_STRETCH = -0.0001f;
     
     public void renderTextureOverlay(Block block, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Level level, BlockPos pos) {
         
@@ -72,11 +72,10 @@ public class VendorBlockBaseRenderer {
         addVertex(matrix, vertexConsumer, x1, y1, z2, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
         
         // West
-        float WESTFACEFIX = TEXTURE_STRETCH * 2;
-        addVertex(matrix, vertexConsumer, x1 + WESTFACEFIX, y1, z2, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1 + WESTFACEFIX, y2, z2, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1 + WESTFACEFIX, y2, z1, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1 + WESTFACEFIX, y1, z1, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH, y1, z2, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH, y2, z2, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH, y2, z1, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH, y1, z1, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
 
         // East
         addVertex(matrix, vertexConsumer, x2, y1, z1, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
