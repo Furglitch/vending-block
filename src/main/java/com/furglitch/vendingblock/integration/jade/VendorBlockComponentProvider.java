@@ -4,6 +4,8 @@ import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
@@ -46,6 +48,26 @@ public enum VendorBlockComponentProvider implements IBlockComponentProvider {
             }
 
             if (serverData.contains("owner")) tooltip.add(Component.translatable("jade.vendingblock.owner", serverData.getString("owner")));
+
+            if (serverData.contains("hasError")) {
+                boolean hasError = serverData.getBoolean("hasError");
+                int errorCode = serverData.getInt("errorCode");
+                if (hasError) {
+                    switch (errorCode) {
+                        case 1:
+                            tooltip.add(Component.translatable("jade.vendingblock.error.sold").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xba3c3c))));
+                            break;
+                        case 2:
+                            tooltip.add(Component.translatable("jade.vendingblock.error.full").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xba3c3c))));
+                            break;
+                        case 3:
+                            tooltip.add(Component.translatable("jade.vendingblock.error.empty").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xba3c3c))));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
     }
 

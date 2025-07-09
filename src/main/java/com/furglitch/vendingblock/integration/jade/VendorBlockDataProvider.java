@@ -28,6 +28,9 @@ public enum VendorBlockDataProvider implements IServerDataProvider<BlockAccessor
                 tag.putString("priceName", price.getHoverName().getString());
                 tag.putInt("priceCount", price.getCount());
             }
+
+            tag.putBoolean("hasError", entity.hasError);
+            tag.putInt("errorCode", entity.errorCode);
         }
     }
 

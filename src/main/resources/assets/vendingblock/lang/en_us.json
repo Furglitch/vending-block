@@ -7,12 +7,18 @@
   "hint.vendingblock.buy": "for",
   "hint.vendingblock.request": "is requesting",
   "hint.vendingblock.giveaway": "is giving away",
+  "hint.vendingblock.error.sold": "Sold Out!",
+  "hint.vendingblock.error.full": "Inventory Full!",
+  "hint.vendingblock.error.empty": "Not Set Up!",
 
   "jade.vendingblock.sell": "Selling: %s",
   "jade.vendingblock.buy": "Buying: %s",
   "jade.vendingblock.request": "Requesting: %s",
   "jade.vendingblock.giveaway": "Giving Away: %s",
   "jade.vendingblock.owner": "Owner: %s",
+  "jade.vendingblock.error.sold": "Error: Sold Out",
+  "jade.vendingblock.error.full": "Error: Inventory Full",
+  "jade.vendingblock.error.empty": "Error: Not Set Up",
 
   "menu.vendingblock.settings": "Vendor Settings",
   "menu.vendingblock.admin.settings": "Admin Settings",

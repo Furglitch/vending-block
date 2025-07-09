@@ -18,7 +18,7 @@ public class HintOverlay {
     private static final int ColorBCK = 0xC0161616;
     private static final int ColorBDR = 0xD0161616;
     private static final int ColorTXT = 0xFFFFFFFF;
-    private static Component sellItemText = null, buyItemText = null;
+    private static Component sellItemText = Component.literal(""), buyItemText = Component.literal(""), errorText = Component.literal("");
     private static int saleType = 0;
 
     @SubscribeEvent
@@ -59,7 +59,9 @@ public class HintOverlay {
                 saleType = 0;
                 break;
         }
-        HintDimensions dimensions = calculateDimensions(mc, entity.getOwnerUser(), sellItem, buyItem, saleType, mc.font.lineHeight+2);
+        if (entity.hasError) errorText = getErrorString(entity.errorCode);
+
+        HintDimensions dimensions = calculateDimensions(mc, entity.getOwnerUser(), sellItem, buyItem, saleType, mc.font.lineHeight+4, entity.hasError);
 
         int margin = 8;
         int w = dimensions.width + (margin * 2);
@@ -67,13 +69,11 @@ public class HintOverlay {
         int x = (mc.getWindow().getGuiScaledWidth() - w) / 2;
         int y = 8;
 
+        renderContent(gui, mc, entity.getOwnerUser(), sellItem, buyItem, x, y + margin, w, mc.font.lineHeight+4, entity.hasError);
         drawBackground(gui, x, y, w, h);
-
-        renderContent(gui, mc, entity.getOwnerUser(), sellItem, buyItem, x, y + margin, w, mc.font.lineHeight+2);
-
     }
 
-    private static HintDimensions calculateDimensions(Minecraft mc, String owner, ItemStack sellItem, ItemStack buyItem, int saleType, int lineHeight) {
+    private static HintDimensions calculateDimensions(Minecraft mc, String owner, ItemStack sellItem, ItemStack buyItem, int saleType, int lineHeight, boolean error) {
         int maxWidth = 0;
         int totalHeight = 0;
 
@@ -87,21 +87,27 @@ public class HintOverlay {
                 maxWidth = Math.max(maxWidth, mc.font.width(buyItemText.getString()));
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, buyItem).width);
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, sellItem).width);
-                totalHeight += lineHeight * 4;
+                totalHeight += lineHeight * 4.2;
                 break;
             case 2:
                 sellItemText = Component.translatable("hint.vendingblock.giveaway");
                 maxWidth = Math.max(maxWidth, mc.font.width(sellItemText.getString()));
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, sellItem).width);
-                totalHeight += lineHeight * 2;
+                totalHeight += lineHeight * 2.1;
                 break;
             case 3:
                 buyItemText = Component.translatable("hint.vendingblock.request");
                 maxWidth = Math.max(maxWidth, mc.font.width(buyItemText.getString()));
                 maxWidth = Math.max(maxWidth, calculateItemDimensions(mc, buyItem).width);
-                totalHeight += lineHeight * 2;
+                totalHeight += lineHeight * 2.1;
                 break;
         }
+
+        if (error) {
+            maxWidth = Math.max(maxWidth, mc.font.width(errorText.getString()));
+            totalHeight += lineHeight / 2;
+        }
+
 
         return new HintDimensions(maxWidth, totalHeight);
     }
@@ -127,32 +133,48 @@ public class HintOverlay {
         gui.fill(x + w - 1, y, x + w, y + h, ColorBDR);
     }
 
-    public static int renderContent(GuiGraphics gui, Minecraft mc, String owner, ItemStack sellItem, ItemStack buyItem, int x, int y, int w, int h) {
+    public static void renderContent(GuiGraphics gui, Minecraft mc, String owner, ItemStack sellItem, ItemStack buyItem, int x, int y, int w, int h, boolean error) {
         drawText(gui, mc, owner, x, y, w, ColorTXT);
         y += h;
         
         switch (saleType) {
             case 1:
                 drawText(gui, mc, sellItemText.getString(), x, y, w, ColorTXT & 0x80FFFFFF);
-                y += h;
+                y += h * 1.2;
                 drawText(gui, mc, sellItem, x, y, w, ColorTXT);
                 y += h;
                 drawText(gui, mc, buyItemText.getString(), x, y, w, ColorTXT & 0x80FFFFFF);
-                y += h;
+                y += h * 1.2;
                 drawText(gui, mc, buyItem, x, y, w, ColorTXT);
+                if (error) {
+                    y += h;
+                    drawText(gui, mc, errorText.getString(), x, y, w, 0xFFba3c3c);
+                }
                 break;
             case 2:
                 drawText(gui, mc, sellItemText.getString(), x, y, w, ColorTXT & 0x80FFFFFF);
-                y += h;
+                y += h * 1.2;
                 drawText(gui, mc, sellItem, x, y, w, ColorTXT);
+                if (error) {
+                    y += h;
+                    drawText(gui, mc, errorText.getString(), x, y, w, 0xFFba3c3c);
+                }
                 break;
             case 3:
                 drawText(gui, mc, buyItemText.getString(), x, y, w, ColorTXT & 0x80FFFFFF);
-                y += h;
+                y += h * 1.2;
                 drawText(gui, mc, buyItem, x, y, w, ColorTXT);
+                if (error) {
+                    y += h;
+                    drawText(gui, mc, errorText.getString(), x, y, w, 0xFFba3c3c);
+                }
+                break;
+            case 0:
+                if (error) {
+                    drawText(gui, mc, errorText.getString(), x, y, w, 0xFFba3c3c);
+                }
                 break;
         }
-        return y;
     }
 
     private static void drawText(GuiGraphics gui, Minecraft mc, String text, int x, int y, int w, int color) {
@@ -169,6 +191,13 @@ public class HintOverlay {
 
         gui.renderItem(item, txtX, y - 5);
         gui.drawString(mc.font, text, txtX + 20, y, color);
+    }
+
+    public static Component getErrorString(int code) {
+        if (code == 1) return Component.translatable("hint.vendingblock.error.sold");
+        else if (code == 2) return Component.translatable("hint.vendingblock.error.full");
+        else if (code == 3) return Component.translatable("hint.vendingblock.error.empty");
+        else return Component.literal("");
     }
 
     private static class HintDimensions {
