@@ -17,6 +17,7 @@ import net.minecraft.world.level.LightLayer;
 public class VendorBlockItemRenderer {
     
     private float rotation;
+    private long lastTime = System.currentTimeMillis();
     
     public void renderItem(ItemStack item, PoseStack poseStack, MultiBufferSource bufferSource, Level level, BlockPos pos) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
@@ -33,8 +34,12 @@ public class VendorBlockItemRenderer {
     }
     
     private float getRotation() {
-        rotation += 0.5f;
-        if (rotation >= 360.0f) rotation = 0.0f;
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        rotation += (elapsedTime / 16.0f); // Adjust rotation speed here
+        if (rotation >= 360.0f) rotation -= 360.0f;
         return rotation;
     }
     
