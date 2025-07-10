@@ -31,6 +31,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
     private UUID ownerID;
     private String ownerUser;
     public boolean infiniteInventory = false;
+    public boolean discardsPayment = false;
     public boolean hasError = false;
     public int errorCode = 0; // 0 = no error, 1 = no stock, 2 = no space, 3 = not set
 
@@ -272,8 +273,21 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         }
     }
 
+    public void setDiscarding(boolean discardsPayment) {
+        this.discardsPayment = discardsPayment;
+        setChanged();
+        if (!level.isClientSide()) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+            checkErrorState();
+        }
+    }
+
     public boolean isInfinite() {
         return infiniteInventory;
+    }
+
+    public boolean isDiscarding() {
+        return discardsPayment;
     }
 
     @Override
@@ -286,6 +300,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         tag.putBoolean("hasError", this.hasError);
         tag.putInt("errorCode", this.errorCode);
         tag.putBoolean("infiniteInventory", this.infiniteInventory);
+        tag.putBoolean("discardsPayment", this.discardsPayment);
     }
 
     @Override
@@ -298,6 +313,7 @@ public class VendorBlockEntity extends BlockEntity implements MenuProvider{
         if (tag.contains("hasError")) this.hasError = tag.getBoolean("hasError");
         if (tag.contains("errorCode")) this.errorCode = tag.getInt("errorCode");
         this.infiniteInventory = tag.getBoolean("infiniteInventory");
+        this.discardsPayment = tag.getBoolean("discardsPayment");
         
         if (level != null && !level.isClientSide()) checkErrorState();
     }

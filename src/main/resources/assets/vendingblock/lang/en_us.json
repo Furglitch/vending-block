@@ -27,6 +27,7 @@
   "menu.vendingblock.tooltip.price": "Price",
   "menu.vendingblock.tooltip.facade": "Facade",
   "menu.vendingblock.tooltip.infinite": "Infinite Inventory",
+  "menu.vendingblock.tooltip.discard": "Discard Payment",
 
   "msg.vendingblock.sell": "You bought %s %s from %s for %s %s",
   "msg.vendingblock.request": "You gave %s %s to %s",

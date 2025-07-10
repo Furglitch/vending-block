@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.gui.components.CustomCheckbox;
 import com.furglitch.vendingblock.gui.components.FilterSlot;
-import com.furglitch.vendingblock.gui.components.InfinityCheckbox;
 import com.furglitch.vendingblock.network.InfiniteInventoryPacket;
 import com.furglitch.vendingblock.network.OwnerChangePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -29,8 +29,10 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
 
     private EditBox ownerField;
     private String initialOwnerValue;
-    private InfinityCheckbox infiniteCheckbox;
+    private CustomCheckbox infiniteCheckbox;
+    private CustomCheckbox discardCheckbox;
     private boolean infiniteInit;
+    private boolean discardInit;
 
     public VendorAdminScreen(VendorAdminMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -62,18 +64,26 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         this.addRenderableWidget(ownerField);
         
         boolean infiniteStatus = menu.blockEntity.isInfinite();
-        Component infiniteLabel = Component.translatable("menu.vendingblock.tooltip.infinite");
-
-        infiniteCheckbox = InfinityCheckbox.builder(infiniteLabel, this.font)
-            .pos(x + 133, y + 16)
+        infiniteCheckbox = CustomCheckbox.builder(Component.literal(""), this.font)
+            .pos(x + 115, y + 16)
             .size(18, 18)
             .selected(infiniteStatus)
             .build();
         infiniteCheckbox.setTooltip(net.minecraft.client.gui.components.Tooltip.create(
             Component.translatable("menu.vendingblock.tooltip.infinite")));
         infiniteInit = infiniteStatus;
-
         this.addRenderableWidget(infiniteCheckbox);
+
+        boolean discardStatus = menu.blockEntity.isDiscarding();
+        discardCheckbox = CustomCheckbox.builder(Component.literal(""), this.font)
+            .pos(x + 133, y + 16)
+            .size(18, 18)
+            .selected(discardStatus)
+            .build();
+        discardCheckbox.setTooltip(net.minecraft.client.gui.components.Tooltip.create(
+            Component.translatable("menu.vendingblock.tooltip.discard")));
+        discardInit = discardStatus;
+        this.addRenderableWidget(discardCheckbox);
     }
 
     @Override
@@ -208,6 +218,7 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
     public void onClose() {
         sendOwnerChangeIfChanged();
         sendInfiniteInventoryChangeIfChanged();
+        sendDiscardsPaymentChangeIfChanged();
         super.onClose();
     }
 
@@ -223,6 +234,14 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         boolean newInfiniteInventory = infiniteCheckbox.selected();
         if (newInfiniteInventory != infiniteInit) {
             InfiniteInventoryPacket packet = new InfiniteInventoryPacket(menu.blockEntity.getBlockPos(), newInfiniteInventory);
+            PacketDistributor.sendToServer(packet);
+        }
+    }
+
+    private void sendDiscardsPaymentChangeIfChanged() {
+        boolean newDiscardsPayment = discardCheckbox.selected();
+        if (newDiscardsPayment != discardInit) {
+            com.furglitch.vendingblock.network.DiscardsPaymentPacket packet = new com.furglitch.vendingblock.network.DiscardsPaymentPacket(menu.blockEntity.getBlockPos(), newDiscardsPayment);
             PacketDistributor.sendToServer(packet);
         }
     }

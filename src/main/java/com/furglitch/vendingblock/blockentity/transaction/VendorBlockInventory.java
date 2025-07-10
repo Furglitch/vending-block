@@ -69,6 +69,8 @@ public class VendorBlockInventory {
     }
 
     public static boolean checkStockSpace(VendorBlockEntity vendor, ItemStack product, ItemStack price) {
+        if (vendor.isDiscarding()) return true;
+
         ItemStack[] fakeInv = new ItemStack[9];
         for (int i = 1; i < 10; i++) {
             fakeInv[i - 1] = vendor.inventory.getStackInSlot(i).copy();

@@ -7,7 +7,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public class InfinityCheckbox extends AbstractWidget {
+public class CustomCheckbox extends AbstractWidget {
     private static final ResourceLocation CHECKBOX_SELECTED_HIGHLIGHTED_SPRITE = 
         ResourceLocation.withDefaultNamespace("widget/checkbox_selected_highlighted");
     private static final ResourceLocation CHECKBOX_SELECTED_SPRITE = 
@@ -20,7 +20,7 @@ public class InfinityCheckbox extends AbstractWidget {
     private boolean selected;
     private final int checkboxSize;
 
-    public InfinityCheckbox(int x, int y, int width, int height, Component message, Font font, boolean selected) {
+    public CustomCheckbox(int x, int y, int width, int height, Component message, Font font, boolean selected) {
         super(x, y, width, height, message);
         this.selected = selected;
         this.checkboxSize = Math.min(width, height);
@@ -101,8 +101,8 @@ public class InfinityCheckbox extends AbstractWidget {
             return this;
         }
 
-        public InfinityCheckbox build() {
-            return new InfinityCheckbox(this.x, this.y, this.width, this.height, this.message, this.font, this.selected);
+        public CustomCheckbox build() {
+            return new CustomCheckbox(this.x, this.y, this.width, this.height, this.message, this.font, this.selected);
         }
     }
 }

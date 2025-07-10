@@ -61,7 +61,6 @@ public class VendorBlockTransaction {
     }
 
     private static void recievePayment(Player buyer, VendorBlockEntity vendor, ItemStack price) {
-
         int cost = price.getCount();
         for (int i = 0; i < buyer.getInventory().getContainerSize() && cost > 0; i++) {
             ItemStack slot = buyer.getInventory().getItem(i);
@@ -73,20 +72,24 @@ public class VendorBlockTransaction {
         }
 
         int transfer = price.getCount() - cost;
-        for (int i = 1; i <= 9 && transfer > 0; i++) {
-            ItemStack slot = vendor.inventory.getStackInSlot(i);
-            if (slot.isEmpty()) {
-                int space = Math.min(transfer, price.getMaxStackSize());
-                ItemStack insert = price.copy();
-                insert.setCount(space);
-                vendor.inventory.setStackInSlot(i, insert);
-                transfer -= space;
-            } else if (ItemStack.isSameItemSameComponents(slot, price)) {
-                int space = slot.getMaxStackSize() - slot.getCount();
-                int freeSpace = Math.min(space, transfer);
-                if (freeSpace > 0) {
-                    slot.grow(freeSpace);
-                    transfer -= freeSpace;
+        if (vendor.isDiscarding()) {
+            transfer = 0;            
+        } else {
+            for (int i = 1; i <= 9 && transfer > 0; i++) {
+                ItemStack slot = vendor.inventory.getStackInSlot(i);
+                if (slot.isEmpty()) {
+                    int space = Math.min(transfer, price.getMaxStackSize());
+                    ItemStack insert = price.copy();
+                    insert.setCount(space);
+                    vendor.inventory.setStackInSlot(i, insert);
+                    transfer -= space;
+                } else if (ItemStack.isSameItemSameComponents(slot, price)) {
+                    int space = slot.getMaxStackSize() - slot.getCount();
+                    int freeSpace = Math.min(space, transfer);
+                    if (freeSpace > 0) {
+                        slot.grow(freeSpace);
+                        transfer -= freeSpace;
+                    }
                 }
             }
         }
