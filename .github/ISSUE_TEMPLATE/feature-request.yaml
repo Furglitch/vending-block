@@ -6,10 +6,10 @@ assignees: Furglitch
 body:
   - type: markdown
     attributes:
-      value: '**Check for existing requests.**\nBefore submitting a feature request, please check the [issue tracker](https://github.com/Furglitch/vending-block/issues) and the [to-do list](https://github.com/Furglitch/vending-block/issues/1) to see if your idea has already been suggested.'
+      value: '**Check for existing requests.**<\br>Before submitting a feature request, please check the [issue tracker](https://github.com/Furglitch/vending-block/issues) and the [to-do list](https://github.com/Furglitch/vending-block/issues/1) to see if your idea has already been suggested.'
   - type: markdown
     attributes:
-      value: '**Requests for version updates or backports will be closed and ignored.**\nThey will be released if deemed necessary, and only when they are ready.'
+      value: '**Requests for version updates or backports will be closed and ignored.**<\br>They will be released if deemed necessary, and only when they are ready.'
   - type: textarea
     id: description
     attributes:
