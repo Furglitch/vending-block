@@ -32,9 +32,9 @@ public class VendorAdminMenu extends AbstractContainerMenu {
 
         addPlayerInventory(inv);
 
-        this.addSlot(new FilterSlot(this.blockEntity.inventory, 0, 52, 53, this.blockEntity));
-        this.addSlot(new FilterSlot(this.blockEntity.inventory, 10, 70, 53, this.blockEntity));
-        this.addSlot(new FilterSlot(this.blockEntity.inventory, 11, 107, 53, this.blockEntity));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 0, 62, 53, this.blockEntity));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 10, 80, 53, this.blockEntity));
+        this.addSlot(new FilterSlot(this.blockEntity.inventory, 11, 98, 53, this.blockEntity));
     }
 
     // CREDIT: diesieben07 | https://github.com/diesieben07/SevenCommons

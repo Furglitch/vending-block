@@ -23,7 +23,10 @@
   "menu.vendingblock.settings": "Vendor Settings",
   "menu.vendingblock.admin.settings": "Admin Settings",
   "menu.vendingblock.admin.owner": "Owner",
-  "menu.vendingblock.admin.infinite": "Infinite Inventory",
+  "menu.vendingblock.tooltip.product": "Product",
+  "menu.vendingblock.tooltip.price": "Price",
+  "menu.vendingblock.tooltip.facade": "Facade",
+  "menu.vendingblock.tooltip.infinite": "Infinite Inventory",
 
   "msg.vendingblock.sell": "You bought %s %s from %s for %s %s",
   "msg.vendingblock.request": "You gave %s %s to %s",
