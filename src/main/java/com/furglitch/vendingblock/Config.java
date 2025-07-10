@@ -1,6 +1,9 @@
 package com.furglitch.vendingblock;
 
+import java.util.List;
+
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
 public class Config {
     
@@ -69,10 +72,11 @@ public class Config {
             FACING_PLAYER;
         }
         
-        public static final ModConfigSpec.ConfigValue<java.util.List<String>> PRODUCT_BLACKLIST = BUILDER
-            .comment("List of blacklisted product IDs")
+        @SuppressWarnings("deprecation")
+        public static final ConfigValue<List<? extends String>> PRODUCT_BLACKLIST = BUILDER
+            .comment("List of blacklisted product IDs (Server restart required).")
             .translation("config.vendingblock.server.productBlacklist")
-            .define("productBlacklist", java.util.Arrays.asList("vendingblock:vendor_key"));
+            .defineListAllowEmpty("productBlacklist", java.util.Arrays.asList("vendingblock:vendor_key"), item -> item instanceof String);
 
         public static final ModConfigSpec.BooleanValue VENDOR_KEY_IN_CREATIVE = BUILDER
             .comment("Whether the vendor key should appear in the creative mode tab (Server restart required)")

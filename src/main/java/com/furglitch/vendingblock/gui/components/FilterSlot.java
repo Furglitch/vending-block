@@ -91,7 +91,7 @@ public class FilterSlot extends SlotItemHandler {
         Item item = stack.getItem();
         String itemId = item.toString();
 
-        List<String> blacklist = Config.Server.PRODUCT_BLACKLIST.get();
+        List<? extends String> blacklist = Config.Server.PRODUCT_BLACKLIST.get();
         if (blacklist.contains(itemId)) {
             BlockPos pos = blockEntity.getBlockPos();
             Player player = blockEntity.getLevel().getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
