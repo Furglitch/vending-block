@@ -13,7 +13,14 @@ This mod aims to stay faithful to AUTOMATIC_MAIDEN's (aka [minecreatr](https://w
 - **Endless Customization**: Change the texture of the base in the GUI!
 - **Notifications**: Vendors will notify you of transactions and issues (toggleable).
 - **Animations**: Different animations are available for the item display.
+
+### Admin Features:
+- **Server-Wide Animation**: Set the default display animation for your server! (Players can override this in their client config.)
 - **Blacklisting**: Server admins can blacklist the sale of certain items with the server config.
+- **Server Admin Screen**: Using the Vendor's Key, you can access the following enhancements:
+  - ***Owner Changing***: Change the owner of a vending block! (For when a player changes their username, or set it to your server name for a server shop!)
+  - ***Infinite Inventory***: Give your vendor block an endless stock!
+- **Remove Key from Creative**: Simply removes the Vendor's Key from the Creative menu.
 
 ### Compatibility:
 - **REI/JEI/EMI**: Set your prices and facade with a simple drag-and-drop from the item list.
