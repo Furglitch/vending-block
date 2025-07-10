@@ -4,7 +4,7 @@
 A modern revival of Vending Block from back when Minecraft versions were in the single-digits! Once again, players have a simple way to trade with each other, even when they're not online!
 <br/>
 <br/>
-This mod aims to stay faithful to AUTOMATIC_MAIDEN's (aka [minecreatr](https://www.curseforge.com/members/minecreatr/projects) original 1.6.4 mod while adding a few modernized quality-of-life features!
+This mod aims to stay faithful to AUTOMATIC_MAIDEN's (aka <a href="https://www.curseforge.com/members/minecreatr/projects">minecreatr</a>) original 1.6.4 mod while adding a few modernized quality-of-life features!
 
 ### Features:
 - **Simple Player Trading**: Set up a vendor and you're good to go! No need to meet up with people to trade.
