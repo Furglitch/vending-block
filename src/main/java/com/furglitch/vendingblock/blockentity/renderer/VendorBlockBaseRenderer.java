@@ -54,10 +54,10 @@ public class VendorBlockBaseRenderer {
         addVertex(matrix, vertexConsumer, x1, y1, z2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
         
         // Top
-        addVertex(matrix, vertexConsumer, x1, y2, z2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z2, uMax, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z1, uMax, vTopMin, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z1, uMin, vTopMin, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z2 + TEXTURE_STRETCH * 2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z2 + TEXTURE_STRETCH * 2, uMax, vTopMax, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z1 + TEXTURE_STRETCH * 2, uMax, vTopMin, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z1 + TEXTURE_STRETCH * 2, uMin, vTopMin, packedLight, packedOverlay, red, green, blue);
         
         // North
         addVertex(matrix, vertexConsumer, x1, y1, z1, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
