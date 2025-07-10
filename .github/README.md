@@ -15,11 +15,12 @@ This mod aims to stay faithful to AUTOMATIC_MAIDEN's (aka [minecreatr](https://w
 - **Animations**: Different animations are available for the item display.
 - **Blacklisting**: Server admins can blacklist the sale of certain items with the server config.
 
-### Mod Compatibility:
+### Compatibility:
 - **REI/JEI/EMI**: Set your prices and facade with a simple drag-and-drop from the item list.
 - **Jade**: Favors the Jade overlay to show transaction information.
-- **Compatible with Shaders!** (Tested with *Photon*)
-- **Every Mod**: The base facade function accepts blocks from any mod! (Tested with *Biomes O' Plenty*)
+- **Compatible with Shaders:** Tested with *Photon*
+- **Compatible with Resource Packs**: Pulls textures right from the block! Tested with *Bare Bones* and *Bare Metals*
+- **Every Mod**: The base facade function accepts blocks from any mod! Tested with *Biomes O' Plenty*
 
 ---
 
