@@ -11,7 +11,8 @@ public class ItemRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(VendingBlock.MODID);
 
     public static final DeferredItem<Item> VENDOR_KEY = ITEMS.register("vendor_key",
-        () -> new Item(new Item.Properties()));
+        () -> new Item(new Item.Properties()
+            .stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
