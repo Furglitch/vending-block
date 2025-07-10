@@ -128,7 +128,7 @@ public class FilterSlot extends SlotItemHandler {
                     if (slotIndex == 11 && !isFullBlock(cursorStack)) return false;
                     if (isBlacklisted(cursorStack)) return false;
                     ItemStack slotStack = cursorStack.copy();
-                    if (slotIndex == 11) {
+                    if (slotIndex == 11 || cursorStack.getItem() != getItem().getItem()) {
                         slotStack.setCount(1);
                     } else {
                         slotStack.setCount(getItem().getCount() + 1);
