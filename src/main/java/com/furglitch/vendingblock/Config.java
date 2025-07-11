@@ -74,15 +74,15 @@ public class Config {
         
         @SuppressWarnings("deprecation")
         public static final ConfigValue<List<? extends String>> PRODUCT_BLACKLIST = BUILDER
-            .comment("List of blacklisted product IDs.\n\nExample list:\n\"minecraft:oak_wood\",\"stone\",\"#minecraft:planks\",\"#c:glass_blocks\"\n\n(Server restart required).")
+            .comment("List of blacklisted facades\n\nExamples:\n- minecraft:oak_wood\n- stone\n- *stained_glass\n- #minecraft:planks\n- #c:glass_blocks\n\nServer restart required")
             .translation("config.vendingblock.server.productBlacklist")
             .defineListAllowEmpty("productBlacklist", java.util.Arrays.asList("vendingblock:vendor_key"), item -> item instanceof String);
         
         @SuppressWarnings("deprecation")
         public static final ConfigValue<List<? extends String>> FACADE_BLACKLIST = BUILDER
-            .comment("List of blacklisted facades.\n\nExample list:\n\"minecraft:oak_wood\",\"stone\",\"#minecraft:planks\",\"#c:glass_blocks\"\n\n(Server restart required).")
+            .comment("List of blacklisted facades\n\nExamples:\n- minecraft:oak_wood\n- stone\n- *stained_glass\n- #minecraft:planks\n- #c:glass_blocks\n\nServer restart required")
             .translation("config.vendingblock.server.facadeBlacklist")
-            .defineListAllowEmpty("facadeBlacklist", java.util.Arrays.asList("#c:glass_blocks"), item -> item instanceof String);
+            .defineListAllowEmpty("facadeBlacklist", java.util.Arrays.asList("*copper_grate","#c:bookshelves","#c:glass_blocks","#minecraft:leaves","beacon","cobweb","glow_lichen","mangrove_roots","*piston","sculk_vein","vine"), item -> item instanceof String);
 
         public static final ModConfigSpec.BooleanValue VENDOR_KEY_IN_CREATIVE = BUILDER
             .comment("Whether the vendor key should appear in the creative mode tab (Server restart required)")
@@ -92,3 +92,5 @@ public class Config {
         public static final ModConfigSpec SPEC = BUILDER.build();
     }
 }
+
+

@@ -195,8 +195,8 @@ public class FilterSlot extends SlotItemHandler {
         boolean match = false;
 
         for (String entry : blacklist) {
-            System.out.println("Checking " + entry + " against " + itemId);
             if (entry.equals(itemId) || ("minecraft:"+entry).equals(itemId)) { match = true; }
+            else if (entry.contains("*")) { match = wildcardMatch(entry, itemId) || wildcardMatch("minecraft:"+entry, itemId); }
             else if (entry.startsWith("#")) { match = isItemInTag(entry.substring(1), stack); }
             if (match) break;
         }
@@ -222,8 +222,8 @@ public class FilterSlot extends SlotItemHandler {
         boolean match = false;
 
         for (String entry : blacklist) {
-            System.out.println("Checking " + entry + " against " + itemId);
-            if (entry.equals(itemId)) { match = true; }
+            if (entry.equals(itemId) || ("minecraft:"+entry).equals(itemId)) { match = true; }
+            else if (entry.contains("*")) { match = wildcardMatch(entry, itemId) || wildcardMatch("minecraft:"+entry, itemId); }
             else if (entry.startsWith("#")) { match = isItemInTag(entry.substring(1), stack); }
             if (match) break;
         }
@@ -242,6 +242,11 @@ public class FilterSlot extends SlotItemHandler {
         }
 
         return match;
+    }
+    
+    private boolean wildcardMatch(String pattern, String str) {
+        String regex = pattern.replace("*", ".*");
+        return str.matches(regex);
     }
 
     @SuppressWarnings("deprecation")
