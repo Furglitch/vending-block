@@ -2,6 +2,7 @@ package com.furglitch.vendingblock.integration.emi;
 
 import com.furglitch.vendingblock.gui.admin.VendorAdminScreen;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
+import com.furglitch.vendingblock.gui.display.DisplayBlockScreen;
 
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
@@ -14,6 +15,7 @@ public class GhostHandlerRegistry implements EmiPlugin {
     public void register(EmiRegistry registry) {
         registry.addDragDropHandler(VendorBlockScreen.class, new GhostHandlerBlock());
         registry.addDragDropHandler(VendorAdminScreen.class, new GhostHandlerAdmin());
+        registry.addDragDropHandler(DisplayBlockScreen.class, new GhostHandlerDisplay());
     }
     
 }

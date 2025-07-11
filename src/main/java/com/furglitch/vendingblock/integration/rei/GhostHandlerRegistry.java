@@ -11,5 +11,6 @@ public class GhostHandlerRegistry implements REIClientPlugin {
     public void registerScreens(ScreenRegistry registry) {
         registry.registerDraggableStackVisitor(new GhostHandlerBlock());
         registry.registerDraggableStackVisitor(new GhostHandlerAdmin());
+        registry.registerDraggableStackVisitor(new GhostHandlerDisplay());
     }
 }
