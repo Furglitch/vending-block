@@ -1,7 +1,9 @@
 {
   "block.vendingblock.vending_block": "Vending Block",
+  "block.vendingblock.display_block": "Display Block",
   "item.vendingblock.vendor_key": "Vendor's Key",
   "ui.vendingblock.creative_tab": "Vending Block",
+
 
   "hint.vendingblock.sell": "is selling",
   "hint.vendingblock.buy": "for",
@@ -23,6 +25,7 @@
   "menu.vendingblock.settings": "Vendor Settings",
   "menu.vendingblock.admin.settings": "Admin Settings",
   "menu.vendingblock.admin.owner": "Owner",
+  "menu.vendingblock.display.settings": "Display Settings",
   "menu.vendingblock.tooltip.product": "Product",
   "menu.vendingblock.tooltip.price": "Price",
   "menu.vendingblock.tooltip.facade": "Facade",

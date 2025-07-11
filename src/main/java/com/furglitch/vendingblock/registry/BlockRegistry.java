@@ -21,6 +21,10 @@ public class BlockRegistry {
         () -> new VendorBlock(Block.Properties.of()
             .strength(1.5f).sound(SoundType.METAL).noOcclusion()));
 
+    public static final DeferredBlock<Block> DISPLAY = registerBlock("display_block",
+        () -> new com.furglitch.vendingblock.block.DisplayBlock(Block.Properties.of()
+            .strength(1.0f).sound(SoundType.METAL).noOcclusion()));
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

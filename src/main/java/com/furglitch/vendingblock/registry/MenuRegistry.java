@@ -2,6 +2,7 @@ package com.furglitch.vendingblock.registry;
 
 import com.furglitch.vendingblock.VendingBlock;
 import com.furglitch.vendingblock.gui.admin.VendorAdminMenu;
+import com.furglitch.vendingblock.gui.display.DisplayBlockMenu;
 import com.furglitch.vendingblock.gui.trade.VendorBlockMenu;
 
 import net.minecraft.core.registries.Registries;
@@ -19,6 +20,7 @@ public class MenuRegistry {
 
     public static final DeferredHolder<MenuType<?>, MenuType<VendorBlockMenu>> VENDOR_MENU = registerMenuType("vendor_menu", VendorBlockMenu::new);
     public static final DeferredHolder<MenuType<?>, MenuType<VendorAdminMenu>> VENDOR_ADMIN_MENU = registerMenuType("vendor_admin_menu", VendorAdminMenu::new);
+    public static final DeferredHolder<MenuType<?>, MenuType<DisplayBlockMenu>> DISPLAY_MENU = registerMenuType("display_menu", DisplayBlockMenu::new);
 
     private static <T extends AbstractContainerMenu>DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));

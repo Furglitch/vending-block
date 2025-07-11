@@ -22,6 +22,7 @@ public class TabRegistry {
             .icon(() -> new ItemStack(BlockRegistry.VENDOR.get()))
             .displayItems((parameters, output) -> {
                 output.accept(BlockRegistry.VENDOR.get());
+                output.accept(BlockRegistry.DISPLAY.get());
                 if (Config.Server.VENDOR_KEY_IN_CREATIVE.get()) output.accept(ItemRegistry.VENDOR_KEY.get());
             })
             .build());

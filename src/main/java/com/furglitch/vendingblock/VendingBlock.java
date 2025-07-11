@@ -94,11 +94,13 @@ public class VendingBlock {
         public static void registerMenus(RegisterMenuScreensEvent event) {
             event.register(MenuRegistry.VENDOR_MENU.get(), VendorBlockScreen::new);
             event.register(MenuRegistry.VENDOR_ADMIN_MENU.get(), VendorAdminScreen::new);
+            event.register(MenuRegistry.DISPLAY_MENU.get(), com.furglitch.vendingblock.gui.display.DisplayBlockScreen::new);
         }
 
         @SubscribeEvent
         public static void registerDisplay(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(BlockEntityRegistry.VENDOR_BE.get(), VendorBlockEntityDisplay::new);
+            event.registerBlockEntityRenderer(BlockEntityRegistry.DISPLAY_BE.get(), com.furglitch.vendingblock.blockentity.DisplayBlockEntityDisplay::new);
         }
 
     }

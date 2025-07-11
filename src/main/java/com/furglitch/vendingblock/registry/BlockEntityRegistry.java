@@ -19,6 +19,12 @@ public class BlockEntityRegistry {
             VendorBlockEntity::new, 
             BlockRegistry.VENDOR.get()).build(null)
         );
+
+    public static final Supplier<BlockEntityType<com.furglitch.vendingblock.blockentity.DisplayBlockEntity>> DISPLAY_BE =
+        BLOCK_ENTITIES.register("display_block_be", () -> BlockEntityType.Builder.of(
+            com.furglitch.vendingblock.blockentity.DisplayBlockEntity::new,
+            BlockRegistry.DISPLAY.get()).build(null)
+        );
     
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

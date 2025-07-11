@@ -1,0 +1,104 @@
+package com.furglitch.vendingblock.blockentity;
+
+import java.util.UUID;
+
+import com.furglitch.vendingblock.gui.display.DisplayBlockMenu;
+import com.furglitch.vendingblock.registry.BlockEntityRegistry;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Containers;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+public class DisplayBlockEntity extends BlockEntity implements MenuProvider {
+
+    private UUID ownerID;
+    private String ownerUser;
+
+    public DisplayBlockEntity(BlockPos pos, BlockState state) {
+        super(BlockEntityRegistry.DISPLAY_BE.get(), pos, state);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("menu.vendingblock.display.settings");
+    }
+
+
+    public final ItemStackHandler inventory = new ItemStackHandler(2) {
+        @Override
+        protected int getStackLimit(int slot, ItemStack stack) {
+            return 64;
+        }
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide()) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                level.invalidateCapabilities(getBlockPos());
+            }
+        }
+    };
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new DisplayBlockMenu(id, inv, this);
+    }
+
+    public void drops() {
+        SimpleContainer inv = new SimpleContainer(inventory.getSlots());
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            if (i != 1) {
+                inv.setItem(i, inventory.getStackInSlot(i));
+            }
+        }
+        Containers.dropContents(this.level, this.worldPosition, inv);
+    }
+
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.put("inventory", inventory.serializeNBT(registries));
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
+    }
+    
+    public void updateOwnershipInfo(Player player) {
+        if (this.ownerUser != null && this.ownerID == null) {
+            if (this.ownerUser.equals(player.getName().getString())) {
+                this.ownerID = player.getUUID();
+                setChanged();
+                if (!level.isClientSide()) {
+                    level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+                }
+            }
+        }
+    }
+}
