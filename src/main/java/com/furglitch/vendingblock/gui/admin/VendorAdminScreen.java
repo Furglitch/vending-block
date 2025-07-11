@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> {
@@ -256,5 +257,28 @@ public class VendorAdminScreen extends AbstractContainerScreen<VendorAdminMenu> 
         return filterSlots;
     }
 
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double unused, double delta) {
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        int slot = -1;
+        if (isMouseOverSlot((int)mouseX, (int)mouseY, x + 62, y + 53)) { slot = 0; }
+        else if (isMouseOverSlot((int)mouseX, (int)mouseY, x + 80, y + 53)) { slot = 10; }
+
+        if (slot == 0 || slot == 10) {
+            ItemStack stack = menu.blockEntity.inventory.getStackInSlot(slot).copy();
+            if (!stack.isEmpty()) {
+                int newCount = stack.getCount() + (delta < 0 ? -1 : 1);
+                newCount = Math.max(1, Math.min(newCount, stack.getMaxStackSize()));
+                stack.setCount(newCount);
+                com.furglitch.vendingblock.network.FilterSlotUpdatePacket packet =
+                    new com.furglitch.vendingblock.network.FilterSlotUpdatePacket(
+                        menu.blockEntity.getBlockPos(), slot, stack);
+                net.neoforged.neoforge.network.PacketDistributor.sendToServer(packet);
+            }
+        }
+        return super.mouseScrolled(mouseX, mouseY, unused, delta);
+    }
     
 }
