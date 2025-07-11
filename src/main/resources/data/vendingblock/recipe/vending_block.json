@@ -8,7 +8,7 @@
     ],
     "key": {
         "G": {
-            "item": "minecraft:glass"
+            "tag": "c:glass_panes"
         },
         "E": {
             "item": "minecraft:emerald"
@@ -17,7 +17,7 @@
             "item": "minecraft:redstone"
         },
         "M": {
-            "item": "minecraft:oak_planks"
+            "tag": "planks"
         }
     },
     "result": {
