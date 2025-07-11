@@ -56,7 +56,9 @@
   "config.vendingblock.messages.fullStorage": "Full Storage Notifications",
 
   "config.vendingblock.server.productBlacklist": "Product Blacklist",
-  "msg.vendingblock.blacklist": "%s is blacklisted and cannot be sold in vending blocks on this server",
+  "msg.vendingblock.blacklist.product": "%s is blacklisted and cannot be sold in vending blocks on this server",
+  "msg.vendingblock.blacklist.fullBlock": "%s is not a full block and cannot be used as a vending block facade.",
+  "msg.vendingblock.blacklist.facade": "%s is currently blacklisted and cannot be used as a facade. This may be due to rendering issues.",
 
   "config.vendingblock.creative.keyInTab": "Creative Vendor's Key",
 

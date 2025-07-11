@@ -74,9 +74,15 @@ public class Config {
         
         @SuppressWarnings("deprecation")
         public static final ConfigValue<List<? extends String>> PRODUCT_BLACKLIST = BUILDER
-            .comment("List of blacklisted product IDs (Server restart required).")
+            .comment("List of blacklisted product IDs.\n\nExample list:\n\"minecraft:oak_wood\",\"stone\",\"#minecraft:planks\",\"#c:glass_blocks\"\n\n(Server restart required).")
             .translation("config.vendingblock.server.productBlacklist")
             .defineListAllowEmpty("productBlacklist", java.util.Arrays.asList("vendingblock:vendor_key"), item -> item instanceof String);
+        
+        @SuppressWarnings("deprecation")
+        public static final ConfigValue<List<? extends String>> FACADE_BLACKLIST = BUILDER
+            .comment("List of blacklisted facades.\n\nExample list:\n\"minecraft:oak_wood\",\"stone\",\"#minecraft:planks\",\"#c:glass_blocks\"\n\n(Server restart required).")
+            .translation("config.vendingblock.server.facadeBlacklist")
+            .defineListAllowEmpty("facadeBlacklist", java.util.Arrays.asList("#c:glass_blocks"), item -> item instanceof String);
 
         public static final ModConfigSpec.BooleanValue VENDOR_KEY_IN_CREATIVE = BUILDER
             .comment("Whether the vendor key should appear in the creative mode tab (Server restart required)")

@@ -56,7 +56,15 @@ public class Messages {
         return Component.translatable("msg.vendingblock.full.owner");
     }
     
-    public static Component blacklisted(String item) {
-        return Component.translatable("msg.vendingblock.blacklist", item);
+    public static Component blacklistedProduct(String item) {
+        return Component.translatable("msg.vendingblock.blacklist.product", item);
+    }
+
+    public static Component blacklistedFacade(String item) {
+        return Component.translatable("msg.vendingblock.blacklist.facade", item);
+    }
+    
+    public static Component fullBlockFacade(String item) {
+        return Component.translatable("msg.vendingblock.blacklist.fullBlock", item);
     }
 }
