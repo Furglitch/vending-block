@@ -1,5 +1,16 @@
 <div align="center"><img src="/.github/assets/title.png" alt="Vending Block (logo)"></img></div>
 <br/>
+<div align="center">
+  <a href="https://modrinth.com/mod/vending-block-restocked"><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/vending-block-restocked?style=for-the-badge&logo=modrinth&logoColor=%2300AF5C&label=Modrinth&color=%2300AF5C&cacheSeconds=86400"/></a>
+  <a href="https://github.com/Furglitch/vending-block"><img alt="GitHub Downloads" src="https://img.shields.io/github/downloads/Furglitch/vending-block/total?style=for-the-badge&logo=github&logoColor=%23181717C&label=GitHub&color=%23181717&cacheSeconds=86400"/></a>
+  <a href="https://curseforge.com/minecraft/mc-mods/vending-block-restocked"><img alt="CurseForge Downloads" src="https://img.shields.io/curseforge/dt/1303833?style=for-the-badge&logo=curseforge&logoColor=%23F16436&label=CurseForge&color=%23F16436&cacheSeconds=86400"/></a>
+</div>
+<div align="center">
+  <a href="https://github.com/Furglitch/vending-block/issues"><img alt="Issue Counter" src="https://img.shields.io/github/issues-search?query=repo%3Afurglitch%2Fvending-block%20state%3Aopen%20-%231&style=for-the-badge&label=Issues&color=%232088FF&cacheSeconds=86400"/></a>
+  <a href="[https://github.com/Furglitch/vending-block/issues](https://github.com/Furglitch/vending-block/blob/main/LICENSE)"><img alt="License: GNU-GPLv3" src="https://img.shields.io/github/license/furglitch/vending-block?style=for-the-badge&label=License&color=%232088FF&cacheSeconds=86400"/></a>
+</div>
+
+<br/>
 <br/>
 A modern revival of Vending Block from back when Minecraft versions were in the single-digits! Once again, players have a simple way to trade with each other, even when they're not online!
 <br/>
