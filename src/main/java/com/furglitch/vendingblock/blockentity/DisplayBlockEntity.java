@@ -39,9 +39,23 @@ public class DisplayBlockEntity extends BlockEntity implements MenuProvider {
 
     public final ItemStackHandler inventory = new ItemStackHandler(2) {
         @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
-            return 64;
+        public void setStackInSlot(int slot, ItemStack stack) {
+            if (slot == 0 && !stack.isEmpty() && stack.getCount() > 1) {
+                ItemStack dropStack = stack.copy();
+                dropStack.setCount(stack.getCount() - 1);;
+                stack.setCount(1);
+                SimpleContainer dropInv = new SimpleContainer(dropStack);
+                Containers.dropContents(level, worldPosition, dropInv);
+            }
+            super.setStackInSlot(slot, stack);
         }
+        
+        @Override
+        protected int getStackLimit(int slot, ItemStack stack) {
+            if (slot == 0) { return 1; }
+            else { return 64; }
+        }
+
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
