@@ -151,10 +151,30 @@ public class FilterSlot extends SlotItemHandler {
 
         Block block = blockItem.getBlock();
         BlockState state = block.defaultBlockState();
-        VoxelShape shape = state.getShape(null, null);
+        net.minecraft.world.level.BlockGetter blockGetter = null;
+        BlockPos pos = null;
+        if (vendorBlockEntity != null && vendorBlockEntity.getLevel() != null) {
+            blockGetter = vendorBlockEntity.getLevel();
+            pos = vendorBlockEntity.getBlockPos();
+        } else if (displayBlockEntity != null && displayBlockEntity.getLevel() != null) {
+            blockGetter = displayBlockEntity.getLevel();
+            pos = displayBlockEntity.getBlockPos();
+        }
+
+        VoxelShape shape;
+        try {
+            if (blockGetter != null && pos != null) {
+                shape = state.getShape(blockGetter, pos);
+            } else {
+                shape = state.getShape(null, null);
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
         VoxelShape fullCube = Shapes.block();
         if (!shape.equals(fullCube)) {
-            BlockPos pos = vendorBlockEntity != null ? vendorBlockEntity.getBlockPos() : (displayBlockEntity != null ? displayBlockEntity.getBlockPos() : null);
+            if (pos == null) { return false; }
             Player player = null;
             if (vendorBlockEntity != null && vendorBlockEntity.getLevel() != null)
                 player = vendorBlockEntity.getLevel().getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
