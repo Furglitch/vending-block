@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 
 public class VendorBlockBaseRenderer {
 
-    private static final float TEXTURE_STRETCH = -0.0001f;
+    private static final float TEXTURE_STRETCH = -0.0005f;
     
     public void renderTextureOverlay(Block block, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Level level, BlockPos pos) {
         
@@ -28,7 +28,7 @@ public class VendorBlockBaseRenderer {
         poseStack.pushPose();
         
         int tintColor = getBiomeColor(block, level, pos);
-        renderCube(poseStack, vertexConsumer, -TEXTURE_STRETCH, TEXTURE_STRETCH, TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, 0.125f - TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, sprite, packedLight, packedOverlay, tintColor);
+        renderCube(poseStack, vertexConsumer, TEXTURE_STRETCH, TEXTURE_STRETCH, TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, 0.125f - TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, sprite, packedLight, packedOverlay, tintColor);
         
         poseStack.popPose();
     }
@@ -54,11 +54,11 @@ public class VendorBlockBaseRenderer {
         addVertex(matrix, vertexConsumer, x1, y1, z2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
         
         // Top
-        addVertex(matrix, vertexConsumer, x1, y2, z2 + TEXTURE_STRETCH * 2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z2 + TEXTURE_STRETCH * 2, uMax, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z1 + TEXTURE_STRETCH * 2, uMax, vTopMin, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z1 + TEXTURE_STRETCH * 2, uMin, vTopMin, packedLight, packedOverlay, red, green, blue);
-        
+        addVertex(matrix, vertexConsumer, x1, y2, z2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z2, uMax, vTopMax, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z1, uMax, vTopMin, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z1, uMin, vTopMin, packedLight, packedOverlay, red, green, blue);
+
         // North
         addVertex(matrix, vertexConsumer, x1, y1, z1, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
         addVertex(matrix, vertexConsumer, x1, y2, z1, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
@@ -72,10 +72,10 @@ public class VendorBlockBaseRenderer {
         addVertex(matrix, vertexConsumer, x1, y1, z2, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
         
         // West
-        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH * 2, y1, z2, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH * 2, y2, z2, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH * 2, y2, z1, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1 + TEXTURE_STRETCH * 2, y1, z1, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y1, z2, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z2, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z1, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y1, z1, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
 
         // East
         addVertex(matrix, vertexConsumer, x2, y1, z1, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
