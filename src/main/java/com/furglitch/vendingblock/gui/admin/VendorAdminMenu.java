@@ -63,7 +63,6 @@ public class VendorAdminMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         } else {
-            System.out.println("Invalid slotIndex:" + pIndex);
             return ItemStack.EMPTY;
         }
         if (sourceStack.getCount() == 0) {
