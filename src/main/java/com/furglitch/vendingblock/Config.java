@@ -11,7 +11,7 @@ public class Config {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
-            .comment("Animation mode for vending block items. 'SERVER_DEFAULT' uses the server's setting, which is 'ROTATION' unless changed.")
+            .comment("Animation mode for vending block items.\n\n'SERVER_DEFAULT' uses the server-side setting, which is 'ROTATION' unless changed by admins.")
             .translation("config.vendingblock.animation.mode")
             .defineEnum("clientAnimationMode", AnimationMode.SERVER_DEFAULT);
 
@@ -60,7 +60,7 @@ public class Config {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
-            .comment("Animation mode for vending block items")
+            .comment("Animation mode for vending block items\nApplies to all users who have selected 'SERVER_DEFAULT' (default) in their client settings.")
             .translation("config.vendingblock.animation.mode")
             .defineEnum("animationMode", AnimationMode.ROTATION);
 
