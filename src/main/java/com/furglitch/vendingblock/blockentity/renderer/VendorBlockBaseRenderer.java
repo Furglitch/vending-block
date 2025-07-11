@@ -7,81 +7,89 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class VendorBlockBaseRenderer {
 
     private static final float TEXTURE_STRETCH = -0.0005f;
     
     public void renderTextureOverlay(Block block, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Level level, BlockPos pos) {
-        
-        ResourceLocation blockID = BuiltInRegistries.BLOCK.getKey(block);
         ResourceLocation atlasLoc = ResourceLocation.withDefaultNamespace("textures/atlas/blocks.png");
-        
-        TextureAtlasSprite sprite = getBlockTexture(blockID, Minecraft.getInstance().getModelManager().getAtlas(atlasLoc));
+        var mc = Minecraft.getInstance();
+        var state = block.defaultBlockState();
+        var blockRenderer = mc.getBlockRenderer();
+        var model = blockRenderer.getBlockModel(state);
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.cutout());
-        
         poseStack.pushPose();
-        
         int tintColor = getBiomeColor(block, level, pos);
-        renderCube(poseStack, vertexConsumer, TEXTURE_STRETCH, TEXTURE_STRETCH, TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, 0.125f - TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, sprite, packedLight, packedOverlay, tintColor);
-        
+
+        TextureAtlasSprite faceUp = getBlockTexture(model, state, Direction.UP, mc, atlasLoc);
+        TextureAtlasSprite faceDown = getBlockTexture(model, state, Direction.DOWN, mc, atlasLoc);
+        TextureAtlasSprite faceNorth = getBlockTexture(model, state, Direction.NORTH, mc, atlasLoc);
+        TextureAtlasSprite faceSouth = getBlockTexture(model, state, Direction.SOUTH, mc, atlasLoc);
+        TextureAtlasSprite faceWest = getBlockTexture(model, state, Direction.WEST, mc, atlasLoc);
+        TextureAtlasSprite faceEast = getBlockTexture(model, state, Direction.EAST, mc, atlasLoc);
+
+        renderCube(poseStack, vertexConsumer, TEXTURE_STRETCH, TEXTURE_STRETCH, TEXTURE_STRETCH, 1f - TEXTURE_STRETCH, 0.125f - TEXTURE_STRETCH, 1f - TEXTURE_STRETCH,
+            faceUp, faceDown, faceNorth, faceSouth, faceWest, faceEast, packedLight, packedOverlay, tintColor);
         poseStack.popPose();
     }
-    
-    private void renderCube(PoseStack poseStack, VertexConsumer vertexConsumer, float x1, float y1, float z1, float x2, float y2, float z2, TextureAtlasSprite sprite, int packedLight, int packedOverlay, int tintColor) {
-        
+
+    private void renderCube(PoseStack poseStack, VertexConsumer vertexConsumer, float x1, float y1, float z1, float x2, float y2, float z2,
+                            TextureAtlasSprite faceUp, TextureAtlasSprite faceDown, TextureAtlasSprite faceNorth, TextureAtlasSprite faceSouth, TextureAtlasSprite faceWest, TextureAtlasSprite faceEast,
+                            int packedLight, int packedOverlay, int tintColor) {
+
         var matrix = poseStack.last().pose();
-        float heightRatio = (y2 - y1) / 1.0f;
-        float uMin = sprite.getU0() - TEXTURE_STRETCH;
-        float uMax = sprite.getU1() + TEXTURE_STRETCH;
-        float vMinStretched = (sprite.getV1() - (sprite.getV1() - sprite.getV0()) * heightRatio) - TEXTURE_STRETCH;
-        float vMaxStretched = sprite.getV1() + TEXTURE_STRETCH;
-        float vTopMin = sprite.getV0() - TEXTURE_STRETCH;
-        float vTopMax = sprite.getV1() + TEXTURE_STRETCH;
         int red = (tintColor >> 16) & 0xFF;
         int green = (tintColor >> 8) & 0xFF;
         int blue = tintColor & 0xFF;
-        
+
         // Bottom
-        addVertex(matrix, vertexConsumer, x1, y1, z1, uMin, vTopMin, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y1, z1, uMax, vTopMin, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y1, z2, uMax, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y1, z2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
-        
+        addVertex(matrix, vertexConsumer, x1, y1, z1, faceDown.getU0(), faceDown.getV0(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y1, z1, faceDown.getU1(), faceDown.getV0(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y1, z2, faceDown.getU1(), faceDown.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y1, z2, faceDown.getU0(), faceDown.getV1(), packedLight, packedOverlay, red, green, blue);
+
         // Top
-        addVertex(matrix, vertexConsumer, x1, y2, z2, uMin, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z2, uMax, vTopMax, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z1, uMax, vTopMin, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z1, uMin, vTopMin, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z2, faceUp.getU0(), faceUp.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z2, faceUp.getU1(), faceUp.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z1, faceUp.getU1(), faceUp.getV0(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z1, faceUp.getU0(), faceUp.getV0(), packedLight, packedOverlay, red, green, blue);
 
         // North
-        addVertex(matrix, vertexConsumer, x1, y1, z1, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z1, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z1, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y1, z1, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        
+        float v0 = faceNorth.getV1() * (1f - 2/16f) + faceNorth.getV0() * (2/16f);
+        addVertex(matrix, vertexConsumer, x1, y1, z1, faceNorth.getU1(), faceNorth.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z1, faceNorth.getU1(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z1, faceNorth.getU0(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y1, z1, faceNorth.getU0(), faceNorth.getV1(), packedLight, packedOverlay, red, green, blue);
+
         // South
-        addVertex(matrix, vertexConsumer, x2, y1, z2, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z2, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z2, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y1, z2, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        
+        v0 = faceSouth.getV1() * (1 - 2/16f) + faceSouth.getV0() * (2/16f);
+        addVertex(matrix, vertexConsumer, x2, y1, z2, faceSouth.getU1(), faceSouth.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z2, faceSouth.getU1(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z2, faceSouth.getU0(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y1, z2, faceSouth.getU0(), faceSouth.getV1(), packedLight, packedOverlay, red, green, blue);
+
         // West
-        addVertex(matrix, vertexConsumer, x1, y1, z2, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z2, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y2, z1, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x1, y1, z1, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
+        v0 = faceWest.getV1() * (1f - 2/16f) + faceWest.getV0() * (2/16f);
+        addVertex(matrix, vertexConsumer, x1, y1, z2, faceWest.getU1(), faceWest.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z2, faceWest.getU1(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y2, z1, faceWest.getU0(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x1, y1, z1, faceWest.getU0(), faceWest.getV1(), packedLight, packedOverlay, red, green, blue);
 
         // East
-        addVertex(matrix, vertexConsumer, x2, y1, z1, uMax, vMaxStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z1, uMax, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y2, z2, uMin, vMinStretched, packedLight, packedOverlay, red, green, blue);
-        addVertex(matrix, vertexConsumer, x2, y1, z2, uMin, vMaxStretched, packedLight, packedOverlay, red, green, blue);
+        v0 = faceEast.getV1() * (1f - 2/16f) + faceEast.getV0() * (2/16f);
+        addVertex(matrix, vertexConsumer, x2, y1, z1, faceEast.getU1(), faceEast.getV1(), packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z1, faceEast.getU1(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y2, z2, faceEast.getU0(), v0, packedLight, packedOverlay, red, green, blue);
+        addVertex(matrix, vertexConsumer, x2, y1, z2, faceEast.getU0(), faceEast.getV1(), packedLight, packedOverlay, red, green, blue);
     }
     
     private void addVertex(org.joml.Matrix4f matrix, VertexConsumer vertexConsumer, float x, float y, float z, float u, float v, int packedLight, int packedOverlay, int red, int green, int blue) {
@@ -92,30 +100,13 @@ public class VendorBlockBaseRenderer {
             .setLight(packedLight)
             .setNormal(0.0f, 1.0f, 0.0f);
     }
-    
-    private TextureAtlasSprite getBlockTexture(ResourceLocation blockID, net.minecraft.client.renderer.texture.TextureAtlas atlas) {
-        String[] texturePatterns = {
-            "block/" + blockID.getPath(),
-            "block/" + blockID.getPath() + "_top",
-            "block/" + blockID.getPath() + "_side",
-            "block/" + blockID.getPath() + "_back",
-            "block/" + blockID.getPath() + "_front",
-            "block/" + blockID.getPath() + "_0",
-            "block/" + blockID.getPath() + "_still",
-            "block/" + blockID.getPath() + "_on",
-            "block/" + blockID.getPath() + "_active",
-        };
-        
-        for (String pattern : texturePatterns) {
-            ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(blockID.getNamespace(), pattern);
-            TextureAtlasSprite sprite = atlas.getSprite(textureLoc);
-            if (!sprite.contents().name().getPath().contains("missingno")) {
-                return sprite;
-            }
+
+    private TextureAtlasSprite getBlockTexture(BakedModel model, BlockState state, Direction face, Minecraft mc, ResourceLocation atlasLoc) {
+        var quads = model.getQuads(state, face, mc.level != null ? mc.level.random : null);
+        if (quads != null && !quads.isEmpty()) {
+            return quads.get(0).getSprite();
         }
-        
-        ResourceLocation fallbackLoc = ResourceLocation.fromNamespaceAndPath(blockID.getNamespace(), "block/" + blockID.getPath());
-        return atlas.getSprite(fallbackLoc);
+        return model.getParticleIcon();
     }
     
     private int getBiomeColor(Block block, Level level, BlockPos pos) {
