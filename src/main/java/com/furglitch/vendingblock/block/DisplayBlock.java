@@ -26,6 +26,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.fml.ModList;
 
 public class DisplayBlock extends BaseEntityBlock {
 
@@ -61,15 +62,24 @@ public class DisplayBlock extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
+
+        if (placer instanceof Player player && level.getBlockEntity(pos) instanceof DisplayBlockEntity displayBlockEntity) {
+            displayBlockEntity.setOwner(player);
+        }
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof DisplayBlockEntity displayBlockEntity && !level.isClientSide()) {
-            displayBlockEntity.updateOwnershipInfo(player);
+            if (displayBlockEntity.isOwner(player) && ModList.get().isLoaded("carryon") && player.isShiftKeyDown()) {
+                return InteractionResult.SUCCESS; // Allows owners to pick up the display block with CarryOn
+            }
 
-            ((ServerPlayer) player).openMenu(new SimpleMenuProvider(displayBlockEntity, Component.translatable("menu.vendingblock.display.settings")), pos);
-            level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 2.0F);
+            if (displayBlockEntity.isOwner(player) && !level.isClientSide()) {
+                displayBlockEntity.updateOwnershipInfo(player);
+                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(displayBlockEntity, Component.translatable("menu.vendingblock.display.settings")), pos);
+                level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 2.0F);
+            }
         }
         return InteractionResult.SUCCESS;
     }

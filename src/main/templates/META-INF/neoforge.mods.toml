@@ -30,10 +30,10 @@ version="${mod_version}" #mandatory
 displayName="${mod_name}" #mandatory
 
 # A URL to query for updates for this mod. See the JSON update specification https://docs.neoforged.net/docs/misc/updatechecker/
-#updateJSONURL="https://raw.githubusercontent.com/Furglitch/vending-block/refs/heads/1.21.1/updates.json" #optional
+updateJSONURL="https://raw.githubusercontent.com/Furglitch/vending-block/refs/heads/1.21.1/updates.json" #optional
 
 # A URL for the "homepage" for this mod, displayed in the mod UI
-#displayURL="https://github.com/Furglitch/vending-block/" #optional
+displayURL="https://github.com/Furglitch/vending-block/" #optional
 
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="pack.png" #optional
@@ -48,8 +48,8 @@ authors="${mod_authors}" #optional
 description='''${mod_description}'''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
-#[[mixins]]
-#config="${mod_id}.mixins.json"
+[[mixins]]
+config="${mod_id}.mixins.json"
 
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg

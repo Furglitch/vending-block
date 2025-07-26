@@ -1,7 +1,9 @@
 package com.furglitch.vendingblock;
 
 import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Mixins;
 
+import com.furglitch.vendingblock.block.events.BreakEvent;
 import com.furglitch.vendingblock.blockentity.VendorBlockEntityDisplay;
 import com.furglitch.vendingblock.gui.admin.VendorAdminScreen;
 import com.furglitch.vendingblock.gui.hud.HintOverlay;
@@ -46,11 +48,13 @@ public class VendingBlock {
         BlockEntityRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);
         TabRegistry.register(modEventBus);
+        NeoForge.EVENT_BUS.register(BreakEvent.class);
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(com.furglitch.vendingblock.network.NetworkHandler::register);
         modContainer.registerConfig(ModConfig.Type.CLIENT, Config.Client.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, Config.Server.SPEC);
+        Mixins.addConfiguration("vendingblock.mixins.json");
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

@@ -66,6 +66,38 @@ public class DisplayBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
+    public void setOwner(Player player) {
+        this.ownerID = player.getUUID();
+        this.ownerUser = player.getName().getString();
+        setChanged();
+    }
+
+    public UUID getOwnerID() {
+        return this.ownerID;
+    }
+
+    public String getOwnerUser() {
+        return this.ownerUser;
+    }
+
+    public boolean hasOwner() {
+        return this.ownerID != null || this.ownerUser != null;
+    }
+    
+    public boolean isOwner(Player player) {
+        if (this.ownerID != null && this.ownerID.equals(player.getUUID())) {
+            return true;
+        }
+        
+        if (this.ownerUser != null && this.ownerUser.equals(player.getName().getString())) {
+            this.ownerID = player.getUUID();
+            setChanged();
+            return true;
+        }
+        
+        return false;
+    }
+
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
         return new DisplayBlockMenu(id, inv, this);
@@ -86,12 +118,16 @@ public class DisplayBlockEntity extends BlockEntity implements MenuProvider {
     protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("inventory", inventory.serializeNBT(registries));
+        if (this.ownerID != null) tag.putUUID("ownerID", this.ownerID);
+        if (this.ownerUser != null) tag.putString("ownerUser", this.ownerUser);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+        if (tag.hasUUID("ownerID")) this.ownerID = tag.getUUID("ownerID");
+        if (tag.contains("ownerUser")) this.ownerUser = tag.getString("ownerUser");
     }
 
     @Override
