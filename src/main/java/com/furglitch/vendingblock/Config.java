@@ -58,6 +58,19 @@ public class Config {
     
     public static class Server {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+        
+        public static final ModConfigSpec.EnumValue<BreakLevel> BREAK_LEVEL = BUILDER
+            .comment("Defines who besides the block owner can break the vending block.\n\nSee minecraft.wiki for more information on permission levels.")
+            .translation("config.vendingblock.server.breakLevel")
+            .defineEnum("breakLevel", BreakLevel.GAMEMASTER);
+
+        public enum BreakLevel {
+            SERVER_OWNER,
+            ADMIN,
+            GAMEMASTER,
+            MODERATOR,
+            BLOCK_OWNER_ONLY;
+        }
 
         public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
             .comment("Animation mode for vending block items\nApplies to all users who have selected 'SERVER_DEFAULT' (default) in their client settings.")

@@ -1,5 +1,6 @@
 package com.furglitch.vendingblock.block.events;
 
+import com.furglitch.vendingblock.Config;
 import com.furglitch.vendingblock.blockentity.DisplayBlockEntity;
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
 
@@ -21,15 +22,42 @@ public class BreakEvent {
 
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof VendorBlockEntity vendorBlockEntity) {
-            if (!vendorBlockEntity.isOwner(player)) {
+            if (!canBreak(player, vendorBlockEntity)) {
                 event.setCanceled(true);
             }
         }
         else if (be instanceof DisplayBlockEntity displayBlockEntity) {
-            if (!displayBlockEntity.isOwner(player)) {
+            if (!canBreak(player, displayBlockEntity)) {
                 event.setCanceled(true);
             }
         }
-
     }
+
+    private static boolean canBreak(Player player, Object blockEntity) {
+
+        Config.Server.BreakLevel breakLevel = Config.Server.BREAK_LEVEL.get();
+
+        if (blockEntity instanceof VendorBlockEntity vendor && vendor.isOwner(player)) return true;
+        if (blockEntity instanceof DisplayBlockEntity display && display.isOwner(player)) return true;
+
+        switch (breakLevel) {
+            case SERVER_OWNER:
+                return isServerOwner(player);
+            case ADMIN:
+                return isAdmin(player) || isServerOwner(player);
+            case GAMEMASTER:
+                return isGamemaster(player) || isAdmin(player) || isServerOwner(player);
+            case MODERATOR:
+                return isModerator(player) || isGamemaster(player) || isAdmin(player) || isServerOwner(player);
+            case BLOCK_OWNER_ONLY:
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    private static boolean isServerOwner(Player player) { return player.hasPermissions(4); }
+    private static boolean isAdmin(Player player) { return player.hasPermissions(3); }
+    private static boolean isGamemaster(Player player) { return player.hasPermissions(2); }
+    private static boolean isModerator(Player player) { return player.hasPermissions(1); }
 }
