@@ -1,6 +1,7 @@
 package com.furglitch.vendingblock;
 
 import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Mixins;
 
 import com.furglitch.vendingblock.block.events.BreakEvent;
 import com.furglitch.vendingblock.blockentity.VendorBlockEntityDisplay;
@@ -53,6 +54,7 @@ public class VendingBlock {
         modEventBus.addListener(com.furglitch.vendingblock.network.NetworkHandler::register);
         modContainer.registerConfig(ModConfig.Type.CLIENT, Config.Client.SPEC);
         modContainer.registerConfig(ModConfig.Type.SERVER, Config.Server.SPEC);
+        Mixins.addConfiguration("vendingblock.mixins.json");
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {

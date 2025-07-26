@@ -23,7 +23,7 @@ group = mod_group_id
 
 repositories {
     maven { url = "https://api.modrinth.com/maven" } // Modrinth
-    maven { url = "https://maven.blamejared.com/" } // JEI Host
+    maven { url = "https://maven.blamejared.com/" } // JEI, CarryOn Host
     maven { url = "https://modmaven.dev/" } // JEI fallback
     maven { url = "https://maven.terraformersmc.com/" } // EMI Host
     maven { url = "https://maven.shedaniel.me/" } // REI Host
@@ -148,6 +148,10 @@ dependencies {
     compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
     //localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 
+    // CarryOn integration
+    compileOnly "tschipp.carryon:carryon-neoforge-${minecraft_version}:${carryon_version}"
+    localRuntime "tschipp.carryon:carryon-neoforge-${minecraft_version}:${carryon_version}"
+
 
 }
 
@@ -169,7 +173,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             jade_version           : jade_version,
             jei_version            : jei_version,
             emi_version            : emi_version,
-            rei_version            : rei_version
+            rei_version            : rei_version,
+            carryon_version        : carryon_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties

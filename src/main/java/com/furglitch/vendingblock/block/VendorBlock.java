@@ -29,6 +29,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.fml.ModList;
 
 public class VendorBlock extends BaseEntityBlock {
 
@@ -75,6 +76,10 @@ public class VendorBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof VendorBlockEntity vendorBlockEntity) {
+            if (vendorBlockEntity.isOwner(player) && ModList.get().isLoaded("carryon") && player.isShiftKeyDown()) {
+                return InteractionResult.SUCCESS; // Allows owners to pick up the vendor block with CarryOn
+            }
+
             vendorBlockEntity.updateOwnershipInfo(player);
             
             if (player.getMainHandItem().is(ItemRegistry.VENDOR_KEY.get()) && !level.isClientSide()) {
