@@ -65,6 +65,20 @@ public class DisplayBlockEntity extends BlockEntity implements MenuProvider {
             }
         }
     };
+    
+    public boolean isOwner(Player player) {
+        if (this.ownerID != null && this.ownerID.equals(player.getUUID())) {
+            return true;
+        }
+        
+        if (this.ownerUser != null && this.ownerUser.equals(player.getName().getString())) {
+            this.ownerID = player.getUUID();
+            setChanged();
+            return true;
+        }
+        
+        return false;
+    }
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
