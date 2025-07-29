@@ -2,7 +2,9 @@ package com.furglitch.vendingblock.gui.trade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.furglitch.vendingblock.Config;
 import com.furglitch.vendingblock.VendingBlock;
 import com.furglitch.vendingblock.gui.components.FilterSlot;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -15,6 +17,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item.TooltipContext;
 
 public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> {
 
@@ -54,8 +58,38 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-        this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
-        
+
+        Component scrollMsg = null;
+        int msgColor = 0xFFAA00; // Minecraft gold
+        Slot hoveredSlot = this.getSlotUnderMouse();
+        if (hoveredSlot instanceof FilterSlot filterSlot) {
+            int slotIndex = filterSlot.getSlotIndex();
+            if (slotIndex == 0 || slotIndex == 10) {
+                ItemStack stack = hoveredSlot.getItem();
+                if (slotIndex == 0) scrollMsg = Component.translatable("menu.vendingblock.tooltip.scroll.product");
+                if (slotIndex == 10) scrollMsg = Component.translatable("menu.vendingblock.tooltip.scroll.price");
+
+                if (!stack.isEmpty()) {
+                    if (Config.Client.SCROLLTIP_POSITION.get() == Config.Client.ScrolltipPosition.ITEM_TOOLTIP) {
+                        scrollMsg = scrollMsg.copy().withColor(msgColor);
+                        List<Component> tooltipLines = stack.getTooltipLines(
+                            TooltipContext.EMPTY, this.minecraft.player, TooltipFlag.Default.NORMAL
+                        );
+                        tooltipLines.add(scrollMsg);
+                        pGuiGraphics.renderTooltip(this.font, tooltipLines, Optional.empty(), pMouseX, pMouseY);
+                    } else {
+                        int tooltipX = (this.width/2) - (this.font.width(scrollMsg) / 2);
+                        int tooltipY = ((this.height - this.imageHeight) / 2) - (this.font.lineHeight + 2);
+                        pGuiGraphics.drawString(this.font, scrollMsg, tooltipX, tooltipY, msgColor, false);
+                        this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+                    }
+                }
+                return;
+            }
+            if (slotIndex == 11) {
+                this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+            }
+        }
         this.renderFilterSlotTooltips(pGuiGraphics, pMouseX, pMouseY);
     }
     

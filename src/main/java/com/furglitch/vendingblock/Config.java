@@ -24,6 +24,16 @@ public class Config {
             FACING_PLAYER;
         }
 
+        public static final ModConfigSpec.EnumValue<ScrolltipPosition> SCROLLTIP_POSITION = BUILDER
+            .comment("Position of the 'scroll' tooltip in the vendor block GUI.\n\n'TOP' shows it at the top of the GUI,\n'ITEM_TOOLTIP' adds the scroll tooltip to the item tooltip.")
+            .translation("config.vendingblock.scrolltip")
+            .defineEnum("scrolltipPosition", ScrolltipPosition.TOP);
+
+        public enum ScrolltipPosition {
+            ITEM_TOOLTIP,
+            TOP;
+        }
+
         static { BUILDER.push("ownerNotifications"); }
 
         public static final ModConfigSpec.BooleanValue PURCHASE_MESSAGES = BUILDER

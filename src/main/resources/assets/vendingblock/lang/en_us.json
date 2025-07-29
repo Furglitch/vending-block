@@ -31,6 +31,10 @@
   "menu.vendingblock.tooltip.facade": "Facade",
   "menu.vendingblock.tooltip.infinite": "Infinite Inventory",
   "menu.vendingblock.tooltip.discard": "Discard Payment",
+  
+  "config.vendingblock.scrolltip": "Scroll Tooltip Position",
+  "menu.vendingblock.tooltip.scroll.product": "Scroll to adjust sale count",
+  "menu.vendingblock.tooltip.scroll.price": "Scroll to adjust buy price",
 
   "msg.vendingblock.sell": "You bought %s %s from %s for %s %s",
   "msg.vendingblock.request": "You gave %s %s to %s",
