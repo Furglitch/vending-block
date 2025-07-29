@@ -150,6 +150,7 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
             if (!stack.isEmpty()) {
                 int newCount = stack.getCount() + (delta < 0 ? -1 : 1);
                 newCount = Math.max(1, newCount);
+                newCount = Math.min(newCount, 99); // Crashes at 100 // TODO figure out how to remove this limit
                 if (stack.getMaxStackSize() == 1) newCount = Math.min(newCount, 9);
                 stack.setCount(newCount);
                 com.furglitch.vendingblock.network.FilterSlotUpdatePacket packet =
