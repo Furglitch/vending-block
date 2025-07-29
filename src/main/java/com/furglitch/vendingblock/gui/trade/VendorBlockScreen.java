@@ -149,7 +149,7 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
             ItemStack stack = menu.blockEntity.inventory.getStackInSlot(slot).copy();
             if (!stack.isEmpty()) {
                 int newCount = stack.getCount() + (delta < 0 ? -1 : 1);
-                newCount = Math.max(1, Math.min(newCount, stack.getMaxStackSize()));
+                newCount = Math.max(1, newCount);
                 stack.setCount(newCount);
                 com.furglitch.vendingblock.network.FilterSlotUpdatePacket packet =
                     new com.furglitch.vendingblock.network.FilterSlotUpdatePacket(
