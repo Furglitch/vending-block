@@ -11,7 +11,7 @@ public class Config {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
-            .comment("Animation mode for vending block items.\n\n'SERVER_DEFAULT' uses the server-side setting, which is 'ROTATION' unless changed by admins.")
+            .comment("Animation mode for vending block items.\n\n'SERVER_DEFAULT' uses the server-side setting, which is 'ROTATION' unless changed by admins.\n")
             .translation("config.vendingblock.animation.mode")
             .defineEnum("clientAnimationMode", AnimationMode.SERVER_DEFAULT);
 
@@ -25,7 +25,7 @@ public class Config {
         }
 
         public static final ModConfigSpec.EnumValue<ScrolltipPosition> SCROLLTIP_POSITION = BUILDER
-            .comment("Position of the 'scroll' tooltip in the vendor block GUI.\n\n'TOP' shows it at the top of the GUI,\n'ITEM_TOOLTIP' adds the scroll tooltip to the item tooltip.")
+            .comment("Position of the 'scroll' tooltip in the vendor block GUI.\n\n'TOP' shows it at the top of the GUI,\n'ITEM_TOOLTIP' adds the scroll tooltip to the item tooltip.\n")
             .translation("config.vendingblock.scrolltip")
             .defineEnum("scrolltipPosition", ScrolltipPosition.TOP);
 
@@ -70,7 +70,7 @@ public class Config {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
         
         public static final ModConfigSpec.EnumValue<BreakLevel> BREAK_LEVEL = BUILDER
-            .comment("Defines who besides the block owner can break the vending block.\n\nSee minecraft.wiki for more information on permission levels.")
+            .comment("Defines who besides the block owner can break the vending block.\n\nSee minecraft.wiki for more information on permission levels.\n")
             .translation("config.vendingblock.server.breakLevel")
             .defineEnum("breakLevel", BreakLevel.GAMEMASTER);
 
@@ -83,7 +83,7 @@ public class Config {
         }
 
         public static final ModConfigSpec.EnumValue<AnimationMode> ANIMATION_MODE = BUILDER
-            .comment("Animation mode for vending block items\nApplies to all users who have selected 'SERVER_DEFAULT' (default) in their client settings.")
+            .comment("Animation mode for vending block items\nApplies to all users who have selected 'SERVER_DEFAULT' (default) in their client settings.\n")
             .translation("config.vendingblock.animation.mode")
             .defineEnum("animationMode", AnimationMode.ROTATION);
 
