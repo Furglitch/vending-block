@@ -35,15 +35,6 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: version
-    attributes:
-      label: Mod version
-      description: Do not put 'latest', put the version number
-      value: '1.X.X'
-    validations:
-      required: true
-
   - type: textarea
     id: logs
     attributes:
