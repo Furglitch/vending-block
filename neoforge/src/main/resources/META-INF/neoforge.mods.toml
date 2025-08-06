@@ -1,19 +1,21 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
-displayURL="https://github.com/Furglitch/vending-block"
-issueTrackerURL="https://github.com/Furglitch/vending-block/issues"
-updateJSONURL="https://raw.githubusercontent.com/Furglitch/vending-block/refs/heads/main/neoforge/updates.json"
 license = "GNU GPLv3.0"
 
 [[mods]]
 modId = "vendingblock"
 version = "${version}"
 displayName = "Vending Block: Restocked"
+displayURL = "https://github.com/Furglitch/vending-block"
+issueTrackerURL = "https://github.com/Furglitch/vending-block/issues"
+updateJSONURL = "https://raw.githubusercontent.com/Furglitch/vending-block/refs/heads/1.21.1/updates.json"
+#credits = ""
 authors = "Furglitch"
-description = '''
-A revival of the classic Vending Block mod, allowing players set up and use custom shops!
-'''
-#logoFile = ""
+description = "A revival of the classic Vending Block mod, allowing players set up and use custom shops!"
+logoFile="pack.png"
+
+#[[mixins]]
+#config = "vendingblock.mixins.json"
 
 [[dependencies.vendingblock]]
 modId = "neoforge"
