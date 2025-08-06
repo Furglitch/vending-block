@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/Furglitch/vending-block",
+    "1.21.1": {
+        "1.2.0": "Architectury Rewrite",
+        "1.1.3": "Add scrolling count hint\nClean up config descriptions\nRemove product-price stack size restriction\nLimit product-price count to 99\nLimit single stack product-price to 1",
+        "1.1.2": "Fixed non-owner breaking display block\nFixed non-owner accessing GUI display block\nAdded Carry On support",
+        "1.1.1": "Added ghost dragging to Display Block",
+        "1.1.0": "Added Display Block\nImproved Facades\nImproved Blacklisting\nImproved GUI\nAdding scrolling count adjustment\nAdd payment discard for admin shops\nLimit Vendor Key stack to 1",
+        "1.0.0": "Initial Release"
+    },
+    "promos": {
+        "1.21.1-latest": "1.2.0",
+        "1.21.1-recommended": "1.1.3"
+    }
+}
