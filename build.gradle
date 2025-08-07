@@ -31,11 +31,10 @@ subprojects {
     }
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
+        maven { // FzzyConfig
+            name = "FzzyMaven"
+            url = uri("https://maven.fzzyhmstrs.me/")
+        }
     }
 
     loom {
@@ -79,6 +78,30 @@ subprojects {
             // Notice: This block does NOT have the same function as the block in the top level.
             // The repositories here will be used for publishing your artifact, not for
             // retrieving dependencies.
+        }
+    }
+}
+
+project(":fabric") { 
+    repositories {
+    }
+
+    dependencies {
+        implementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+${rootProject.minecraft_version_secondary}")
+    }
+}
+
+project(":neoforge") {
+    repositories {
+        maven { // YetAnotherConfigLib Dependency
+            name 'Kotlin for Forge'
+            url 'https://thedarkcolour.github.io/KotlinForForge/'
+        }
+    }
+
+    dependencies {
+        implementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+${rootProject.minecraft_version_secondary}+neoforge") {
+            exclude group: "net.neoforged.fancymodloader", module: "loader"
         }
     }
 }

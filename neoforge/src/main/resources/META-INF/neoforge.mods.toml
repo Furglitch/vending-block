@@ -2,6 +2,8 @@ modLoader = "javafml"
 loaderVersion = "[4,)"
 license = "GNU GPLv3.0"
 
+modProperties={fzzy_config="vendingblock"}
+
 [[mods]]
 modId = "vendingblock"
 version = "${version}"
@@ -36,6 +38,13 @@ modId = "architectury"
 type = "required"
 versionRange = "[13.0.8,)"
 ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.vendingblock]]
+modId = "fzzy_config"
+mandatory = true
+versionRange = "[0.7.2,)"
+ordering = "NONE"
 side = "BOTH"
 
 [[mixins]]

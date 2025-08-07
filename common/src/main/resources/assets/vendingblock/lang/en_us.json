@@ -1,0 +1,52 @@
+{
+    "vendingblock.config.client": "Client Settings",
+    "vendingblock.config.server": "Server Settings",
+
+    "vendingblock.config.client.animationMode": "Product Display Animation",
+    "vendingblock.config.client.animationMode.desc": "Set the animation for vending block product display",
+    "vendingblock.config.client.animationMode.SERVER": "Server Default",
+    "vendingblock.config.client.animationMode.STILL": "Still",
+    "vendingblock.config.client.animationMode.ROTATE": "Spin",
+    "vendingblock.config.client.animationMode.BOB": "Bob",
+    "vendingblock.config.client.animationMode.BOB_ROTATE": "Spin and Bob",
+    "vendingblock.config.client.animationMode.FACE": "Face Player",
+
+    "vendingblock.config.client.scrolltipPosition": "Scroll Tip Position",
+    "vendingblock.config.client.scrolltipPosition.desc": "Set the scroll tip display location",
+    "vendingblock.config.client.scrolltipPosition.TOP": "Above GUI",
+    "vendingblock.config.client.scrolltipPosition.ITEM": "In Item Tooltip",
+
+    "vendingblock.config.client.notificationSection": "Notification Settings",
+    "vendingblock.config.client.notificationSection.msgPurchase": "Purchases",
+    "vendingblock.config.client.notificationSection.msgGiveaway": "Giveaways",
+    "vendingblock.config.client.notificationSection.msgDonation": "Donations",
+    "vendingblock.config.client.notificationSection.msgEmpty": "Out Of Stock",
+    "vendingblock.config.client.notificationSection.msgFull": "Full Inventory",
+
+    "vendingblock.config.server.creativeKey": "Key in Creative Menu",
+    "vendingblock.config.server.creativeKey.desc": "Toggle whether the Vendor's Key is available in the creative menu.",
+
+    "vendingblock.config.server.breakLevel": "Block Break Level",
+    "vendingblock.config.server.breakLevel.desc": "Set the permission level required to break vending blocks and display blocks.\n\nSee minecraft.wiki for more information on permission levels",
+    "vendingblock.config.server.breakLevel.SERVER_OWNER": "Server Owner",
+    "vendingblock.config.server.breakLevel.ADMIN": "Admin",
+    "vendingblock.config.server.breakLevel.GAMEMASTER": "Game Master",
+    "vendingblock.config.server.breakLevel.MODERATOR": "Moderator",
+    "vendingblock.config.server.breakLevel.BLOCK_OWNER_ONLY": "Block Owner Only",
+
+    "vendingblock.config.server.animationMode": "Product Display Animation",
+    "vendingblock.config.server.animationMode.desc": "Set the animation for vending block product display",
+    "vendingblock.config.server.animationMode.STILL": "Still",
+    "vendingblock.config.server.animationMode.ROTATE": "Spin",
+    "vendingblock.config.server.animationMode.BOB": "Bob",
+    "vendingblock.config.server.animationMode.BOB_ROTATE": "Spin and Bob",
+    "vendingblock.config.server.animationMode.FACE": "Face Player",
+
+    "vendingblock.config.server.productBlacklist": "Product Blacklist",
+    "vendingblock.config.server.productBlacklist.desc": "Items that cannot be sold in vending blocks",
+
+    "vendingblock.config.server.facadeBlacklist": "Facade Blacklist",
+    "vendingblock.config.server.facadeBlacklist.desc": "Items that cannot be used as facades for vending blocks"
+
+
+}
