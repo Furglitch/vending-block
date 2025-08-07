@@ -87,7 +87,7 @@ project(":fabric") {
     }
 
     dependencies {
-        implementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+${rootProject.minecraft_version_secondary}")
+        modImplementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+${rootProject.minecraft_version_secondary}")
     }
 }
 

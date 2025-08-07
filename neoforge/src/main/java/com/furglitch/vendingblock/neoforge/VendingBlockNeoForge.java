@@ -1,7 +1,8 @@
-package com.furglitch.vendingblock;
+package com.furglitch.vendingblock.neoforge;
 
-import com.furglitch.vendingblock.config.ClientConfig;
-import com.furglitch.vendingblock.config.ServerConfig;
+import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.neoforge.config.ClientConfig;
+import com.furglitch.vendingblock.neoforge.config.ServerConfig;
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import me.fzzyhmstrs.fzzy_config.api.RegisterType;

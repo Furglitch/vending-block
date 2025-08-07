@@ -1,17 +1,18 @@
 package com.furglitch.vendingblock.fabric;
 
-import net.fabricmc.api.ModInitializer;
-
 import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.fabric.config.ClientConfig;
+import com.furglitch.vendingblock.fabric.config.ServerConfig;
+
+import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
+import me.fzzyhmstrs.fzzy_config.api.RegisterType;
+import net.fabricmc.api.ModInitializer;
 
 public final class VendingBlockFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
-
-        // Run our common setup.
+        ConfigApiJava.registerAndLoadConfig(ClientConfig::new, RegisterType.CLIENT);
+        ConfigApiJava.registerAndLoadConfig(ServerConfig::new, RegisterType.BOTH);
         VendingBlock.init();
     }
 }

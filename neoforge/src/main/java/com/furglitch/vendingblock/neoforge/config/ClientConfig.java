@@ -1,4 +1,4 @@
-package com.furglitch.vendingblock.config;
+package com.furglitch.vendingblock.neoforge.config;
 
 import org.jetbrains.annotations.NotNull;
 
