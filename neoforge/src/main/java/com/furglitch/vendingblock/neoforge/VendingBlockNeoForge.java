@@ -8,7 +8,6 @@ import net.neoforged.fml.common.Mod;
 public final class VendingBlockNeoForge {
 
     public VendingBlockNeoForge() {
-
         VendingBlock.init();
     }
 }
