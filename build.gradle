@@ -25,9 +25,14 @@ allprojects {
                     url = "https://api.modrinth.com/maven"
                 }
             }
-            filter {
-                includeGroup "maven.modrinth"
+            filter { includeGroup "maven.modrinth" }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven { url "https://cursemaven.com" }
             }
+            filter { includeGroup "curse.maven" }
         }
     }
 }
@@ -101,6 +106,8 @@ project(":fabric") {
     }
 
     dependencies {
+        modRuntimeOnly ("curse.maven:menulogue-682371:5705587")
+        modRuntimeOnly ("curse.maven:catalogue-459701:6458217")
         modRuntimeOnly ("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}")
     }
 }
@@ -114,6 +121,7 @@ project(":neoforge") {
     }
 
     dependencies {
+        runtimeOnly ("curse.maven:catalogue-459701:6458225")
         runtimeOnly ("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+neoforge") {
             exclude group: "net.neoforged.fancymodloader", module: "loader"
         }
