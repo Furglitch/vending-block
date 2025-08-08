@@ -1,4 +1,8 @@
 {
+    "block.vendingblock.vending_block": "Vending Block",
+    "block.vendingblock.display_block": "Display Block",
+    "item.vendingblock.vendor_key": "Vendor's Key",
+
     "vendingblock.config.client": "Client Settings",
     "vendingblock.config.server": "Server Settings",
 
