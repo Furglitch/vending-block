@@ -17,6 +17,18 @@ allprojects {
             name = 'ParchmentMC'
             url = 'https://maven.parchmentmc.org'
         }
+        
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = "https://api.modrinth.com/maven"
+                }
+            }
+            filter {
+                includeGroup "maven.modrinth"
+            }
+        }
     }
 }
 
@@ -47,6 +59,8 @@ subprojects {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:2024.11.17@zip")
         }
+
+        modCompileOnly ("maven.modrinth:fzzy-config:${rootProject.fzzyconfig_version}")
     }
 
     java {
@@ -87,7 +101,7 @@ project(":fabric") {
     }
 
     dependencies {
-        modImplementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+${rootProject.minecraft_version_secondary}")
+        modRuntimeOnly ("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}")
     }
 }
 
@@ -100,7 +114,7 @@ project(":neoforge") {
     }
 
     dependencies {
-        implementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+${rootProject.minecraft_version_secondary}+neoforge") {
+        runtimeOnly ("me.fzzyhmstrs:fzzy_config:${rootProject.fzzyconfig_version}+neoforge") {
             exclude group: "net.neoforged.fancymodloader", module: "loader"
         }
     }

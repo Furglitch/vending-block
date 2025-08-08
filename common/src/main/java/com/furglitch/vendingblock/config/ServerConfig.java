@@ -1,4 +1,4 @@
-package com.furglitch.vendingblock.fabric.config;
+package com.furglitch.vendingblock.config;
 
 import java.util.Set;
 
