@@ -2,6 +2,7 @@ package com.furglitch.vendingblock.block;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -43,7 +44,7 @@ public class VendorBlock extends BaseEntityBlock {
 
     @Nullable @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new VendorBlockEntity(pos, state);
     }
 
 }

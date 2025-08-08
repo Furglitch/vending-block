@@ -19,12 +19,12 @@ public class BlockRegistry {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(VendingBlock.MOD_ID, Registries.BLOCK);
 
-    public static final RegistrySupplier<Block> VENDOR = registerBlock(
+    public static final RegistrySupplier<Block> VENDOR = register(
         "vending_block", 
         () -> new VendorBlock(defaultProperties("vending_block"))
     );
 
-    public static final RegistrySupplier<Block> DISPLAY = registerBlock(
+    public static final RegistrySupplier<Block> DISPLAY = register(
         "display_block", 
         () -> new DisplayBlock(defaultProperties("display_block"))
     );
@@ -33,7 +33,7 @@ public class BlockRegistry {
         BLOCKS.register();
     }
 
-    public static RegistrySupplier<Block> registerBlock(String name, Supplier<Block> block) {
+    public static RegistrySupplier<Block> register(String name, Supplier<Block> block) {
         return BLOCKS.register(
             ResourceLocation.fromNamespaceAndPath(VendingBlock.MOD_ID, name),
             block

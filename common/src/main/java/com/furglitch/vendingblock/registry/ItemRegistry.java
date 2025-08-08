@@ -16,7 +16,7 @@ public class ItemRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(VendingBlock.MOD_ID, Registries.ITEM);
 
-    public static RegistrySupplier<Item> VENDOR_ITEM = registerItem(
+    public static RegistrySupplier<Item> VENDOR_ITEM = register(
         "vending_block",
         () -> new BlockItem(
             BlockRegistry.VENDOR.get(),
@@ -24,7 +24,7 @@ public class ItemRegistry {
         )
     );
 
-    public static RegistrySupplier<Item> DISPLAY_ITEM = registerItem(
+    public static RegistrySupplier<Item> DISPLAY_ITEM = register(
         "display_block",
         () -> new BlockItem(
             BlockRegistry.DISPLAY.get(),
@@ -32,7 +32,7 @@ public class ItemRegistry {
         )
     );
 
-    public static RegistrySupplier<Item> KEY = registerItem(
+    public static RegistrySupplier<Item> KEY = register(
         "vendor_key",
         () -> new Item(defaultProperties("vendor_key").arch$tab(CreativeModeTabs.FUNCTIONAL_BLOCKS))
     );
@@ -41,7 +41,7 @@ public class ItemRegistry {
         ITEMS.register();
     }
 
-    public static RegistrySupplier<Item> registerItem(String name, Supplier<Item> item) {
+    public static RegistrySupplier<Item> register(String name, Supplier<Item> item) {
         return ITEMS.register(
             ResourceLocation.fromNamespaceAndPath(VendingBlock.MOD_ID, name),
             item

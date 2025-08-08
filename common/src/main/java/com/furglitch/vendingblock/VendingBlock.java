@@ -2,6 +2,7 @@ package com.furglitch.vendingblock;
 
 import com.furglitch.vendingblock.config.ClientConfig;
 import com.furglitch.vendingblock.config.ServerConfig;
+import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 import com.furglitch.vendingblock.registry.BlockRegistry;
 import com.furglitch.vendingblock.registry.ItemRegistry;
 
@@ -16,6 +17,7 @@ public final class VendingBlock {
         ConfigApiJava.registerAndLoadConfig(ServerConfig::new, RegisterType.BOTH);      
 
         BlockRegistry.init();
+        BlockEntityRegistry.init();
         ItemRegistry.init();  
     }
 }
