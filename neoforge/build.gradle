@@ -40,6 +40,21 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 }
+loom {
+    runs {
+        Client2 {
+            client()
+            name = "Client 2"
+            vmArg "-Dneoforge.development=true"
+            property "neoforge.log.level", "debug"
+            property "user.name", "testSecondary"
+            programArg "--username"
+            programArg "testSecondary"
+            programArg "--port"
+            programArg "25566"
+        }
+    }
+}
 
 processResources {
     inputs.property 'version', project.version
