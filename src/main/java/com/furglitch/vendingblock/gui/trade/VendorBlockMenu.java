@@ -53,6 +53,9 @@ public class VendorBlockMenu extends AbstractContainerMenu{
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
     private static final int TE_INVENTORY_SLOT_COUNT = 12;
+    private static final int TE_INVENTORY_STOCK_FIRST_SLOT_INDEX = TE_INVENTORY_FIRST_SLOT_INDEX + 2;
+    private static final int TE_INVENTORY_STOCK_SLOT_COUNT = 9;
+
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -61,8 +64,8 @@ public class VendorBlockMenu extends AbstractContainerMenu{
         ItemStack copyOfSourceStack = sourceStack.copy();
 
         if (pIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
-            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX
-                    + TE_INVENTORY_SLOT_COUNT, false)) {
+            if (!moveItemStackTo(sourceStack, TE_INVENTORY_STOCK_FIRST_SLOT_INDEX,
+                    TE_INVENTORY_STOCK_FIRST_SLOT_INDEX + TE_INVENTORY_STOCK_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
             }
         } else if (pIndex < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
