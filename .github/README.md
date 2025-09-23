@@ -12,6 +12,12 @@
 
 <br/>
 <br/>
+
+> $${\color{red}State \space of \space Development}$$<br/>
+> Currently, the mod is undergoing a complete rewrite, utilizing the Architectury API to add Fabric support. I'm also *considering* developing for some previous versions of Minecraft, at the very least 1.20.X.<br/>
+> The rewrite will be handled in the [architectury-rewrite](https://github.com/Furglitch/vending-block/tree/architectury-rewrite) branch.<br/>
+> Current issues will be addressed in the rewrite, unless severe enough to warrant immediate attention.
+
 A modern revival of Vending Block from back when Minecraft versions were in the single-digits! Once again, players have a simple way to trade with each other, even when they're not online!
 <br/>
 <br/>
