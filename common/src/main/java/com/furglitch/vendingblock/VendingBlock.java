@@ -5,6 +5,7 @@ import com.furglitch.vendingblock.config.ServerConfig;
 import com.furglitch.vendingblock.registry.BlockEntityRegistry;
 import com.furglitch.vendingblock.registry.BlockRegistry;
 import com.furglitch.vendingblock.registry.ItemRegistry;
+import com.furglitch.vendingblock.registry.MenuRegistry;
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import me.fzzyhmstrs.fzzy_config.api.RegisterType;
@@ -18,6 +19,7 @@ public final class VendingBlock {
 
         BlockRegistry.init();
         BlockEntityRegistry.init();
-        ItemRegistry.init();  
+        ItemRegistry.init();
+        MenuRegistry.init();
     }
 }
