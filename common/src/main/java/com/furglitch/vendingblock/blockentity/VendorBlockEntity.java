@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -66,12 +67,15 @@ public class VendorBlockEntity extends BaseContainerBlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, Provider registries) {
         super.saveAdditional(tag, registries);
+    ContainerHelper.saveAllItems(tag, this.items, registries);
         ownerInfo.saveNBT(tag);
     }
 
     @Override
     public void loadAdditional(CompoundTag tag, Provider registries) {
         super.loadAdditional(tag, registries);
+        this.items = NonNullList.withSize(inv_size, ItemStack.EMPTY);
+    ContainerHelper.loadAllItems(tag, this.items, registries);
         ownerInfo.loadNBT(tag);
     }
     

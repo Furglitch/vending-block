@@ -53,7 +53,28 @@ public class VendorBlockMenu extends AbstractContainerMenu {
         for (int i = 0; i < CONTAINER_INVENTORY_ROW_COUNT; i++) {
             for (int j = 0; j < CONTAINER_INVENTORY_COLUMN_COUNT; j++) {
                 int slotIndex = j + i * 3;
-                this.addSlot(new Slot(cont, slotIndex, 62 + (j * 18), 17 + (i * 18)));
+                this.addSlot(new Slot(cont, slotIndex, 62 + (j * 18), 17 + (i * 18)) {
+                    @Override
+                    public void set(ItemStack stack) {
+                        super.set(stack);
+                        notifyContainerChanged(cont);
+                    }
+
+                    @Override
+                    public void onTake(Player player, ItemStack stack) {
+                        super.onTake(player, stack);
+                        notifyContainerChanged(cont);
+                    }
+                });
+            }
+        }
+    }
+
+    private void notifyContainerChanged(Container cont) {
+        if (cont instanceof VendorBlockEntity be) {
+            be.setChanged();
+            if (be.getLevel() != null) {
+                be.getLevel().sendBlockUpdated(be.getBlockPos(), be.getBlockState(), be.getBlockState(), 3);
             }
         }
     }
