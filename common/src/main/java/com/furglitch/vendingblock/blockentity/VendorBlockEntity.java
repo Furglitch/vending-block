@@ -21,6 +21,7 @@ public class VendorBlockEntity extends BaseContainerBlockEntity {
 
     private static final int inv_size = 9;
     private NonNullList<ItemStack> items;
+    private NonNullList<ItemStack> filterItems = NonNullList.withSize(3, ItemStack.EMPTY);
     private ContainerData data;
 
     private final OwnerInfo ownerInfo = new OwnerInfo();
@@ -45,6 +46,20 @@ public class VendorBlockEntity extends BaseContainerBlockEntity {
         };
     }
 
+    public ItemStack getFilterItem(int index) {
+        if (index < 0 || index >= this.filterItems.size()) return ItemStack.EMPTY;
+        return this.filterItems.get(index);
+    }
+
+    public void setFilterItem(int index, ItemStack stack) {
+        if (index < 0 || index >= this.filterItems.size()) return;
+        this.filterItems.set(index, stack);
+        this.setChanged();
+        if (this.getLevel() != null) {
+            this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        }
+    }
+
     @Override
     protected Component getDefaultName() {
         return Component.translatable("block.vendingblock.vending_block");
@@ -67,7 +82,10 @@ public class VendorBlockEntity extends BaseContainerBlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, Provider registries) {
         super.saveAdditional(tag, registries);
-    ContainerHelper.saveAllItems(tag, this.items, registries);
+        ContainerHelper.saveAllItems(tag, this.items, registries);
+        CompoundTag filterTag = new CompoundTag();
+        ContainerHelper.saveAllItems(filterTag, this.filterItems, registries);
+        tag.put("filter_items", filterTag);
         ownerInfo.saveNBT(tag);
     }
 
@@ -75,7 +93,12 @@ public class VendorBlockEntity extends BaseContainerBlockEntity {
     public void loadAdditional(CompoundTag tag, Provider registries) {
         super.loadAdditional(tag, registries);
         this.items = NonNullList.withSize(inv_size, ItemStack.EMPTY);
-    ContainerHelper.loadAllItems(tag, this.items, registries);
+        ContainerHelper.loadAllItems(tag, this.items, registries);
+        this.filterItems = NonNullList.withSize(3, ItemStack.EMPTY);
+        if (tag.contains("filter_items")) {
+            CompoundTag filterTag = tag.getCompound("filter_items");
+            ContainerHelper.loadAllItems(filterTag, this.filterItems, registries);
+        }
         ownerInfo.loadNBT(tag);
     }
     

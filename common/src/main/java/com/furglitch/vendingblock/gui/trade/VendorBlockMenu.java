@@ -1,6 +1,7 @@
 package com.furglitch.vendingblock.gui.trade;
 
 import com.furglitch.vendingblock.blockentity.VendorBlockEntity;
+import com.furglitch.vendingblock.gui.components.GhostFilterSlot;
 import com.furglitch.vendingblock.registry.MenuRegistry;
 
 import net.minecraft.world.Container;
@@ -8,6 +9,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -68,6 +70,16 @@ public class VendorBlockMenu extends AbstractContainerMenu {
                 });
             }
         }
+        
+        if (cont instanceof VendorBlockEntity be) {
+            this.addSlot(new GhostFilterSlot(be, 0, 26, 17));
+            this.addSlot(new GhostFilterSlot(be, 1, 26, 53));
+            this.addSlot(new GhostFilterSlot(be, 2, 134, 17));
+        } else {
+            this.addSlot(new GhostFilterSlot(null, 0, 26, 17));
+            this.addSlot(new GhostFilterSlot(null, 1, 26, 53));
+            this.addSlot(new GhostFilterSlot(null, 2, 134, 17));
+        }
     }
 
     private void notifyContainerChanged(Container cont) {
@@ -107,6 +119,24 @@ public class VendorBlockMenu extends AbstractContainerMenu {
             slot.onTake(player, sourceStack);
         }
         return stack;
+    }
+
+    @Override
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        if (this.container instanceof VendorBlockEntity) {
+            if (slotId >= 0 && slotId < this.slots.size()) {
+                Slot slot = this.slots.get(slotId);
+                if (slot instanceof GhostFilterSlot ghost) {
+                    ItemStack carried = player.containerMenu != null ? player.containerMenu.getCarried() : ItemStack.EMPTY;
+                    if (carried == null) carried = ItemStack.EMPTY;
+                    ItemStack toSet = carried.isEmpty() ? ItemStack.EMPTY : carried.copy();
+                    if (!toSet.isEmpty()) toSet.setCount(1);
+                    ghost.set(toSet);
+                    return;
+                }
+            }
+        }
+        super.clicked(slotId, button, clickType, player);
     }
     
 }
