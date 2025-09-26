@@ -107,18 +107,46 @@ public class VendorBlockMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack stack = ItemStack.EMPTY;
+        ItemStack result = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot.hasItem()) {
-            ItemStack sourceStack = slot.getItem();
-            stack = sourceStack.copy();
 
-            if (sourceStack.isEmpty()) { slot.set(ItemStack.EMPTY); }
-            else { slot.setChanged(); }
+        if (slot != null && slot.hasItem()) {
+            ItemStack original = slot.getItem();
+            result = original.copy();
 
-            slot.onTake(player, sourceStack);
+            int containerSlots = CONTAINER_INVENTORY_ROW_COUNT * CONTAINER_INVENTORY_COLUMN_COUNT;
+            int ghostSlots = 3;
+            int totalContainer = containerSlots + ghostSlots;
+
+            if (index >= 0 && index < containerSlots) { // Block Inventory
+                if (!this.moveItemStackTo(original, totalContainer, this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+                slot.onTake(player, original);
+            }
+
+            else if (index >= totalContainer && index < this.slots.size()) { // Player Inventory
+                if (!this.moveItemStackTo(original, 0, containerSlots, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            else if (index >= containerSlots && index < totalContainer) { // Ghost Slots
+                return ItemStack.EMPTY;
+            }
+
+            if (original.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+
+            if (original.getCount() == result.getCount()) { return ItemStack.EMPTY; }
+
+            slot.onTake(player, original);
         }
-        return stack;
+
+        return result;
     }
 
     @Override
