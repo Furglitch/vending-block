@@ -55,7 +55,7 @@ public class VendorBlockMenu extends AbstractContainerMenu {
         for (int i = 0; i < CONTAINER_INVENTORY_ROW_COUNT; i++) {
             for (int j = 0; j < CONTAINER_INVENTORY_COLUMN_COUNT; j++) {
                 int slotIndex = j + i * 3;
-                this.addSlot(new Slot(cont, slotIndex, 62 + (j * 18), 17 + (i * 18)) {
+                this.addSlot(new Slot(cont, slotIndex, 44 + (j * 18), 17 + (i * 18)) {
                     @Override
                     public void set(ItemStack stack) {
                         super.set(stack);
@@ -72,13 +72,11 @@ public class VendorBlockMenu extends AbstractContainerMenu {
         }
         
         if (cont instanceof VendorBlockEntity be) {
-            this.addSlot(new GhostFilterSlot(be, 0, 26, 17));
-            this.addSlot(new GhostFilterSlot(be, 1, 26, 53));
-            this.addSlot(new GhostFilterSlot(be, 2, 134, 17));
+            this.addSlot(new GhostFilterSlot(be, 0, 116, 17));
+            this.addSlot(new GhostFilterSlot(be, 1, 116, 53));
         } else {
-            this.addSlot(new GhostFilterSlot(null, 0, 26, 17));
-            this.addSlot(new GhostFilterSlot(null, 1, 26, 53));
-            this.addSlot(new GhostFilterSlot(null, 2, 134, 17));
+            this.addSlot(new GhostFilterSlot(null, 0, 116, 17));
+            this.addSlot(new GhostFilterSlot(null, 1, 116, 53));
         }
     }
 
