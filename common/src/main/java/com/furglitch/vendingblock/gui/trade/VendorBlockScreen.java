@@ -79,18 +79,17 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
             y = (this.height - this.imageHeight) / 2;
             int iconX = x + 176;
             int iconY = y + 8;
-            int overlayWidth = 84;
             int overlayX = Math.max(x, iconX);
             int overlayY = Math.max(y, iconY);
-            int qtyY = overlayY + 92;
-            int minusX = overlayX + 12;
-            int plusX = overlayX + overlayWidth - 14;
-            int hitHalf = 8; // clickable square half-size (bigger to match button background)
-            if (mouseX >= minusX - hitHalf && mouseX < minusX + hitHalf && mouseY >= qtyY - hitHalf && mouseY < qtyY + hitHalf) {
+            int qtyY = overlayY + 54;
+            int minusX = overlayX + 3;
+            int plusX = overlayX + 64;
+            int buttonSize = 16;
+            if (mouseX >= minusX - buttonSize && mouseX < minusX + buttonSize && mouseY >= qtyY - buttonSize && mouseY < qtyY + buttonSize) {
                 this.tradeQuantity = Math.max(MIN_QUANTITY, this.tradeQuantity - 1);
                 return true;
             }
-            if (mouseX >= plusX - hitHalf && mouseX < plusX + hitHalf && mouseY >= qtyY - hitHalf && mouseY < qtyY + hitHalf) {
+            if (mouseX >= plusX - buttonSize && mouseX < plusX + buttonSize && mouseY >= qtyY - buttonSize && mouseY < qtyY + buttonSize) {
                 this.tradeQuantity = Math.min(MAX_QUANTITY, this.tradeQuantity + 1);
                 return true;
             }
