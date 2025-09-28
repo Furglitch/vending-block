@@ -42,12 +42,13 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
         graphics.blit(BACKGROUND, x + 116, y + 17, 0, 176, 16, 16, 384, 256); // Product Icon
         graphics.blit(BACKGROUND, x + 116, y + 53, 16, 176, 16, 16, 384, 256); // Price Icon
         graphics.blit(BACKGROUND, x + 176, y + 8, 0, 224, 23, 22, 384, 256); // Settings Tab
-        
-        // Settings Tab Icon (with Hover)
+
+        // Settings Tab Icon Hover
         int iconX = x + 176;
         int iconY = y + 8 + 3;
         int iconV = (mouseX >= iconX && mouseX < iconX + 16 && mouseY >= iconY && mouseY < iconY + 16) ? 16 : 0;
         graphics.blit(BACKGROUND, iconX, iconY, iconV, 192, 16, 16, 384, 256);
+
     }
 
     @Override
@@ -140,13 +141,19 @@ public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> 
         graphics.blit(BACKGROUND, overlayX + 3, overlayY + 21, 32, 176, 16, 16, 384, 256); // Facade Slot Icon
         CustomText.drawLeft(graphics, this.font, Component.literal("Facade"), overlayX + 22, overlayY + 25, 1.0f, 0xFFFFFF);
 
+    
         // Trade Limit Scroller
-        CustomText.drawCenter(graphics, this.font, Component.literal("Trade Limit"), overlayX + (overlayWidth / 2), overlayY + 43, 1.0f, 0xFFFFFF); 
-        graphics.blit(BACKGROUND, overlayX + 3, overlayY + 54, 0, 208, 16, 16, 384, 256); 
-        CustomText.drawCenter(graphics, this.font, Component.literal("-"), overlayX + 11, overlayY + 58, 1.0f, 0xFFFFFF); 
-        CustomText.drawCenter(graphics, this.font, Component.literal(Integer.toString(this.tradeQuantity)), overlayX + (overlayWidth / 2), overlayY + 58, 1.0f, 0xFFFFFF); 
-        graphics.blit(BACKGROUND, overlayX + 64, overlayY + 54, 0, 208, 16, 16, 384, 256); 
-        CustomText.drawCenter(graphics, this.font, Component.literal("+"), overlayX + 72, overlayY + 58, 1.0f, 0xFFFFFF); 
+        int minusBtnX = overlayX + 3;
+        int plusBtnX = overlayX + 64;
+        int btnY = overlayY + 54;
+        int minusU = (mouseX >= minusBtnX && mouseX < minusBtnX + 16 && mouseY >= btnY && mouseY < btnY + 16) ? 16 : 0;
+        int plusU = (mouseX >= plusBtnX && mouseX < plusBtnX + 16 && mouseY >= btnY && mouseY < btnY + 16) ? 16 : 0;
+        CustomText.drawCenter(graphics, this.font, Component.literal("Trade Limit"), overlayX + (overlayWidth / 2), overlayY + 43, 1.0f, 0xFFFFFF);
+        graphics.blit(BACKGROUND, minusBtnX, btnY, minusU, 208, 16, 16, 384, 256); // Minus Button
+        CustomText.drawCenter(graphics, this.font, Component.literal("-"), overlayX + 11, overlayY + 58, 1.0f, 0xFFFFFF);
+        CustomText.drawCenter(graphics, this.font, Component.literal(Integer.toString(this.tradeQuantity)), overlayX + (overlayWidth / 2), overlayY + 58, 1.0f, 0xFFFFFF);
+        graphics.blit(BACKGROUND, plusBtnX, btnY, plusU, 208, 16, 16, 384, 256); // Plus Button
+        CustomText.drawCenter(graphics, this.font, Component.literal("+"), overlayX + 72, overlayY + 58, 1.0f, 0xFFFFFF);
 
         // Admin Settings Section
         CustomText.drawCenter(graphics, this.font, Component.literal("ADMIN"), overlayX + (overlayWidth / 2), overlayY + 77, 1.0f, 0xFFFFFF);
