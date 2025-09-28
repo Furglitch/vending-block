@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class VendorBlockScreen extends AbstractContainerScreen<VendorBlockMenu> {
     
-    private static final ResourceLocation BACKGROUND =  ResourceLocation.fromNamespaceAndPath(VendingBlock.MOD_ID, "textures/gui/container/vendor_trade.png");
+    private static final ResourceLocation BACKGROUND =  ResourceLocation.fromNamespaceAndPath(VendingBlock.MOD_ID, "textures/gui/container/vendor.png");
     private boolean showSettingsOverlay = false;
     private SimpleEditBox ownerField;
     private int tradeQuantity = -1;
