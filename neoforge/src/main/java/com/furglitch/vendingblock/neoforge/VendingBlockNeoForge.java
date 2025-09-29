@@ -1,6 +1,7 @@
 package com.furglitch.vendingblock.neoforge;
 
 import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.gui.display.DisplayBlockScreen;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 import com.furglitch.vendingblock.registry.MenuRegistry;
 
@@ -22,6 +23,7 @@ public final class VendingBlockNeoForge {
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(MenuRegistry.VENDOR_MENU.get(), VendorBlockScreen::new);
+            event.register(MenuRegistry.DISPLAY_MENU.get(), DisplayBlockScreen::new);
         }
     }
 
