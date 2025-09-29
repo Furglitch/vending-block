@@ -3,6 +3,8 @@ package com.furglitch.vendingblock.registry;
 import java.util.function.Supplier;
 
 import com.furglitch.vendingblock.VendingBlock;
+import com.furglitch.vendingblock.gui.display.DisplayBlockMenu;
+import com.furglitch.vendingblock.gui.display.DisplayBlockScreen;
 import com.furglitch.vendingblock.gui.trade.VendorBlockMenu;
 import com.furglitch.vendingblock.gui.trade.VendorBlockScreen;
 
@@ -26,10 +28,21 @@ public class MenuRegistry {
         )
     );
 
+    public static RegistrySupplier<MenuType<DisplayBlockMenu>> DISPLAY_MENU = MENUS.register(
+        "display_menu",
+        () -> new MenuType<DisplayBlockMenu>(
+            DisplayBlockMenu::new,
+            defaultProperties("display_menu")
+        )
+    );
+
     public static void init() {
         MENUS.register();
         ClientLifecycleEvent.CLIENT_STARTED.register(client -> {
             dev.architectury.registry.menu.MenuRegistry.registerScreenFactory(VENDOR_MENU.get(), VendorBlockScreen::new);
+        });
+        ClientLifecycleEvent.CLIENT_STARTED.register(client -> {
+            dev.architectury.registry.menu.MenuRegistry.registerScreenFactory(DISPLAY_MENU.get(), DisplayBlockScreen::new);
         });
     }
 
