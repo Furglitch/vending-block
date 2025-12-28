@@ -18,6 +18,11 @@
 > The rewrite will be handled in the [architectury-rewrite](https://github.com/Furglitch/vending-block/tree/architectury-rewrite) branch.<br/>
 > Current issues will be addressed in the rewrite, unless severe enough to warrant immediate attention.
 
+> $${\color{red}State \space of \space Development \space UPDATE}$$<br/>
+> I realise I haven't done anything in about 2 months. With the holidays, a new apartment, and other programming projects<br/>
+> I've completely lost track of my progress, and will be starting over the rewrite soon.
+> The new rewrite will be handled in the [architectury-rewrite-retry](https://github.com/Furglitch/vending-block/tree/architectury-rewrite-retry) branch.<br/>
+
 A modern revival of Vending Block from back when Minecraft versions were in the single-digits! Once again, players have a simple way to trade with each other, even when they're not online!
 <br/>
 <br/>
