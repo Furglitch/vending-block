@@ -13,41 +13,48 @@
 <br/>
 <br/>
 
-> $${\color{red}State \space of \space Development}$$<br/>
-> Currently, the mod is undergoing a complete rewrite, utilizing the Architectury API to add Fabric support. I'm also *considering* developing for some previous versions of Minecraft, at the very least 1.20.X.<br/>
-> The rewrite will be handled in the [architectury-rewrite](https://github.com/Furglitch/vending-block/tree/architectury-rewrite) branch.<br/>
-> Current issues will be addressed in the rewrite, unless severe enough to warrant immediate attention.
-
-A modern revival of Vending Block from back when Minecraft versions were in the single-digits! Once again, players have a simple way to trade with each other, even when they're not online!
-<br/>
-<br/>
-This mod aims to stay faithful to AUTOMATIC_MAIDEN's (aka <a href="https://www.curseforge.com/members/minecreatr/projects">minecreatr</a>) original 1.6.4 mod while adding a few modernized quality-of-life features!
-
-### Features:
-- **Simple Player Trading**: Set up a vendor and you're good to go! No need to meet up with people to trade.
-- **Offline Trading**: No need to be online either! Players can use your vendors whenever the world is online!
-- **Transaction Info**: Looking at a vendor shows you what's for sale.
-- **Endless Customization**: Change the texture of the base in the GUI!
-- **Notifications**: Vendors will notify you of transactions and issues (toggleable).
-- **Animations**: Different animations are available for the item display.
-- **Display Block**: A new block for showing off your items!
-
-### Admin Features:
-- **Server-Wide Animation**: Set the default display animation for your server! (Players can override this in their client config.)
-- **Blacklisting**: Server admins can blacklist the sale of certain items with the server config, as well as the use of certain facades.
-- **Server Admin Screen**: Using the Vendor's Key, you can access the following enhancements:
-  - ***Owner Changing***: Change the owner of a vending block. (For when a player changes their username, or set it to your server name for a server shop)
-  - ***Infinite Inventory***: Give your vendor block an endless stock.
-  - ***Payment Discarding***: Don't need the items? Send them to the void.
-- **Remove Key from Creative**: Simply removes the Vendor's Key from the Creative menu.
-
-### Compatibility:
-- **REI/JEI/EMI**: Set your prices and facade with a simple drag-and-drop from the item list.
-- **Jade**: Favors the Jade overlay to show transaction information.
-- **Compatible with Shaders:** Tested with *Photon*
-- **Compatible with Resource Packs**: Pulls textures right from the block! Tested with *Bare Bones* and *Bare Metals*
-- **Every Mod**: The base facade function accepts blocks from any mod! Tested with *Biomes O' Plenty*
+A modern revival of the classic Vending Block mod, bringing back simple player-to-player trading from Minecraft's early days. Set up vendors that allow players to trade with each other even when offline, staying faithful to AUTOMATIC\_MAIDEN's (aka [minecreatr](https://www.curseforge.com/members/minecreatr/projects)) original 1.6.4 mod while adding modernized quality-of-life features.
 
 ---
 
-This is my first mod! Bugs are to be expected, but I tested as much as I could think of.
+### **Features**
+
+*   **Simple Player Trading**: Set up a vendor and start trading! No need to meet up to trade.
+*   **Offline Trading**: Players can use your vendors whenever the world is online, even if you're not.
+*   **Transaction Info**: Looking at a vendor shows you what's for sale.
+*   **Endless Customization**: Change the texture of the vendor's base directly in the GUI.
+*   **Notifications**: Vendors will notify you of transactions and issues (toggleable).
+*   **Animations**: Choose from different display animations for the item showcase.
+*   **Display Block**: A new block dedicated to showing off your items!
+
+### **Admin Features**
+
+*   **Server-Wide Animation**: Set the default display animation for all players on your server. (Players can override this setting in their client config if desired.)
+*   **Blacklisting**: Prevent the sale of specific items and restrict certain facade blocks through the server config.
+*   **Server Admin Screen**: Access special vendor management tools using the Vendor's Key:
+    *   **_Owner Changing_**: Reassign vendor ownership (useful when players change usernames or for creating server-run shops).
+    *   **_Infinite Inventory_**: Enable unlimited stock for any vendor.
+    *   **_Payment Discarding_**: Automatically void incoming payment items instead of storing them.
+*   **Remove Key from Creative**: Hide the Vendor's Key from the Creative menu to prevent unauthorized access.
+
+### **Compatibility**
+
+*   **REI/JEI/EMI**: Drag and drop from the item list to set prices and facades.
+*   **Jade**: Transaction information displays through Jade's overlay system.
+*   **Shaders**: Fully compatible. Tested with _Photon_.
+*   **Resource Packs**: Vendor facades pull textures directly from active resource packs. Tested with _Bare Bones_ and _Bare Metals_.
+*   **Every Mod**: Use blocks from any mod as vendor facades. Tested with _Biomes O' Plenty_.
+
+### **Issue Tracker**
+
+This is my first mod! Bugs are to be expected, but I tested as much as I could think of. If you encounter any issues, please report them on the [GitHub Issues page](https://github.com/Furglitch/vending-block/issues).
+
+---
+
+<div align="center">
+  <a class="human-made-floater" href="https://www.aimeecozza.com/human-made" title="100% Human Made Content">
+    <img src="https://i.imgur.com/p3WJXsr.png" width="64" alt="100% Human Made Content, No AI Used">
+  </a>
+  <br/>
+  No AI was used in the creation of this mod.
+</div>
