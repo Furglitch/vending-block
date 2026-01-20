@@ -1,0 +1,45 @@
+name: Adjust Issue Title
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+
+    process-bug-report:
+        runs-on: ubuntu-latest
+        if: contains(github.event.issue.title, '[Bug -')
+        steps:
+            - name: Update bug report title
+              uses: actions/github-script@v7
+              with:
+                script: |
+                    const body = context.payload.issue.body || '';
+                    let title = context.payload.issue.title || '';
+
+                    if (!title.includes('{{')) {
+                        console.log('No placeholders in title');
+                        return;
+                    }
+
+                    // Extract mod version
+                    const versionMatch = body.match(/### Mod version\s*\n\s*(.+)/i);
+                    if (versionMatch && versionMatch[1]) {
+                        const version = versionMatch[1].trim();
+                        title = title.replace('{{mod_version}}', version);
+                        console.log('Replaced mod_version with:', version);
+                    }
+
+                    if (title !== context.payload.issue.title) {
+                        await github. rest.issues.update({
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                            issue_number:  context.payload.issue.number,
+                            title: title
+                        });
+                        console.log('Updated title to:', title);
+                    }

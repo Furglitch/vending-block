@@ -1,0 +1,13 @@
+name: Formatting Check
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: webiny/action-conventional-commits@v1.3.0
+      - uses: axel-op/googlejavaformat-action@v4
+        with:
+          args: "--set-exit-if-changed"

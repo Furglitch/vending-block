@@ -1,0 +1,36 @@
+name: "Mod Feature Request"
+description: "Request a new feature or enhancement for any mod in this repository"
+title: "[Feature] "
+labels: [enhancement]
+assignees: []
+body:
+- type: textarea
+  id: feature_summary
+  attributes:
+    label: "Feature summary"
+    description: "Briefly describe the feature you'd like to see."
+  validations:
+    required: true
+- type: textarea
+  id: use_case
+  attributes:
+    label: "Use case"
+    description: "Explain why this feature is needed"
+  validations:
+    required: true
+- type: textarea
+  id: proposed_solution
+  attributes:
+    label: "Proposed solution"
+    description: "Describe how the feature could be implemented, include sketches or examples if available."
+- type: textarea
+  id: alternatives_considered
+  validations:
+    required: true
+  attributes:
+    label: "Alternatives considered"
+    description: "Describe any alternatives you've considered."
+- type: textarea
+  id: additional_info
+  attributes:
+    label: "Additional information"
