@@ -3,11 +3,25 @@ name: Formatting Check
 on: [push, pull_request]
 
 jobs:
-  lint:
+  commits:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: webiny/action-conventional-commits@v1.3.0
-      - uses: axel-op/googlejavaformat-action@v4
+
+  java-format:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      issues: write
+      pull-requests: write
+      statuses: write
+    steps:
+      - uses: actions/checkout@v6
         with:
-          args: "--set-exit-if-changed"
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: super-linter/super-linter@v8.3.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
